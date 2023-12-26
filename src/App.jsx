@@ -1,82 +1,89 @@
-import { useEffect } from 'react';
-import * as THREE from 'three';
-import SceneInit from './lib/SceneInit';
-
-function addSmoke(scene) {
-  const smokeGeometry = new THREE.BufferGeometry();
-  const smokeMaterial = new THREE.PointsMaterial({
-    size: 1,
-    color: 0xff5a00,
-    transparent: true,
-    opacity: 1,
-  });
-
-  const smokeParticles = new THREE.Points(smokeGeometry, smokeMaterial);
-  const particlesData = [];
-
-  for (let i = 0; i < 200; i++) {
-    particlesData.push({
-      position: new THREE.Vector3(),
-      velocity: new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5),
-      lifespan: Math.random() * 0.5,
-      age: 1,
-    });
-  }
-
-  const positions = new Float32Array(particlesData.length * 3);
-
-  for (let i = 0; i < particlesData.length; i++) {
-    positions[i * 3] = particlesData[i].position.x;
-    positions[i * 3 + 1] = particlesData[i].position.y;
-    positions[i * 3 + 2] = particlesData[i].position.z;
-  }
-
-  smokeGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-  scene.add(smokeParticles);
-
-  function updateSmoke() {
-    for (let i = 0; i < particlesData.length; i++) {
-      const particle = particlesData[i];
-      particle.position.add(particle.velocity);
-      particle.age += 0.02;
-
-      if (particle.age > particle.lifespan) {
-        particle.position.set(0, 0, 0);
-        particle.age = 0;
-      }
-    }
-
-    for (let i = 0; i < particlesData.length; i++) {
-      const particle = particlesData[i];
-      positions[i * 3] = particle.position.x;
-      positions[i * 3 + 1] = particle.position.y;
-      positions[i * 3 + 2] = particle.position.z;
-    }
-
-    smokeGeometry.attributes.position.needsUpdate = true;
-  }
-
-  scene.onBeforeRender = updateSmoke;
-}
+import { useEffect } from "react";
+import * as THREE from "three";
+import * as TWEEN from "tween.js" 
+import SceneInit from "./lib/SceneInit";
+import { addSmoke } from "./particles";
+import { renderScene } from "./renderScene";
+import { GUI } from "dat.gui";
+import { robot1 } from "./robot1";
 
 function App() {
   useEffect(() => {
-    const test = new SceneInit('myThreeJsCanvas');
-    test.initialize();
-    test.animate();
+    const project = new SceneInit("canvas");
+    project.initialize();
+    project.animate();
+
+
+    
+    const gui = new GUI();
+
+    const al = new THREE.AmbientLight(0xffffff, 0.5);
+    project.scene.add(al);
+
+    // set up ambient light gui
+    const alFolder = gui.addFolder("ambient light");
+    const alSettings = { color: al.color.getHex() };
+    alFolder.add(al, "visible");
+    alFolder.add(al, "intensity", 0, 1, 0.1);
+    alFolder
+      .addColor(alSettings, "color")
+      .onChange((value) => al.color.set(value));
+    alFolder.open();
+
+    // const dl = new THREE.DirectionalLight(0xffffff, 0.5);
+    // dl.position.set(0, 30, 200);
+    // dl.intensity = 10
+    // dl.castShadow = true;
+
+    // dl.shadow.mapSize.width = 2000;
+    // dl.shadow.mapSize.height = 2000;
+    // dl.shadow.camera.near = 1;
+    // dl.shadow.camera.far = 500;
+
+    const dlHelper = new THREE.DirectionalLightHelper(project.directionalLight, 3);
+    project.scene.add(project.directionalLight);
+    project.scene.add(dlHelper);
+
+    const dlSettings = {
+      visible: true,
+      color: project.directionalLight.color.getHex(),
+    };
+    const dlFolder = gui.addFolder("directional light");
+    dlFolder.add(dlSettings, "visible").onChange((value) => {
+      project.directionalLight.visible = value;
+      dlHelper.visible = value;
+    });
+    dlFolder.add(project.directionalLight, "intensity", 0, 10, 0.25);
+    dlFolder.add(project.directionalLight.position, "y", 1, 400, 10);
+    dlFolder.add(project.directionalLight.position, "x", 1, 400, 10);
+    dlFolder.add(project.directionalLight, "castShadow");
+    dlFolder
+      .addColor(dlSettings, "color")
+      .onChange((value) => project.directionalLight.color.set(value));
+    dlFolder.open();
 
     // Dodaj efekt dymu
-    addSmoke(test.scene);
+    // addSmoke(test.scene);
+
+    // const boxGeometry = new THREE.BoxGeometry()
+    // const boxMaterial = new THREE.MeshNormalMaterial()
+    // const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial)
+    // boxMesh.receiveShadow = true
+    // boxMesh.castShadow = true
+    // project.scene.add(boxMesh)
+
+    renderScene(project.scene);
+    robot1(project.scene);
 
     return () => {
-      test.scene.children = []; // Usuń wszystkie elementy ze sceny
+      project.scene.children = [];
+      gui.destroy();
     };
   }, []);
 
   return (
-    <div>
-      <canvas id="myThreeJsCanvas" />
+    <div className="">
+      <canvas id="canvas" />
     </div>
   );
 }

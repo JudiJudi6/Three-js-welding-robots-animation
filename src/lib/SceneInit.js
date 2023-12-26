@@ -1,6 +1,6 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import Stats from 'three/examples/jsm/libs/stats.module';
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import Stats from "three/examples/jsm/libs/stats.module";
 
 export default class SceneInit {
   constructor(canvasId) {
@@ -29,14 +29,16 @@ export default class SceneInit {
       1,
       1000
     );
-    this.camera.position.z = 48;
+    this.camera.position.z = 200;
+    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+    this.camera.castShadow = true;
 
     const canvas = document.getElementById(this.canvasId);
-    this.renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
-    });
+    this.renderer = new THREE.WebGLRenderer({canvas, antialias: true});
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
     document.body.appendChild(this.renderer.domElement);
 
     this.clock = new THREE.Clock();
@@ -45,31 +47,42 @@ export default class SceneInit {
     document.body.appendChild(this.stats.dom);
 
     this.ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    this.ambientLight.castShadow = true;
+    //this.ambientLight.castShadow = true;
     this.scene.add(this.ambientLight);
 
     this.directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    this.directionalLight.position.set(0, 32, 64);
+    // this.directionalLight.position.set(0, 32, 64);
+    this.directionalLight.position.set(0, 30, 200);
+    this.directionalLight.castShadow = true;
+
+    this.directionalLight.shadow.mapSize.width = 1024;
+    this.directionalLight.shadow.mapSize.height = 1024;
+    this.directionalLight.shadow.camera.near = 1;
+    this.directionalLight.shadow.camera.far = 500;
+    this.directionalLight.shadow.camera.top = 50
+    this.directionalLight.shadow.camera.bottom = -50
+    this.directionalLight.shadow.camera.left = -50
+    this.directionalLight.shadow.camera.right = 50
     this.scene.add(this.directionalLight);
 
     // if window resizes
-    window.addEventListener('resize', () => this.onWindowResize(), false);
+    window.addEventListener("resize", () => this.onWindowResize(), false);
 
     // NOTE: Load space background.
-    // this.loader = new THREE.TextureLoader();
-    // this.scene.background = this.loader.load('./pics/space.jpeg');
+    this.loader = new THREE.TextureLoader();
+    this.scene.background = this.loader.load("./pics/space.jpeg");
 
     // NOTE: Declare uniforms to pass into glsl shaders.
-    // this.uniforms = {
-    //   u_time: { type: 'f', value: 1.0 },
-    //   colorB: { type: 'vec3', value: new THREE.Color(0xfff000) },
-    //   colorA: { type: 'vec3', value: new THREE.Color(0xffffff) },
-    // };
+    this.uniforms = {
+      u_time: { type: "f", value: 1.0 },
+      colorB: { type: "vec3", value: new THREE.Color(0xfff000) },
+      colorA: { type: "vec3", value: new THREE.Color(0xffffff) },
+    };
   }
 
   animate() {
     // NOTE: Window is implied.
-    // requestAnimationFrame(this.animate.bind(this));
+    //requestAnimationFrame(this.animate.bind(this));
     window.requestAnimationFrame(this.animate.bind(this));
     this.render();
     this.stats.update();
@@ -78,7 +91,7 @@ export default class SceneInit {
 
   render() {
     // NOTE: Update uniform data on each render.
-    // this.uniforms.u_time.value += this.clock.getDelta();
+    this.uniforms.u_time.value += this.clock.getDelta();
     this.renderer.render(this.scene, this.camera);
   }
 
