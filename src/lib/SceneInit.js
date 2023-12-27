@@ -8,7 +8,7 @@ export default class SceneInit {
     this.camera = undefined;
     this.renderer = undefined;
 
-    this.fov = 45;
+    this.fov = 70;
     this.nearPlane = 1;
     this.farPlane = 1000;
     this.canvasId = canvasId;
@@ -50,20 +50,20 @@ export default class SceneInit {
     //this.ambientLight.castShadow = true;
     this.scene.add(this.ambientLight);
 
-    this.directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    // this.directionalLight.position.set(0, 32, 64);
-    this.directionalLight.position.set(0, 30, 200);
-    this.directionalLight.castShadow = true;
+    // this.directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    // // this.directionalLight.position.set(0, 32, 64);
+    // this.directionalLight.position.set(0, 30, 200);
+    // this.directionalLight.castShadow = true;
 
-    this.directionalLight.shadow.mapSize.width = 1024;
-    this.directionalLight.shadow.mapSize.height = 1024;
-    this.directionalLight.shadow.camera.near = 1;
-    this.directionalLight.shadow.camera.far = 500;
-    this.directionalLight.shadow.camera.top = 50
-    this.directionalLight.shadow.camera.bottom = -50
-    this.directionalLight.shadow.camera.left = -50
-    this.directionalLight.shadow.camera.right = 50
-    this.scene.add(this.directionalLight);
+    // this.directionalLight.shadow.mapSize.width = 1024;
+    // this.directionalLight.shadow.mapSize.height = 1024;
+    // this.directionalLight.shadow.camera.near = 1;
+    // this.directionalLight.shadow.camera.far = 500;
+    // this.directionalLight.shadow.camera.top = 500
+    // this.directionalLight.shadow.camera.bottom = -500
+    // this.directionalLight.shadow.camera.left = -500
+    // this.directionalLight.shadow.camera.right = 500
+    // this.scene.add(this.directionalLight);
 
     // if window resizes
     window.addEventListener("resize", () => this.onWindowResize(), false);

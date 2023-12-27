@@ -40,27 +40,27 @@ function App() {
     // dl.shadow.camera.near = 1;
     // dl.shadow.camera.far = 500;
 
-    const dlHelper = new THREE.DirectionalLightHelper(project.directionalLight, 3);
-    project.scene.add(project.directionalLight);
-    project.scene.add(dlHelper);
+    // const dlHelper = new THREE.DirectionalLightHelper(project.directionalLight, 3);
+    // project.scene.add(project.directionalLight);
+    // project.scene.add(dlHelper);
 
-    const dlSettings = {
-      visible: true,
-      color: project.directionalLight.color.getHex(),
-    };
-    const dlFolder = gui.addFolder("directional light");
-    dlFolder.add(dlSettings, "visible").onChange((value) => {
-      project.directionalLight.visible = value;
-      dlHelper.visible = value;
-    });
-    dlFolder.add(project.directionalLight, "intensity", 0, 10, 0.25);
-    dlFolder.add(project.directionalLight.position, "y", 1, 400, 10);
-    dlFolder.add(project.directionalLight.position, "x", 1, 400, 10);
-    dlFolder.add(project.directionalLight, "castShadow");
-    dlFolder
-      .addColor(dlSettings, "color")
-      .onChange((value) => project.directionalLight.color.set(value));
-    dlFolder.open();
+    // const dlSettings = {
+    //   visible: true,
+    //   color: project.directionalLight.color.getHex(),
+    // };
+    // const dlFolder = gui.addFolder("directional light");
+    // dlFolder.add(dlSettings, "visible").onChange((value) => {
+    //   project.directionalLight.visible = value;
+    //   dlHelper.visible = value;
+    // });
+    // dlFolder.add(project.directionalLight, "intensity", 0, 10, 0.25);
+    // dlFolder.add(project.directionalLight.position, "y", 1, 400, 10);
+    // dlFolder.add(project.directionalLight.position, "x", 1, 400, 10);
+    // dlFolder.add(project.directionalLight, "castShadow");
+    // dlFolder
+    //   .addColor(dlSettings, "color")
+    //   .onChange((value) => project.directionalLight.color.set(value));
+    // dlFolder.open();
 
     // Dodaj efekt dymu
     // addSmoke(test.scene);

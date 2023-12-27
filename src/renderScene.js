@@ -1,27 +1,46 @@
-import * as THREE from 'three';
+import * as THREE from "three";
+import { box } from "./meshes/Box";
+import { metalFrame } from "./metalFrame";
+import { light } from "./light";
 
 export function renderScene(scene) {
-    const boxGeometry = new THREE.BoxGeometry(400, 1, 400);
-    const boxMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
-    const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
+  const groundMesh = box(scene, 800, 1, 400, "floor.jpg", 10, 5);
 
-    boxMesh.position.y = -1;
-    boxMesh.receiveShadow = true;
-    scene.add(boxMesh);
+  const wallMeshOne = box(scene, 800, 150, 1, "wall.jpg", 2, 1);
+  wallMeshOne.position.z = -200;
+  wallMeshOne.position.y = 75;
 
-    // const textureLoader = new THREE.TextureLoader();
-    // textureLoader.load(
-    //     'floor.jpg',
-    //     (texture) => {
-    //         texture.wrapS = THREE.RepeatWrapping;
-    //         texture.wrapT = THREE.RepeatWrapping;
-    //         texture.repeat.set(10, 10)
-    //         boxMaterial.map = texture;
-    //         boxMaterial.needsUpdate = true;
-    //     },
-    //     undefined,
-    //     (error) => {
-    //         console.error('Błąd ładowania tekstury', error);
-    //     }
-    // );
+  const wallMeshTwo = box(scene, 800, 150, 1, "wall.jpg", 2, 1);
+  wallMeshTwo.position.z = 200;
+  wallMeshTwo.position.y = 75;
+
+  const wallMeshThree = box(scene, 1, 300, 400, "wall.jpg", 1, 2);
+  wallMeshThree.position.x = 400;
+  wallMeshThree.position.y = 150;
+
+  const wallMeshFour = box(scene, 1, 300, 400, "wall.jpg", 1, 2);
+  wallMeshFour.position.x = -400;
+  wallMeshFour.position.y = 150;
+
+  const gateMesh = box(scene, 1, 75, 125, "gate.jpg");
+  gateMesh.position.x = -399;
+  gateMesh.position.y = 37;
+
+  const sheetCeilingOneMesh = box(scene, 800, 1, 250, "sheet.jpg", 20, 20);
+  sheetCeilingOneMesh.position.z = 100;
+  sheetCeilingOneMesh.position.y = 195;
+  sheetCeilingOneMesh.rotation.x = THREE.MathUtils.degToRad(25);
+
+  const sheetCeilingTwoMesh = box(scene, 800, 1, 250, "sheet.jpg", 20, 20);
+  sheetCeilingTwoMesh.position.z = -100;
+  sheetCeilingTwoMesh.position.y = 195;
+  sheetCeilingTwoMesh.rotation.x = THREE.MathUtils.degToRad(-25);
+
+  metalFrame(scene, 0)
+  metalFrame(scene, 200)
+  metalFrame(scene, -200)
+  metalFrame(scene, 395)
+  metalFrame(scene, -395)
+
+  light(scene, new THREE.Vector3(200, 20, 0));
 }
