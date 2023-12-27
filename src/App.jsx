@@ -17,7 +17,7 @@ function App() {
     
     const gui = new GUI();
 
-    const al = new THREE.AmbientLight(0xffffff, 0.5);
+    const al = new THREE.AmbientLight(0xffffff, 0.3);
     project.scene.add(al);
 
     // set up ambient light gui

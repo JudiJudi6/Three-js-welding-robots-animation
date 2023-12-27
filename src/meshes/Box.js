@@ -1,8 +1,8 @@
 import * as THREE from "three";
 
-export function box(scene, w, h, d, path, repeatX = 1, repeatY = 1) {
+export function box(scene, w, h, d, path, repeatX = 1, repeatY = 1, color = '') {
   const boxGeometry = new THREE.BoxGeometry(w, h, d);
-  const boxMaterial = new THREE.MeshPhongMaterial();
+  const boxMaterial = new THREE.MeshPhongMaterial({ color: color });
   const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
  
   boxMesh.receiveShadow = true;

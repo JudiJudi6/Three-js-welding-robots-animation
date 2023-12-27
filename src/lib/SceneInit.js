@@ -47,32 +47,13 @@ export default class SceneInit {
     document.body.appendChild(this.stats.dom);
 
     this.ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    //this.ambientLight.castShadow = true;
     this.scene.add(this.ambientLight);
 
-    // this.directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    // // this.directionalLight.position.set(0, 32, 64);
-    // this.directionalLight.position.set(0, 30, 200);
-    // this.directionalLight.castShadow = true;
-
-    // this.directionalLight.shadow.mapSize.width = 1024;
-    // this.directionalLight.shadow.mapSize.height = 1024;
-    // this.directionalLight.shadow.camera.near = 1;
-    // this.directionalLight.shadow.camera.far = 500;
-    // this.directionalLight.shadow.camera.top = 500
-    // this.directionalLight.shadow.camera.bottom = -500
-    // this.directionalLight.shadow.camera.left = -500
-    // this.directionalLight.shadow.camera.right = 500
-    // this.scene.add(this.directionalLight);
-
-    // if window resizes
     window.addEventListener("resize", () => this.onWindowResize(), false);
 
-    // NOTE: Load space background.
     this.loader = new THREE.TextureLoader();
     this.scene.background = this.loader.load("./pics/space.jpeg");
 
-    // NOTE: Declare uniforms to pass into glsl shaders.
     this.uniforms = {
       u_time: { type: "f", value: 1.0 },
       colorB: { type: "vec3", value: new THREE.Color(0xfff000) },
@@ -81,8 +62,6 @@ export default class SceneInit {
   }
 
   animate() {
-    // NOTE: Window is implied.
-    //requestAnimationFrame(this.animate.bind(this));
     window.requestAnimationFrame(this.animate.bind(this));
     this.render();
     this.stats.update();
@@ -90,7 +69,6 @@ export default class SceneInit {
   }
 
   render() {
-    // NOTE: Update uniform data on each render.
     this.uniforms.u_time.value += this.clock.getDelta();
     this.renderer.render(this.scene, this.camera);
   }

@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { box } from "./meshes/Box";
 import { metalFrame } from "./metalFrame";
 import { light } from "./light";
+import { lamp } from "./meshes/Lamp";
 
 export function renderScene(scene) {
   const groundMesh = box(scene, 800, 1, 400, "floor.jpg", 10, 5);
@@ -36,11 +37,28 @@ export function renderScene(scene) {
   sheetCeilingTwoMesh.position.y = 195;
   sheetCeilingTwoMesh.rotation.x = THREE.MathUtils.degToRad(-25);
 
-  metalFrame(scene, 0)
-  metalFrame(scene, 200)
-  metalFrame(scene, -200)
-  metalFrame(scene, 395)
-  metalFrame(scene, -395)
+  metalFrame(scene, 0);
+  metalFrame(scene, 200);
+  metalFrame(scene, -200);
+  metalFrame(scene, 395);
+  metalFrame(scene, -395);
 
-  light(scene, new THREE.Vector3(200, 20, 0));
+  lamp(scene, 3, 205, 105, 30);
+  light(scene, 3, 120, 190, -1);
+
+  lamp(scene, 3, 205, -105, -30);
+  light(scene, 3, 120, -190, 1);
+
+  lamp(scene, 203, 205, 105, 30);
+  light(scene, 203, 120, 190, -1);
+
+  lamp(scene, 203, 205, -105, -30);
+  light(scene, 203, 120, -190, 1);
+
+  lamp(scene, -203, 205, 105, 30);
+  light(scene, -203, 120, 190, -1);
+
+  lamp(scene, -203, 205, -105, -30);
+  light(scene, -203, 120, -190, 1);
+  //   const { spotLight: spotLight2, lampGrup: lampGrup2 } = light(scene, 200, 150, 0, -20);
 }
