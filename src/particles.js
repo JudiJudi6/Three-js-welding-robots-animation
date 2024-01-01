@@ -24,9 +24,9 @@ export function addSmoke(scene) {
     const positions = new Float32Array(particlesData.length * 3);
   
     for (let i = 0; i < particlesData.length; i++) {
-      positions[i * 3] = particlesData[i].position.x;
-      positions[i * 3 + 1] = particlesData[i].position.y;
-      positions[i * 3 + 2] = particlesData[i].position.z;
+      positions[i * 30] = particlesData[i].position.x;
+      positions[i * 30 + 10] = particlesData[i].position.y;
+      positions[i * 30 + 20] = particlesData[i].position.z;
     }
   
     smokeGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import * as THREE from "three";
 import * as TWEEN from "tween.js" 
 import SceneInit from "./lib/SceneInit";
-import { addSmoke } from "./particles";
 import { renderScene } from "./renderScene";
 import { GUI } from "dat.gui";
 import { robot1 } from "./robot1";
