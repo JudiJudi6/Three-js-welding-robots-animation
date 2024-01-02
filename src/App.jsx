@@ -5,6 +5,7 @@ import SceneInit from "./lib/SceneInit";
 import { renderScene } from "./renderScene";
 import { GUI } from "dat.gui";
 import { robot1 } from "./robot1";
+import { robots } from "./robots";
 
 function App() {
   useEffect(() => {
@@ -72,7 +73,7 @@ function App() {
     // project.scene.add(boxMesh)
 
     renderScene(project.scene);
-    robot1(project.scene);
+    robots(project.scene)
 
     return () => {
       project.scene.children = [];
