@@ -4,7 +4,7 @@ import { box } from "./meshes/Box";
 import { cone } from "./meshes/Cone";
 import { addSmoke } from "./particles";
 
-export function robot1(scene) {
+export function robot1(scene, x, y, z, r) {
   const basisGroup = new THREE.Group();
   const phaseOne = new THREE.Group();
   const phaseTwo = new THREE.Group();
@@ -50,6 +50,21 @@ export function robot1(scene) {
   phaseOneCylinder2.position.z = 2.5;
   phaseOneCylinder2.rotation.x = THREE.MathUtils.degToRad(90);
 
+  // phaseOne.add(
+  //   phaseOneBlock1,
+  //   phaseOneBlock2,
+  //   phaseOneCylinder,
+  //   phaseOneCylinder2
+  // );
+
+  // const phaseOneContainer = new THREE.Object3D();
+  // phaseOneContainer.add(
+  //   phaseOneBlock1,
+  //   phaseOneBlock2,
+  //   phaseOneCylinder,
+  //   phaseOneCylinder2
+  // );
+
   phaseOne.add(
     phaseOneBlock1,
     phaseOneBlock2,
@@ -57,17 +72,7 @@ export function robot1(scene) {
     phaseOneCylinder2
   );
 
-  const phaseOneContainer = new THREE.Object3D();
-  phaseOneContainer.add(
-    phaseOneBlock1,
-    phaseOneBlock2,
-    phaseOneCylinder,
-    phaseOneCylinder2
-  );
-
-  phaseOne.add(phaseOneContainer);
-
-  scene.add(phaseOne);
+  // scene.add(phaseOne);
 
   //phase two
 
@@ -81,16 +86,16 @@ export function robot1(scene) {
   phaseTwoCylinder2.position.x = 30;
   phaseTwoCylinder2.rotation.x = THREE.MathUtils.degToRad(90);
 
-  const phaseTwoContainer = new THREE.Object3D();
-  phaseTwoContainer.add(phaseTwoCylinder1, phaseTwoBlock, phaseTwoCylinder2);
-  phaseTwo.add(phaseTwoContainer);
+  // const phaseTwoContainer = new THREE.Object3D();
+  // phaseTwoContainer.add(phaseTwoCylinder1, phaseTwoBlock, phaseTwoCylinder2);
+  phaseTwo.add(phaseTwoCylinder1, phaseTwoBlock, phaseTwoCylinder2);
 
   phaseTwo.position.y = 22.5;
   phaseTwo.position.x = 14;
   phaseTwo.position.z = -2.5;
   phaseTwo.rotation.z = THREE.MathUtils.degToRad(135);
 
-  scene.add(phaseTwo);
+  // scene.add(phaseTwo);
 
   //phase three
 
@@ -114,22 +119,28 @@ export function robot1(scene) {
   phaseThreeCylinder3.position.y = -16;
   phaseThreeCylinder3.rotation.x = THREE.MathUtils.degToRad(90);
 
-  const phaseThreeContainer = new THREE.Object3D();
-  phaseThreeContainer.add(
+  // const phaseThreeContainer = new THREE.Object3D();
+  // phaseThreeContainer.add(
+  //   phaseThreeCylinder,
+  //   phaseThreeBlock1,
+  //   phaseThreeCylinder2,
+  //   phaseThreeBlock2,
+  //   phaseThreeCylinder3
+  // );
+  phaseThree.add(
     phaseThreeCylinder,
     phaseThreeBlock1,
     phaseThreeCylinder2,
     phaseThreeBlock2,
     phaseThreeCylinder3
   );
-  phaseThree.add(phaseThreeContainer);
 
   phaseThree.position.x = -6.5;
   phaseThree.position.y = 43;
   phaseThree.position.z = 2.5;
   // phaseThree.rotation.z = THREE.MathUtils.degToRad(135);
 
-  scene.add(phaseThree);
+  // scene.add(phaseThree);
 
   //phase four
 
@@ -143,21 +154,38 @@ export function robot1(scene) {
   phaseFourCone.rotation.z = THREE.MathUtils.degToRad(-90);
   phaseFourCone.position.x = 15;
 
-  const phaseFourContainer = new THREE.Object3D();
-  phaseFourContainer.add(phaseFourCylinder, phaseFourBlock, phaseFourCone);
+  // const phaseFourContainer = new THREE.Object3D();
+  // phaseFourContainer.add(phaseFourCylinder, phaseFourBlock, phaseFourCone);
 
-  phaseFour.add(phaseFourContainer);
+  phaseFour.add(phaseFourCylinder, phaseFourBlock, phaseFourCone);
 
   phaseFour.position.x = 27.5;
   phaseFour.position.y = 27.5;
   phaseFour.position.z = -2.5;
   phaseFour.rotation.z = THREE.MathUtils.degToRad(-90);
 
-  scene.add(phaseFour);
-  addSmoke(scene);
+  // scene.add(phaseFour);
 
-  const phaseOneRotationSpeed = 0.02;
-  scene.onBeforeRender = function () {
-    // phaseFourContainer.rotation.z += phaseOneRotationSpeed;
-  };
+  const robotObj = new THREE.Object3D();
+  robotObj.add(basisGroup, phaseOne, phaseTwo, phaseThree, phaseFour);
+
+  phaseOne.attach(phaseTwo);
+  phaseTwo.attach(phaseThree);
+  phaseThree.attach(phaseFour);
+
+  robotObj.position.set(x, y, z);
+  robotObj.rotation.y = THREE.MathUtils.degToRad(r);
+
+  scene.add(robotObj);
+
+  return { phaseOne, phaseTwo, phaseThree, phaseFour };
+
+  // const phaseOneRotationSpeed = 0.01;
+  // scene.onBeforeRender = function () {
+  //   addSmoke(scene, new THREE.Vector3(100, 100, 0));
+  // rotateAll.rotation.y += phaseOneRotationSpeed;
+  // phaseTwo.rotation.z += phaseOneRotationSpeed;
+  // phaseThree.rotation.z += phaseOneRotationSpeed;
+  // phaseFour.rotation.z += phaseOneRotationSpeed;
+  // };
 }
