@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { box } from "./meshes/Box";
 import { circle } from "./meshes/Circle";
 
-export function robot2(scene) {
+export function robot2(scene, x, y, z) {
   const phaseOne = new THREE.Group();
   const phaseTwo = new THREE.Group();
   const phaseThree = new THREE.Group();
@@ -33,7 +33,7 @@ export function robot2(scene) {
     phaseOneBlock,
     phaseOneBlock2
   );
-  scene.add(phaseOne);
+  // scene.add(phaseOne);
 
   //phsae two
 
@@ -51,7 +51,7 @@ export function robot2(scene) {
   phaseTwo.position.y = 50;
   phaseTwo.rotation.z = THREE.MathUtils.degToRad(45);
 
-  scene.add(phaseTwo);
+  // scene.add(phaseTwo);
 
   //phase three
 
@@ -92,7 +92,10 @@ export function robot2(scene) {
 
   phaseThree.position.y = 71;
   phaseThree.position.x = 21;
-  scene.add(phaseThree);
+  phaseThree.rotation.z = THREE.MathUtils.degToRad(0);
+
+  
+  // scene.add(phaseThree);
 
   // phase four
 
@@ -106,24 +109,17 @@ export function robot2(scene) {
   phaseFourCylinder2.position.y = -15;
 
   phaseFour.add(phaseFourCylinder, phaseFourBlock, phaseFourCylinder2);
-  phaseFour.position.x = 51
-  phaseFour.position.y = 71
-  scene.add(phaseFour);
+  phaseFour.position.x = 51;
+  phaseFour.position.y = 71;
+
+  const robotObj = new THREE.Object3D();
+  robotObj.add(phaseOne, phaseTwo, phaseThree, phaseFour);
+  robotObj.position.set(x, y, z);
+  scene.add(robotObj);
 
   phaseOne.attach(phaseTwo);
   phaseTwo.attach(phaseThree);
   phaseThree.attach(phaseFour);
-  // scene.add(phaseThree)
-  // scene.add(phaseThree)
-  //   phaseTwo.cle
 
   return { phaseOne, phaseTwo, phaseThree, phaseFour };
-
-  //   const phaseOneRotationSpeed = 0.01;
-  //   scene.onBeforeRender = function () {
-  //     //   rotateAll.rotation.y += phaseOneRotationSpeed;
-  //     phaseTwo.rotation.z += phaseOneRotationSpeed;
-  //     // phaseThree.rotation.z += phaseOneRotationSpeed;
-  //     // phaseFour.rotation.z += phaseOneRotationSpeed;
-  //   };
 }
