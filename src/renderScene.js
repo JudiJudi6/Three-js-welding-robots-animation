@@ -60,5 +60,13 @@ export function renderScene(scene) {
 
   lamp(scene, -203, 205, -105, -30);
   light(scene, -203, 120, -190, 1);
+
+  const block = box(scene, 150, 25, 150);
+  block.position.y = 12.5;
+
+  const block2 = box(scene, 100, 25, 100);
+  block2.position.y = 12.5;
+  block2.position.x = 350;
+
   //   const { spotLight: spotLight2, lampGrup: lampGrup2 } = light(scene, 200, 150, 0, -20);
 }
