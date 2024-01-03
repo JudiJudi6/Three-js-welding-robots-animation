@@ -8,19 +8,17 @@ export function circle(scene, t, b, h, path, color = "") {
   cylinderMesh.receiveShadow = true;
   cylinderMesh.castShadow = true;
 
-  const textureLoader = new THREE.TextureLoader();
-  textureLoader.load(
-    path,
-    (texture) => {
-      cylinderMaterial.map = texture;
-      cylinderMaterial.needsUpdate = true;
-    },
-    undefined,
-    (error) => {
-      console.error("Błąd ładowania tekstury", error);
-    }
-  );
-
+  if (path !== "") {
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load(
+      path,
+      (texture) => {
+        cylinderMaterial.map = texture;
+        cylinderMaterial.needsUpdate = true;
+      },
+      undefined
+    );
+  }
   scene.add(cylinderMesh);
   return cylinderMesh;
 }

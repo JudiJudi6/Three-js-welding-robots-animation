@@ -8,19 +8,17 @@ export function cone(scene, r, h, s, path, color = "") {
   coneMesh.receiveShadow = true;
   coneMesh.castShadow = true;
 
-  const textureLoader = new THREE.TextureLoader();
-  textureLoader.load(
-    path,
-    (texture) => {
-      coneMaterial.map = texture;
-      coneMaterial.needsUpdate = true;
-    },
-    undefined,
-    (error) => {
-      console.error("Błąd ładowania tekstury", error);
-    }
-  );
-
+  if (path !== "") {
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load(
+      path,
+      (texture) => {
+        coneMaterial.map = texture;
+        coneMaterial.needsUpdate = true;
+      },
+      undefined
+    );
+  }
   scene.add(coneMesh);
   return coneMesh;
 }
