@@ -62,5 +62,5 @@ export function addSmoke(scene, startPosition = new THREE.Vector3()) {
     smokeGeometry.attributes.position.needsUpdate = true;
   }
 
-  scene.onBeforeRender = updateSmoke;
+  return updateSmoke
 }
