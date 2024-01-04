@@ -2,7 +2,6 @@ import * as THREE from "three";
 import { circle } from "./meshes/Circle";
 import { box } from "./meshes/Box";
 import { cone } from "./meshes/Cone";
-import { addSmoke } from "./particles";
 
 export function robot1(scene, x, y, z, r) {
   const basisGroup = new THREE.Group();
@@ -13,14 +12,14 @@ export function robot1(scene, x, y, z, r) {
 
   //Basis
 
-  const basisCylinder = circle(scene, 10, 10, 10);
+  const basisCylinder = circle(scene, 10, 10, 10, "robotTexture.jpg");
   basisCylinder.position.y = 5;
 
-  const basisBlock = box(scene, 20, 10, 20);
+  const basisBlock = box(scene, 20, 10, 20, "robotTexture.jpg");
   basisBlock.position.x = -10;
   basisBlock.position.y = 5;
 
-  const basisBlockTop = box(scene, 10, 10, 20);
+  const basisBlockTop = box(scene, 10, 10, 20, "robotTexture.jpg");
   basisBlockTop.position.x = -15;
   basisBlockTop.position.y = 15;
 
@@ -29,22 +28,22 @@ export function robot1(scene, x, y, z, r) {
 
   //phase one
 
-  const phaseOneCylinder = circle(scene, 10, 10, 5, "", 0x11dddd);
+  const phaseOneCylinder = circle(scene, 10, 10, 5, "robotTexture.jpg", 0x11dddd);
   phaseOneCylinder.position.y = 12.5;
 
-  const phaseOneBlock1 = box(scene, 25, 10, 5, "", 1, 1, 0x11dddd);
+  const phaseOneBlock1 = box(scene, 25, 10, 5, "robotTexture.jpg", 1, 1, 0x11dddd);
   phaseOneBlock1.position.y = 15;
   phaseOneBlock1.position.x = 5;
   phaseOneBlock1.position.z = 2.5;
   phaseOneBlock1.rotation.z = THREE.MathUtils.degToRad(40);
 
-  const phaseOneBlock2 = box(scene, 10, 10, 5, "", 1, 1, 0x11dddd);
+  const phaseOneBlock2 = box(scene, 10, 10, 5, "robotTexture.jpg", 1, 1, 0x11dddd);
   phaseOneBlock2.position.y = 15;
   phaseOneBlock2.position.x = 5;
   phaseOneBlock2.position.z = -2.5;
   phaseOneBlock2.rotation.z = THREE.MathUtils.degToRad(40);
 
-  const phaseOneCylinder2 = circle(scene, 5, 5, 5, "", 0x11dddd);
+  const phaseOneCylinder2 = circle(scene, 5, 5, 5, "robotTexture.jpg", 0x11dddd);
   phaseOneCylinder2.position.x = 14;
   phaseOneCylinder2.position.y = 22.5;
   phaseOneCylinder2.position.z = 2.5;
@@ -76,13 +75,13 @@ export function robot1(scene, x, y, z, r) {
 
   //phase two
 
-  const phaseTwoCylinder1 = circle(scene, 5, 5, 5, "", 0xbbd11d);
+  const phaseTwoCylinder1 = circle(scene, 5, 5, 5, "robotTexture.jpg", 0xbbd11d);
   phaseTwoCylinder1.rotation.x = THREE.MathUtils.degToRad(90);
 
-  const phaseTwoBlock = box(scene, 30, 10, 5, "", 1, 1, 0xbbd11d);
+  const phaseTwoBlock = box(scene, 30, 10, 5, "robotTexture.jpg", 1, 1, 0xbbd11d);
   phaseTwoBlock.position.x = 15;
 
-  const phaseTwoCylinder2 = circle(scene, 5, 5, 5, "", 0xbbd11d);
+  const phaseTwoCylinder2 = circle(scene, 5, 5, 5, "robotTexture.jpg", 0xbbd11d);
   phaseTwoCylinder2.position.x = 30;
   phaseTwoCylinder2.rotation.x = THREE.MathUtils.degToRad(90);
 
@@ -99,22 +98,22 @@ export function robot1(scene, x, y, z, r) {
 
   //phase three
 
-  const phaseThreeCylinder = circle(scene, 4, 4, 5, "", 0xddaaff);
+  const phaseThreeCylinder = circle(scene, 4, 4, 5, "robotTexture.jpg", 0xddaaff);
   phaseThreeCylinder.rotation.x = THREE.MathUtils.degToRad(90);
 
-  const phaseThreeBlock1 = box(scene, 15, 8, 5, "", 1, 1, 0xddaaff);
+  const phaseThreeBlock1 = box(scene, 15, 8, 5, "robotTexture.jpg", 1, 1, 0xddaaff);
   phaseThreeBlock1.position.x = 7.5;
 
-  const phaseThreeCylinder2 = circle(scene, 4, 4, 5, "", 0xddaaff);
+  const phaseThreeCylinder2 = circle(scene, 4, 4, 5, "robotTexture.jpg", 0xddaaff);
   phaseThreeCylinder2.position.x = 15;
   phaseThreeCylinder2.rotation.x = THREE.MathUtils.degToRad(90);
 
-  const phaseThreeBlock2 = box(scene, 25, 8, 5, "", 1, 1, 0xddaaff);
+  const phaseThreeBlock2 = box(scene, 25, 8, 5, "robotTexture.jpg", 1, 1, 0xddaaff);
   phaseThreeBlock2.position.x = 24.5;
   phaseThreeBlock2.position.y = -8;
   phaseThreeBlock2.rotation.z = THREE.MathUtils.degToRad(-40);
 
-  const phaseThreeCylinder3 = circle(scene, 4, 4, 5, "", 0xddaaff);
+  const phaseThreeCylinder3 = circle(scene, 4, 4, 5, "robotTexture.jpg", 0xddaaff);
   phaseThreeCylinder3.position.x = 34;
   phaseThreeCylinder3.position.y = -16;
   phaseThreeCylinder3.rotation.x = THREE.MathUtils.degToRad(90);

@@ -8,7 +8,10 @@ export function light(scene, x, y, z, d) {
   spotLight.position.set(x, y, z);
   spotLight.target.position.set(x, y - 1, z + d);
 
+  // slFolder.add();
+
   scene.add(spotLight);
-//   scene.add(spotLightHelper);
+  //   scene.add(spotLightHelper);
   spotLightHelper.update();
+  return spotLight;
 }
