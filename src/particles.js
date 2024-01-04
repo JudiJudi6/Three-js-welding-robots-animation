@@ -40,14 +40,14 @@ export function addSmoke(scene, startPosition = new THREE.Vector3()) {
 
   scene.add(smokeParticles);
 
-  function updateSmoke() {
+  function updateSmoke(pos) {
     for (let i = 0; i < particlesData.length; i++) {
       const particle = particlesData[i];
       particle.position.add(particle.velocity);
       particle.age += 0.02;
 
       if (particle.age > particle.lifespan) {
-        particle.position.copy(startPosition);
+        particle.position.copy(pos);
         particle.age = 0;
       }
     }
