@@ -30,11 +30,19 @@ export default class SceneInit {
       1000
     );
     this.camera.position.z = 200;
+    this.camera.position.y = 100;
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
     this.camera.castShadow = true;
 
     const canvas = document.getElementById(this.canvasId);
-    this.renderer = new THREE.WebGLRenderer({canvas, antialias: true});
+    this.renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: true,
+      premultipliedAlpha: false,
+      preserveDrawingBuffer: true,
+    });
+
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;

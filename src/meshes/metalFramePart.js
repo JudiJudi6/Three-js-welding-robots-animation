@@ -62,7 +62,6 @@ export function metalFramePart(scene) {
 
   const boneMeshYTop = box(scene, 2, 25, 2, "metal.jpg");
   boneMeshYTop.position.y = 230;
-  //   boneMeshYTop.position.z = 149;
 
   metalFrameGroupLeft.add(boneMeshYTop);
   metalFrameGroupLeft.castShadow = true;

@@ -7,7 +7,6 @@ import { addSmoke } from "./particles";
 import { box } from "./meshes/Box";
 
 export function robots(scene) {
-  //animowany blok
   let particlesPosition = new THREE.Vector3(0, -40, 0);
   let weldFlag1;
   let weldFlag2;
@@ -493,7 +492,6 @@ export function robots(scene) {
       helperRobot.phaseTwo.rotation.z = THREE.MathUtils.degToRad(45);
       helperRobot.phaseThree.rotation.z = THREE.MathUtils.degToRad(-45);
       helperRobot.phaseFour.rotation.z = THREE.MathUtils.degToRad(0);
-      // helperRobot.phaseOne.attach(element)
     });
 
   const tweenR2GetFormTableUp3 = new TWEEN.Tween({
@@ -519,7 +517,6 @@ export function robots(scene) {
       helperRobot.phaseTwo.rotation.z = THREE.MathUtils.degToRad(45);
       helperRobot.phaseThree.rotation.z = THREE.MathUtils.degToRad(-45);
       helperRobot.phaseFour.rotation.z = THREE.MathUtils.degToRad(0);
-      // helperRobot.phaseOne.attach(element)
     });
 
   const tweenR2GetFormTableUp4 = new TWEEN.Tween({
@@ -545,7 +542,6 @@ export function robots(scene) {
       helperRobot.phaseTwo.rotation.z = THREE.MathUtils.degToRad(45);
       helperRobot.phaseThree.rotation.z = THREE.MathUtils.degToRad(-45);
       helperRobot.phaseFour.rotation.z = THREE.MathUtils.degToRad(0);
-      // helperRobot.phaseOne.attach(element)
     });
 
   const tweenR2GetFormTableUp5 = new TWEEN.Tween({
@@ -571,7 +567,6 @@ export function robots(scene) {
       helperRobot.phaseTwo.rotation.z = THREE.MathUtils.degToRad(45);
       helperRobot.phaseThree.rotation.z = THREE.MathUtils.degToRad(-45);
       helperRobot.phaseFour.rotation.z = THREE.MathUtils.degToRad(0);
-      // helperRobot.phaseOne.attach(element)
     });
 
   const tweenR2GetFormTableUp6 = new TWEEN.Tween({
@@ -597,7 +592,6 @@ export function robots(scene) {
       helperRobot.phaseTwo.rotation.z = THREE.MathUtils.degToRad(45);
       helperRobot.phaseThree.rotation.z = THREE.MathUtils.degToRad(-45);
       helperRobot.phaseFour.rotation.z = THREE.MathUtils.degToRad(0);
-      // helperRobot.phaseOne.attach(element)
     });
 
   const tweenR1Up = new TWEEN.Tween({
@@ -800,7 +794,6 @@ export function robots(scene) {
   tweenR1GetToMainTable1.chain(tweenR1GetToMainTable2);
   tweenR1GetToMainTable2.chain(tweenR1GetToMainTable3);
   tweenR1GetToMainTable3.chain(tweenR2GetFormStart);
-  // tweenR2GetFormStart.delay(4500).start();
   tweenR2GetFormStart.chain(tweenR2GetFormTableDown);
   tweenR2GetFormTableDown.chain(tweenR2GetFormTableUp);
   tweenR2GetFormTableUp.chain(tweenR2GetToR1);

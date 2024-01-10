@@ -25,12 +25,14 @@ export function box(
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
         texture.repeat.set(repeatX, repeatY);
+        texture.minFilter = THREE.LinearMipMapLinearFilter;
         boxMaterial.map = texture;
         boxMaterial.needsUpdate = true;
       },
       undefined
     );
   }
+  
   scene.add(boxMesh);
   return boxMesh;
 }
