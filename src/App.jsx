@@ -5,23 +5,17 @@ import { GUI } from "dat.gui";
 import { renderScene } from "./renderScene";
 import Stats from "three/examples/jsm/libs/stats.module";
 import { robots } from "./robots";
+import { gsap } from "gsap";
 
 function App() {
   const canvasRef = useRef();
 
   useEffect(() => {
-    let scene,
-      camera,
-      renderer,
-      clock,
-      stats,
-      controls,
-      ambientLight,
-      uniforms;
+    let renderer, stats, controls, ambientLight;
 
     // Scene initialization
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(
+    let scene = new THREE.Scene();
+    let camera = new THREE.PerspectiveCamera(
       70,
       window.innerWidth / window.innerHeight,
       1,
@@ -43,7 +37,6 @@ function App() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    clock = new THREE.Clock();
     controls = new OrbitControls(camera, renderer.domElement);
 
     // Ambient Light
@@ -63,8 +56,45 @@ function App() {
     stats = new Stats();
     document.body.appendChild(stats.dom);
 
+    const tl = gsap.timeline();
     // Event Listener
     window.addEventListener("resize", onWindowResize, false);
+    window.addEventListener("mousedown", () => {
+      tl.to(camera.position, {
+        x: 150,
+        z: 150,
+        duration: 1.5,
+        onUpdate: function () {
+          camera.lookAt(200, 50, 0);
+        },
+      });
+      tl.to(camera.lookAt, {
+        z: Math.PI, // Obrót o 180 stopni wokół osi Y
+        x: Math.PI,
+        duration: 1.5,
+      });
+      // .to(camera.position, {
+      //   x: -150,
+      //   duration: 3.5,
+      //   onUpdate: function () {
+      //     camera.lookAt(0, 0, 0);
+      //   },
+      // })
+      // .to(camera.position, {
+      //   x: -150,
+      //   duration: 2.5,
+      //   onUpdate: function () {
+      //     camera.lookAt(0, 0, 0);
+      //   },
+      // })
+      // .to(camera.position, {
+      //   z: -150,
+      //   duration: 1.5,
+      //   onUpdate: function () {
+      //     camera.lookAt(0, 0, 0);
+      //   },
+      // });
+    });
 
     // Animation
     animate();
@@ -79,6 +109,7 @@ function App() {
       render();
       stats.update();
       controls.update();
+      // gsap.updateRoot()
     }
 
     function render() {
