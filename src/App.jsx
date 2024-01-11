@@ -1,37 +1,100 @@
-import { useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
-import SceneInit from "./lib/SceneInit";
-import { renderScene } from "./renderScene";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GUI } from "dat.gui";
+import { renderScene } from "./renderScene";
+import Stats from "three/examples/jsm/libs/stats.module";
 import { robots } from "./robots";
 
-
 function App() {
-  
+  const canvasRef = useRef();
+
   useEffect(() => {
+    let scene,
+      camera,
+      renderer,
+      clock,
+      stats,
+      controls,
+      ambientLight,
+      uniforms;
+
+    // Scene initialization
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(
+      70,
+      window.innerWidth / window.innerHeight,
+      1,
+      1000
+    );
+    camera.position.z = 200;
+    camera.position.y = 100;
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+    renderer = new THREE.WebGLRenderer({
+      canvas: canvasRef.current,
+      antialias: true,
+      alpha: true,
+      premultipliedAlpha: false,
+      preserveDrawingBuffer: true,
+    });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    clock = new THREE.Clock();
+    controls = new OrbitControls(camera, renderer.domElement);
+
+    // Ambient Light
+    ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+
+    // GUI
     const gui = new GUI();
-    const project = new SceneInit("canvas");
-    project.initialize();
-    project.animate();
-
-    const al = new THREE.AmbientLight(0xffffff, 0.3);
-    project.scene.add(al);
-
     const alFolder = gui.addFolder("Ambient Light");
-    alFolder.add(al, "intensity", 0, 1, 0.1);
+    alFolder.add(ambientLight, "intensity", 0, 1, 0.1);
 
-    renderScene(project.scene, gui);
-    robots(project.scene);
+    // Render Scene
+    renderScene(scene, gui);
+    robots(scene);
+
+    // Stats
+    stats = new Stats();
+    document.body.appendChild(stats.dom);
+
+    // Event Listener
+    window.addEventListener("resize", onWindowResize, false);
+
+    // Animation
+    animate();
 
     return () => {
-      project.scene.children = [];
+      scene.children = [];
       gui.destroy();
     };
-  }, []);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      render();
+      stats.update();
+      controls.update();
+    }
+
+    function render() {
+      renderer.render(scene, camera);
+    }
+
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+  }, [canvasRef]);
 
   return (
     <div className="">
-      <canvas id="canvas" />
+      <canvas ref={canvasRef} />
     </div>
   );
 }

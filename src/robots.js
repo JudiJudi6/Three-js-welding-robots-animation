@@ -8,8 +8,6 @@ import { box } from "./meshes/Box";
 
 export function robots(scene) {
   let particlesPosition = new THREE.Vector3(0, -40, 0);
-  let weldFlag1;
-  let weldFlag2;
   const element = box(scene, 25, 10, 25, "metal.jpg");
   element.position.y = 32;
   element.position.x = 320;
@@ -655,7 +653,6 @@ export function robots(scene) {
       weldingRobot2.phaseTwo.rotation.z = THREE.MathUtils.degToRad(110);
       weldingRobot2.phaseThree.rotation.z = THREE.MathUtils.degToRad(-75);
       weldingRobot2.phaseFour.rotation.z = THREE.MathUtils.degToRad(-125);
-      weldFlag1 = true;
 
       particlesPosition = new THREE.Vector3(3, 35, -60);
       setTimeout(() => {
@@ -753,7 +750,6 @@ export function robots(scene) {
       weldingRobot1.phaseTwo.rotation.z = THREE.MathUtils.degToRad(110);
       weldingRobot1.phaseThree.rotation.z = THREE.MathUtils.degToRad(-75);
       weldingRobot1.phaseFour.rotation.z = THREE.MathUtils.degToRad(-125);
-      weldFlag1 = true;
 
       particlesPosition = new THREE.Vector3(-3, 35, 60);
       setTimeout(() => {
