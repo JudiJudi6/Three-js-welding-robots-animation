@@ -43,38 +43,38 @@ export function renderScene(scene, gui) {
   metalFrame(scene, 395);
   metalFrame(scene, -395);
 
-  lamp(scene, 203, 205, 105, 30);
   const l1 = light(scene, 203, 120, 190, -1);
+  lamp(scene, 203, 205, 105, 30, l1);
   const l1Folder = gui.addFolder("Lamp 1");
   l1Folder.add(l1, "visible");
   l1Folder.add(l1, "intensity", 5000, 50000, 1000);
 
-  lamp(scene, 3, 205, 105, 30);
   const l2 = light(scene, 3, 120, 190, -1);
+  lamp(scene, 3, 205, 105, 30, l2);
   const l2Folder = gui.addFolder("Lamp 2");
   l2Folder.add(l2, "visible");
   l2Folder.add(l2, "intensity", 5000, 50000, 1000);
 
-  lamp(scene, -203, 205, 105, 30);
   const l3 = light(scene, -203, 120, 190, -1);
+  lamp(scene, -203, 205, 105, 30, l3);
   const l3Folder = gui.addFolder("Lamp 3");
   l3Folder.add(l3, "visible");
   l3Folder.add(l3, "intensity", 5000, 50000, 1000);
 
-  lamp(scene, -203, 205, -105, -30);
   const l4 = light(scene, -203, 120, -190, 1);
+  lamp(scene, -203, 205, -105, -30, l4);
   const l4Folder = gui.addFolder("Lamp 4");
   l4Folder.add(l4, "visible");
   l4Folder.add(l4, "intensity", 5000, 50000, 1000);
 
-  lamp(scene, 3, 205, -105, -30);
   const l5 = light(scene, 3, 120, -190, 1);
+  lamp(scene, 3, 205, -105, -30, l5);
   const l5Folder = gui.addFolder("Lamp 5");
   l5Folder.add(l5, "visible");
   l5Folder.add(l5, "intensity", 5000, 50000, 1000);
 
-  lamp(scene, 203, 205, -105, -30);
   const l6 = light(scene, 203, 120, -190, 1);
+  lamp(scene, 203, 205, -105, -30, l6);
   const l6Folder = gui.addFolder("Lamp 6");
   l6Folder.add(l6, "visible");
   l6Folder.add(l6, "intensity", 5000, 50000, 1000);
@@ -85,4 +85,33 @@ export function renderScene(scene, gui) {
   const block2 = box(scene, 100, 25, 100);
   block2.position.y = 12.5;
   block2.position.x = 350;
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "1") {
+      l1.visible = !l1.visible;
+      lamp(scene, 203, 205, 105, 30, l1);
+    }
+    if (e.key === "2") {
+      l2.visible = !l2.visible;
+      lamp(scene, 3, 205, 105, 30, l2);
+    }
+    if (e.key === "3") {
+      l3.visible = !l3.visible;
+      lamp(scene, -203, 205, 105, 30, l3);
+    }
+    if (e.key === "4") {
+      l4.visible = !l4.visible;
+      lamp(scene, -203, 205, -105, -30, l4);
+    }
+    if (e.key === "5") {
+      l5.visible = !l5.visible;
+      lamp(scene, 3, 205, -105, -30, l5);
+    }
+    if (e.key === "6") {
+      l6.visible = !l6.visible;
+      lamp(scene, 203, 205, -105, -30, l6);
+    }
+
+    gui.updateDisplay();
+  });
 }

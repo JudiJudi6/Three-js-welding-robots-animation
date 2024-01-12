@@ -95,6 +95,14 @@ function App() {
       //   },
       // });
     });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "+") {
+        if (ambientLight.intensity < 0.7) ambientLight.intensity += 0.1;
+      }
+      if (e.key === "-") {
+        if (ambientLight.intensity > 0.3) ambientLight.intensity -= 0.1;
+      }
+    });
 
     // Animation
     animate();
