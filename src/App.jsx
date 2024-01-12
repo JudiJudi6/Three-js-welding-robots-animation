@@ -12,6 +12,7 @@ function App() {
 
   useEffect(() => {
     let renderer, stats, controls, ambientLight;
+    let lookAtVector = new THREE.Vector3(400, 50, 0);
 
     // Scene initialization
     let scene = new THREE.Scene();
@@ -38,6 +39,8 @@ function App() {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     controls = new OrbitControls(camera, renderer.domElement);
+    controls.autoRotate = true
+    controls.enabled = false
 
     // Ambient Light
     ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -57,22 +60,94 @@ function App() {
     document.body.appendChild(stats.dom);
 
     const tl = gsap.timeline();
+    let counter = 0;
     // Event Listener
     window.addEventListener("resize", onWindowResize, false);
     window.addEventListener("mousedown", () => {
-      tl.to(camera.position, {
-        x: 150,
-        z: 150,
-        duration: 1.5,
-        onUpdate: function () {
-          camera.lookAt(200, 50, 0);
-        },
+      counter += 1;
+      // tl.to(camera.position, {
+      //   x: 150,
+      //   z: 150,
+      //   duration: 1.5,
+      //   onUpdate: function () {
+      //     camera.lookAt(200, 50, 0);
+      //   },
+      // });
+      // tl.to(camera.lookAt, {
+      //   z: Math.PI, // Obrót o 180 stopni wokół osi Y
+      //   x: Math.PI,
+      //   duration: 1.5,
+      // });
+      gsap.to(camera.position, {
+        duration: 2, // Czas trwania animacji w sekundach
+        x: 200, // Nowa pozycja X kamery
+        y: 100, // Nowa pozycja Y kamery
+        z: 0, // Nowa pozycja Z kamery
+        ease: "power1.inOut", // Funkcja łagodzenia animacji (opcjonalna)
       });
-      tl.to(camera.lookAt, {
-        z: Math.PI, // Obrót o 180 stopni wokół osi Y
-        x: Math.PI,
-        duration: 1.5,
-      });
+
+      // if (counter === 2) {
+      //   gsap.to(camera.position, {
+      //     duration: 2, // Czas trwania animacji w sekundach
+      //     x: 300, // Nowa pozycja X kamery
+      //     y: 100, // Nowa pozycja Y kamery
+      //     z: 0, // Nowa pozycja Z kamery
+      //     ease: "power1.inOut", // Funkcja łagodzenia animacji (opcjonalna)
+      //   });
+      // }
+
+      // if (counter === 3) {
+      //   gsap.to(camera.rotation, {
+      //     duration: 2,
+      //     y: THREE.MathUtils.degToRad(90),
+      //     ease: "power1.inOut",
+      //     onUpdate: () => {
+      //       // camera.lookAt(new THREE.Vector3(0, 0, 0));
+      //       camera.lookAt(lookAtVector);
+      //     },
+      //   });
+      if (counter === 2) {
+        gsap.to(scene.position, {
+          duration: 3,
+          x: 400,
+          ease: "power1.inOut",
+          onUpdate: () => {
+            // camera.lookAt(new THREE.Vector3(0, 0, 0));
+            // counter += 1;
+            // camera.lookAt(lookAtVector);
+            // console.log(counter);
+          },
+        });
+      }
+
+      if (counter === 3) {
+        gsap.to(camera.position, {
+          duration: 2, // Czas trwania animacji w sekundach// Nowa pozycja Y kamery
+          z: 200, // Nowa pozycja Z kamery
+          ease: "power1.inOut", // Funkcja łagodzenia animacji (opcjonalna)
+          onUpdate: () => {
+            camera.lookAt(lookAtVector);
+          },
+          onComplete: () =>{
+            counter = 0
+          }
+        });
+
+      }
+
+      // Animacja kamery wokół okręgu za pomocą GSAP
+      // gsap.to(
+      //   {},
+      //   {
+      //     duration: 1, // Czas trwania animacji w sekundach
+      //     repeat: -1, // Powtarzaj nieskończoność razy
+      //     onUpdate: (progress) => {
+      //       const theta = progress * Math.PI * 2; // 2 * PI odpowiada pełnemu obrotowi
+      //       updateCameraPosition(theta);
+      //       renderer.render(scene, camera);
+      //     },
+      //   }
+      // );
       // .to(camera.position, {
       //   x: -150,
       //   duration: 3.5,
@@ -117,6 +192,7 @@ function App() {
       render();
       stats.update();
       controls.update();
+      // console.log(camera.lookAt)
       // gsap.updateRoot()
     }
 
