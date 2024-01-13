@@ -5,6 +5,9 @@ import { light } from "./light";
 import { lamp } from "./meshes/Lamp";
 
 export function renderScene(scene, gui) {
+  let isPressed = false;
+  let currentNumberKey = null;
+
   const groundMesh = box(scene, 800, 1, 400, "floor.jpg", 10, 5);
 
   const wallMeshOne = box(scene, 800, 150, 1, "wall.jpg", 2, 1);
@@ -87,31 +90,101 @@ export function renderScene(scene, gui) {
   block2.position.x = 350;
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "1") {
-      l1.visible = !l1.visible;
-      lamp(scene, 203, 205, 105, 30, l1);
+    if (isPressed) {
+      return;
     }
-    if (e.key === "2") {
-      l2.visible = !l2.visible;
-      lamp(scene, 3, 205, 105, 30, l2);
+
+    isPressed = true;
+
+    if (e.key >= "1" && e.key <= "6") {
+      currentNumberKey = e.key;
+
+      switch (currentNumberKey) {
+        case "1":
+          toggleLamp(l1);
+          lamp(scene, 203, 205, 105, 30, l1);
+          break;
+        case "2":
+          toggleLamp(l2);
+          lamp(scene, 3, 205, 105, 30, l2);
+          break;
+        case "3":
+          toggleLamp(l3);
+          lamp(scene, -203, 205, 105, 30, l3);
+          break;
+        case "4":
+          toggleLamp(l4);
+          lamp(scene, -203, 205, -105, -30, l4);
+          break;
+        case "5":
+          toggleLamp(l5);
+          lamp(scene, 3, 205, -105, -30, l5);
+          break;
+        case "6":
+          toggleLamp(l6);
+          lamp(scene, 203, 205, -105, -30, l6);
+          break;
+      }
     }
-    if (e.key === "3") {
-      l3.visible = !l3.visible;
-      lamp(scene, -203, 205, 105, 30, l3);
+
+    if (currentNumberKey && e.key === "+") {
+      switch (currentNumberKey) {
+        case "1":
+          if (l1.intensity < 70000) l1.intensity += 5000;
+          break;
+        case "2":
+          if (l2.intensity < 70000) l2.intensity += 5000;
+          break;
+        case "3":
+          if (l3.intensity < 70000) l3.intensity += 5000;
+          break;
+        case "4":
+          if (l4.intensity < 70000) l4.intensity += 5000;
+          break;
+        case "5":
+          if (l5.intensity < 70000) l5.intensity += 5000;
+          break;
+        case "6":
+          if (l6.intensity < 70000) l6.intensity += 5000;
+          break;
+      }
     }
-    if (e.key === "4") {
-      l4.visible = !l4.visible;
-      lamp(scene, -203, 205, -105, -30, l4);
-    }
-    if (e.key === "5") {
-      l5.visible = !l5.visible;
-      lamp(scene, 3, 205, -105, -30, l5);
-    }
-    if (e.key === "6") {
-      l6.visible = !l6.visible;
-      lamp(scene, 203, 205, -105, -30, l6);
+
+    if (currentNumberKey && e.key === "-") {
+      switch (currentNumberKey) {
+        case "1":
+          if (l1.intensity > 5000) l1.intensity -= 5000;
+          break;
+        case "2":
+          if (l2.intensity > 5000) l2.intensity -= 5000;
+          break;
+        case "3":
+          if (l3.intensity > 5000) l3.intensity -= 5000;
+          break;
+        case "4":
+          if (l4.intensity > 5000) l4.intensity -= 5000;
+          break;
+        case "5":
+          if (l5.intensity > 5000) l5.intensity -= 5000;
+          break;
+        case "6":
+          if (l6.intensity > 5000) l6.intensity -= 5000;
+          break;
+      }
     }
 
     gui.updateDisplay();
   });
+
+  document.addEventListener("keyup", (e) => {
+    isPressed = false;
+
+    if (e.key >= "1" && e.key <= "6") {
+      currentNumberKey = null;
+    }
+  });
+
+  function toggleLamp(lamp) {
+    lamp.visible = !lamp.visible;
+  }
 }
