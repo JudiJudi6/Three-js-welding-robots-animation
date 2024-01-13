@@ -12,7 +12,6 @@ function App() {
 
   useEffect(() => {
     let renderer, stats, controls, ambientLight;
-    let lookAtVector = new THREE.Vector3(400, 50, 0);
 
     // Scene initialization
     let scene = new THREE.Scene();
@@ -39,8 +38,13 @@ function App() {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     controls = new OrbitControls(camera, renderer.domElement);
-    controls.autoRotate = true
-    controls.enabled = false
+    controls.autoRotateSpeed = -0.5;
+    controls.enableDamping = true
+    controls.dampingFactor = 0.12
+    controls.enableZoom = true
+
+    // controls.autoRotate = true;
+    // controls.enabled = false;
 
     // Ambient Light
     ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -48,23 +52,32 @@ function App() {
 
     // GUI
     const gui = new GUI();
+    gui.closed = true
     const alFolder = gui.addFolder("Ambient Light");
     alFolder.add(ambientLight, "intensity", 0, 1, 0.1);
 
     // Render Scene
     renderScene(scene, gui);
-    robots(scene);
+    robots(scene, camera, controls);
 
     // Stats
     stats = new Stats();
     document.body.appendChild(stats.dom);
 
-    const tl = gsap.timeline();
-    let counter = 0;
-    // Event Listener
     window.addEventListener("resize", onWindowResize, false);
-    window.addEventListener("mousedown", () => {
-      counter += 1;
+    // window.addEventListener("mouseup", (e) => {
+    //   if (e.button === 0) {
+    //     counter += 1
+    //     console.log(counter)
+    //     console.log("Kliknięcie lewym przyciskiem myszy");
+    //   }
+
+    //   if (e.button === 2) {
+    //     counter += 1
+    //     console.log(counter)
+    //     console.log("Kliknięcie prawym przyciskiem myszy");
+    //   }
+      // counter += 1;
       // tl.to(camera.position, {
       //   x: 150,
       //   z: 150,
@@ -78,13 +91,13 @@ function App() {
       //   x: Math.PI,
       //   duration: 1.5,
       // });
-      gsap.to(camera.position, {
-        duration: 2, // Czas trwania animacji w sekundach
-        x: 200, // Nowa pozycja X kamery
-        y: 100, // Nowa pozycja Y kamery
-        z: 0, // Nowa pozycja Z kamery
-        ease: "power1.inOut", // Funkcja łagodzenia animacji (opcjonalna)
-      });
+      // gsap.to(camera.position, {
+      //   duration: 2, // Czas trwania animacji w sekundach
+      //   x: 200, // Nowa pozycja X kamery
+      //   y: 100, // Nowa pozycja Y kamery
+      //   z: 0, // Nowa pozycja Z kamery
+      //   ease: "power1.inOut", // Funkcja łagodzenia animacji (opcjonalna)
+      // });
 
       // if (counter === 2) {
       //   gsap.to(camera.position, {
@@ -106,34 +119,25 @@ function App() {
       //       camera.lookAt(lookAtVector);
       //     },
       //   });
-      if (counter === 2) {
-        gsap.to(scene.position, {
-          duration: 3,
-          x: 400,
-          ease: "power1.inOut",
-          onUpdate: () => {
-            // camera.lookAt(new THREE.Vector3(0, 0, 0));
-            // counter += 1;
-            // camera.lookAt(lookAtVector);
-            // console.log(counter);
-          },
-        });
-      }
+      // if (counter === 2) {
+      //   gsap.to(controls.target, {
+      //     duration: 3,
+      //     x: 400,
+      //     ease: "power1.inOut",
+      //     onUpdate: () => {
+      //       // camera.lookAt(new THREE.Vector3(0, 0, 0));
+      //       // counter += 1;
+      //       // camera.lookAt(lookAtVector);
+      //       // console.log(counter);
+      //     },
+      //   });
+      // }
 
-      if (counter === 3) {
-        gsap.to(camera.position, {
-          duration: 2, // Czas trwania animacji w sekundach// Nowa pozycja Y kamery
-          z: 200, // Nowa pozycja Z kamery
-          ease: "power1.inOut", // Funkcja łagodzenia animacji (opcjonalna)
-          onUpdate: () => {
-            camera.lookAt(lookAtVector);
-          },
-          onComplete: () =>{
-            counter = 0
-          }
-        });
+      // if (counter === 4) {
+      //   camera.lookAt(new THREE.Vector3(300, 300, 300));
+      // }
 
-      }
+
 
       // Animacja kamery wokół okręgu za pomocą GSAP
       // gsap.to(
@@ -169,12 +173,12 @@ function App() {
       //     camera.lookAt(0, 0, 0);
       //   },
       // });
-    });
+    // });
     document.addEventListener("keydown", (e) => {
-      if (e.key === "+") {
+      if (e.key === "ArrowUp") {
         if (ambientLight.intensity < 0.7) ambientLight.intensity += 0.1;
       }
-      if (e.key === "-") {
+      if (e.key === "ArrowDown") {
         if (ambientLight.intensity > 0.3) ambientLight.intensity -= 0.1;
       }
     });
