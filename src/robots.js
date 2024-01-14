@@ -169,7 +169,6 @@ export function robots(scene, camera, controls) {
     }
 
     if (counter === 4) {
-      console.log("dupa");
       tla
         .to(helperRobot.phaseOne.rotation, {
           duration: 2,
@@ -241,7 +240,7 @@ export function robots(scene, camera, controls) {
           duration: 2,
           z: -60,
           x: 0,
-          y: 50,
+          y: 40,
           ease: "power1.inOut",
         })
         .to(
@@ -502,6 +501,112 @@ export function robots(scene, camera, controls) {
             ease: "power1.inOut",
           },
           "-=3"
+        );
+    }
+
+    if (counter === 8) {
+      tla.clear();
+
+      tla
+        .to(helperRobot.phaseTwo.rotation, {
+          duration: 1.5,
+          z: THREE.MathUtils.degToRad(15),
+          ease: "power1.inOut",
+        })
+        .to(
+          helperRobot.phaseThree.rotation,
+          {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(-25),
+            ease: "power1.inOut",
+          },
+          "-=1.5"
+        )
+        .to(
+          helperRobot.phaseFour.rotation,
+          {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(10),
+            ease: "power1.inOut",
+            onComplete: () => {
+              table.attach(element);
+            },
+          },
+          "-=1.5"
+        )
+        .to(helperRobot.phaseTwo.rotation, {
+          duration: 1.5,
+          z: THREE.MathUtils.degToRad(45),
+          ease: "power1.inOut",
+        })
+        .to(
+          helperRobot.phaseThree.rotation,
+          {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(-45),
+            ease: "power1.inOut",
+          },
+          "-=1.5"
+        )
+        .to(
+          helperRobot.phaseFour.rotation,
+          {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(0),
+            ease: "power1.inOut",
+          },
+          "-=1.5"
+        )
+        .to(helperRobot.phaseOne.rotation, {
+          duration: 1.5,
+          y: THREE.MathUtils.degToRad(180),
+          ease: "power1.inOut",
+        })
+        .to(
+          weldingRobot1.phaseThree.rotation,
+          {
+            duration: 2,
+            z: THREE.MathUtils.degToRad(-50),
+            ease: "power1.inOut",
+          },
+          "-=1"
+        )
+        .to(weldingRobot1.phaseOne.rotation, {
+          duration: 2.5,
+          y: THREE.MathUtils.degToRad(0),
+          ease: "power1.inOut",
+        })
+        .to(
+          weldingRobot1.phaseTwo.rotation,
+          {
+            duration: 2.5,
+            z: THREE.MathUtils.degToRad(110),
+            ease: "power1.inOut",
+          },
+          "-=2.5"
+        )
+        .to(
+          weldingRobot1.phaseThree.rotation,
+          {
+            duration: 2.5,
+            z: THREE.MathUtils.degToRad(-75),
+            ease: "power1.inOut",
+          },
+          "-=2.5"
+        )
+        .to(
+          weldingRobot1.phaseFour.rotation,
+          {
+            duration: 2.5,
+            z: THREE.MathUtils.degToRad(-125),
+            ease: "power1.inOut",
+            onComplete: () => {
+              particlesPosition = new THREE.Vector3(-3, 35, 60);
+              controls.autoRotate = true;
+              controls.autoRotateSpeed = -0.3;
+            },
+          },
+          "-=2.5"
         );
     }
 
@@ -796,6 +901,7 @@ export function robots(scene, camera, controls) {
             ease: "power1.inOut",
             onStart: () => {
               particlesPosition = new THREE.Vector3(0, -40, 0);
+              controls.autoRotate = false;
             },
           })
           .to(weldingRobot2.phaseOne.rotation, {
@@ -835,6 +941,243 @@ export function robots(scene, camera, controls) {
             y: THREE.MathUtils.degToRad(90),
             ease: "power1.inOut",
           });
+      }
+
+      if (counter === 6) {
+        tla.clear();
+
+        tla
+          .to(controls.target, {
+            duration: 3,
+            x: 0,
+            y: 40,
+            z: -60,
+            ease: "power1.inOut",
+          })
+          .to(
+            camera.position,
+            {
+              duration: 3,
+              x: 100,
+              z: -60,
+              y: 75,
+              ease: "power1.inOut",
+            },
+            "-=3"
+          )
+          .to(
+            helperRobot.phaseOne.rotation,
+            {
+              duration: 3,
+              y: THREE.MathUtils.degToRad(90),
+              ease: "power1.inOut",
+              onComplete: () => {
+                controls.autoRotate = true;
+              },
+            },
+            "-=3"
+          )
+          .to(helperRobot.phaseTwo.rotation, {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(15),
+            ease: "power1.inOut",
+          })
+          .to(
+            helperRobot.phaseThree.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(-25),
+              ease: "power1.inOut",
+              onComplete: () => {
+                table.attach(element);
+              },
+            },
+            "-=1.5"
+          )
+          .to(
+            helperRobot.phaseFour.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(10),
+              ease: "power1.inOut",
+            },
+            "-=1.5"
+          )
+          .to(helperRobot.phaseTwo.rotation, {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(45),
+            ease: "power1.inOut",
+          })
+          .to(
+            helperRobot.phaseThree.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(-45),
+              ease: "power1.inOut",
+            },
+            "-=1.5"
+          )
+          .to(
+            helperRobot.phaseFour.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(0),
+              ease: "power1.inOut",
+            },
+            "-=1.5"
+          )
+          .to(helperRobot.phaseOne.rotation, {
+            duration: 2,
+            y: THREE.MathUtils.degToRad(180),
+            ease: "power1.inOut",
+          })
+          .to(
+            weldingRobot2.phaseThree.rotation,
+            {
+              duration: 2,
+              z: THREE.MathUtils.degToRad(-50),
+              ease: "power1.inOut",
+            },
+            "-=1"
+          )
+          .to(weldingRobot2.phaseOne.rotation, {
+            duration: 2.5,
+            y: THREE.MathUtils.degToRad(0),
+            ease: "power1.inOut",
+          })
+          .to(
+            weldingRobot2.phaseTwo.rotation,
+            {
+              duration: 2.5,
+              z: THREE.MathUtils.degToRad(110),
+              ease: "power1.inOut",
+            },
+            "-=2.5"
+          )
+          .to(
+            weldingRobot2.phaseThree.rotation,
+            {
+              duration: 2.5,
+              z: THREE.MathUtils.degToRad(-75),
+              ease: "power1.inOut",
+            },
+            "-=2.5"
+          )
+          .to(
+            weldingRobot2.phaseFour.rotation,
+            {
+              duration: 2.5,
+              z: THREE.MathUtils.degToRad(-125),
+              ease: "power1.inOut",
+              onComplete: () => {
+                particlesPosition = new THREE.Vector3(3, 35, -60);
+                controls.autoRotate = true;
+                controls.autoRotateSpeed = -0.3;
+              },
+            },
+            "-=2.5"
+          );
+      }
+
+      if (counter === 7) {
+        tla.clear();
+
+        tla
+          .to(weldingRobot1.phaseThree.rotation, {
+            duration: 2,
+            z: THREE.MathUtils.degToRad(-50),
+            ease: "power1.inOut",
+            onStart: () => {
+              particlesPosition = new THREE.Vector3(0, -40, 0);
+              controls.autoRotate = false;
+            },
+          })
+          .to(weldingRobot1.phaseOne.rotation, {
+            duration: 2.5,
+            y: THREE.MathUtils.degToRad(90),
+            ease: "power1.inOut",
+          })
+          .to(
+            weldingRobot1.phaseFour.rotation,
+            {
+              duration: 2.5,
+              z: THREE.MathUtils.degToRad(-90),
+              ease: "power1.inOut",
+            },
+            "-=2"
+          )
+          .to(
+            weldingRobot1.phaseThree.rotation,
+            {
+              duration: 2.5,
+              z: THREE.MathUtils.degToRad(-135),
+              ease: "power1.inOut",
+            },
+            "-=2"
+          )
+          .to(
+            weldingRobot1.phaseTwo.rotation,
+            {
+              duration: 2.5,
+              z: THREE.MathUtils.degToRad(135),
+              ease: "power1.inOut",
+            },
+            "-=2"
+          )
+          .to(helperRobot.phaseOne.rotation, {
+            duration: 2,
+            y: THREE.MathUtils.degToRad(-90),
+            ease: "power1.inOut",
+          })
+          .to(helperRobot.phaseTwo.rotation, {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(15),
+            ease: "power1.inOut",
+          })
+          .to(
+            helperRobot.phaseThree.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(-25),
+              ease: "power1.inOut",
+            },
+            "-=1.5"
+          )
+          .to(
+            helperRobot.phaseFour.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(10),
+              ease: "power1.inOut",
+              onComplete: () => {
+                helperRobot.phaseFour.attach(element);
+              },
+            },
+            "-=1.5"
+          )
+          .to(helperRobot.phaseTwo.rotation, {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(45),
+            ease: "power1.inOut",
+          })
+          .to(
+            helperRobot.phaseThree.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(-45),
+              ease: "power1.inOut",
+            },
+            "-=1.5"
+          )
+          .to(
+            helperRobot.phaseFour.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(0),
+              ease: "power1.inOut",
+            },
+            "-=1.5"
+          );
       }
     }
   });
@@ -1485,6 +1828,45 @@ export function robots(scene, camera, controls) {
   // tweenR1GetToBack1.chain(tweenR1GetBack2);
   // tweenR1GetBack2.chain(tweenR1GetBack3);
   // tweenR1GetBack3.chain(tweenR1GetToMainTable1.delay(2000));
+
+  if (counter === 2) {
+    console.log(counter);
+    gsap.to(camera.position, {
+      duration: 2.5,
+      x: 100,
+      y: 50,
+      z: -150,
+      ease: "power1.inOut",
+    });
+    gsap.to(controls.target, {
+      duration: 2.5,
+      x: 100,
+      z: 0,
+      y: 50,
+      ease: "power1.inOut",
+    });
+    gsap.to(ridingRobot.robotObj.position, {
+      duration: 4,
+      x: 105,
+      ease: "power1.inOut",
+      onComplete: () => {
+        ridingRobot.phaseTwo.attach(element);
+      },
+    });
+    gsap.to(ridingRobot.phaseTwo.rotation, {
+      duration: 4,
+      z: THREE.MathUtils.degToRad(180),
+      ease: "power1.inOut",
+    });
+    gsap.to(ridingRobot.wheelsBack.rotation, {
+      duration: 4,
+      z: 200,
+    });
+    gsap.to(ridingRobot.wheelsFront.rotation, {
+      duration: 4,
+      z: 200,
+    });
+  }
 
   scene.onBeforeRender = function () {
     TWEEN.update();
