@@ -711,6 +711,88 @@ export function robots(scene, camera, controls) {
         );
     }
 
+    if (counter === 10) {
+      tla.clear();
+
+      tla
+        .to(controls.target, {
+          duration: 3,
+          x: 50,
+          y: 40,
+          z: 0,
+          ease: "power1.inOut",
+        })
+        .to(
+          camera.position,
+          {
+            duration: 3,
+            x: 120,
+            z: 80,
+            y: 80,
+            ease: "power1.inOut",
+          },
+          "-=3"
+        )
+        .to(
+          helperRobot.phaseOne.rotation,
+          {
+            duration: 1.5,
+            y: THREE.MathUtils.degToRad(0),
+            ease: "power1.inOut",
+          },
+          "-=3"
+        )
+        .to(helperRobot.phaseTwo.rotation, {
+          duration: 1.5,
+          z: THREE.MathUtils.degToRad(15),
+          ease: "power1.inOut",
+        })
+        .to(
+          helperRobot.phaseThree.rotation,
+          {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(-25),
+            ease: "power1.inOut",
+          },
+          "-=1.5"
+        )
+        .to(
+          helperRobot.phaseFour.rotation,
+          {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(10),
+            ease: "power1.inOut",
+            onComplete: () => {
+              table.attach(element);
+            },
+          },
+          "-=1.5"
+        )
+        .to(helperRobot.phaseTwo.rotation, {
+          duration: 1.5,
+          z: THREE.MathUtils.degToRad(45),
+          ease: "power1.inOut",
+        })
+        .to(
+          helperRobot.phaseThree.rotation,
+          {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(-45),
+            ease: "power1.inOut",
+          },
+          "-=1.5"
+        )
+        .to(
+          helperRobot.phaseFour.rotation,
+          {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(0),
+            ease: "power1.inOut",
+          },
+          "-=1.5"
+        );
+    }
+
     //---------------------------------------------------------------------------------------
 
     if (e.key === "ArrowLeft") {
@@ -1283,7 +1365,7 @@ export function robots(scene, camera, controls) {
 
       if (counter === 8) {
         tla.clear();
-  
+
         tla
           .to(helperRobot.phaseTwo.rotation, {
             duration: 1.5,
@@ -1384,6 +1466,92 @@ export function robots(scene, camera, controls) {
               },
             },
             "-=2.5"
+          );
+      }
+
+      if (counter === 9) {
+        tla.clear();
+
+        tla
+          .to(
+            helperRobot.phaseTwo.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(15),
+              ease: "power1.inOut",
+            },
+            "-=3"
+          )
+          .to(
+            helperRobot.phaseThree.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(-25),
+              ease: "power1.inOut",
+            },
+            "-=1.5"
+          )
+          .to(
+            helperRobot.phaseFour.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(10),
+              ease: "power1.inOut",
+              onComplete: () => {
+                helperRobot.phaseFour.attach(element);
+              },
+            },
+            "-=1.5"
+          )
+          .to(helperRobot.phaseTwo.rotation, {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(45),
+            ease: "power1.inOut",
+          })
+          .to(
+            helperRobot.phaseThree.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(-45),
+              ease: "power1.inOut",
+            },
+            "-=1.5"
+          )
+          .to(
+            helperRobot.phaseFour.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(0),
+              ease: "power1.inOut",
+            },
+            "-=1.5"
+          )
+          .to(controls.target, {
+            duration: 3,
+            x: 0,
+            y: 40,
+            z: 60,
+            ease: "power1.inOut",
+          })
+          .to(
+            camera.position,
+            {
+              duration: 3,
+              x: 80,
+              z: 80,
+              y: 80,
+              ease: "power1.inOut",
+            },
+            "-=3"
+          )
+          .to(
+            helperRobot.phaseOne.rotation,
+            {
+              duration: 1.5,
+              y: THREE.MathUtils.degToRad(-90),
+              ease: "power1.inOut",
+            },
+            "-=3"
           );
       }
     }
