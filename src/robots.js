@@ -9,6 +9,7 @@ import gsap from "gsap";
 
 export function robots(scene, camera, controls) {
   let counter = 0;
+  let blockButtonsFlag = false;
   let tla = gsap.timeline();
   let secondTla = gsap.timeline();
 
@@ -35,11 +36,20 @@ export function robots(scene, camera, controls) {
 
   const weldingParticles = addSmoke(scene, particlesPosition);
 
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") {
+  if (blockButtonsFlag) {
+    document.removeEventListener("keydown", animations);
+  } else {
+    document.addEventListener("keydown", animations);
+  }
+
+  function animations(e) {
+    console.log(blockButtonsFlag);
+
+    if (e.key === "ArrowRight" && !blockButtonsFlag) {
       // if(counter )
       counter += 1;
       console.log(counter);
+
       // 1
 
       if (counter === 1) {
@@ -51,6 +61,7 @@ export function robots(scene, camera, controls) {
             z: -150,
             // ease: "power1.in",
             onStart: () => {
+              blockButtonsFlag = true;
               return gsap.to(controls.target, {
                 duration: 3,
                 x: 320,
@@ -65,6 +76,9 @@ export function robots(scene, camera, controls) {
               y: 50,
               z: -150,
               ease: "power1.inOut",
+              onComplete: () => {
+                blockButtonsFlag = false;
+              },
             });
           });
 
@@ -97,6 +111,9 @@ export function robots(scene, camera, controls) {
           x: 100,
           y: 50,
           z: 0,
+          onStart: () => {
+            blockButtonsFlag = true;
+          },
         });
         gsap.to(camera.position, {
           duration: 5,
@@ -104,12 +121,18 @@ export function robots(scene, camera, controls) {
           y: 50,
           z: -150,
           ease: "power1.inOut",
+          onComplete: () => {
+            blockButtonsFlag = false;
+          },
         });
 
         gsap.to(ridingRobot.robotObj.position, {
           duration: 4,
           x: 105,
           ease: "power1.inOut",
+          onStart: () => {
+            ridingRobot.phaseTwo.attach(element);
+          },
           onComplete: () => {
             table.attach(element);
           },
@@ -139,6 +162,12 @@ export function robots(scene, camera, controls) {
           z: 140,
           y: 140,
           ease: "power1.inOut",
+          onStart: () => {
+            blockButtonsFlag = true;
+          },
+          onComplete: () => {
+            blockButtonsFlag = false;
+          },
         });
         gsap.to(controls.target, {
           duration: 2.5,
@@ -169,79 +198,84 @@ export function robots(scene, camera, controls) {
     }
 
     if (counter === 4) {
+      tla.clear();
+
       tla
         .to(helperRobot.phaseOne.rotation, {
           duration: 2,
           y: THREE.MathUtils.degToRad(0),
           ease: "power1.inOut",
+          onStart: () => {
+            blockButtonsFlag = true;
+          },
         })
-        .then(() => {
-          tla
-            .to(helperRobot.phaseTwo.rotation, {
-              duration: 1.5,
-              z: THREE.MathUtils.degToRad(15),
-              ease: "power1.inOut",
-            })
-            .to(
-              helperRobot.phaseThree.rotation,
-              {
-                duration: 1.5,
-                z: THREE.MathUtils.degToRad(-25),
-                ease: "power1.inOut",
-              },
-              "-=1.5"
-            )
-            .to(
-              helperRobot.phaseFour.rotation,
-              {
-                duration: 1.5,
-                z: THREE.MathUtils.degToRad(10),
-                ease: "power1.inOut",
-                onComplete: () => {
-                  helperRobot.phaseFour.attach(element);
-                },
-              },
-              "-=1.5"
-            );
+        .to(helperRobot.phaseTwo.rotation, {
+          duration: 1.5,
+          z: THREE.MathUtils.degToRad(15),
+          ease: "power1.inOut",
         })
-        .then(() => {
-          tla
-            .to(helperRobot.phaseTwo.rotation, {
-              duration: 1.5,
-              z: THREE.MathUtils.degToRad(45),
-              ease: "power1.inOut",
-            })
-            .to(
-              helperRobot.phaseThree.rotation,
-              {
-                duration: 1.5,
-                z: THREE.MathUtils.degToRad(-45),
-                ease: "power1.inOut",
-              },
-              "-=1.5"
-            )
-            .to(
-              helperRobot.phaseFour.rotation,
-              {
-                duration: 1.5,
-                z: THREE.MathUtils.degToRad(0),
-                ease: "power1.inOut",
-              },
-              "-=1.5"
-            );
-        });
+        .to(
+          helperRobot.phaseThree.rotation,
+          {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(-25),
+            ease: "power1.inOut",
+          },
+          "-=1.5"
+        )
+        .to(
+          helperRobot.phaseFour.rotation,
+          {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(10),
+            ease: "power1.inOut",
+            onComplete: () => {
+              helperRobot.phaseFour.attach(element);
+            },
+          },
+          "-=1.5"
+        )
+        .to(helperRobot.phaseTwo.rotation, {
+          duration: 1.5,
+          z: THREE.MathUtils.degToRad(45),
+          ease: "power1.inOut",
+        })
+        .to(
+          helperRobot.phaseThree.rotation,
+          {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(-45),
+            ease: "power1.inOut",
+          },
+          "-=1.5"
+        )
+        .to(
+          helperRobot.phaseFour.rotation,
+          {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(0),
+            ease: "power1.inOut",
+            onComplete: () => {
+              blockButtonsFlag = false;
+            },
+          },
+          "-=1.5"
+        );
     }
 
     if (counter === 5) {
       tla.clear();
 
-      secondTla
+      tla
         .to(controls.target, {
           duration: 2,
           z: -60,
           x: 0,
           y: 40,
           ease: "power1.inOut",
+          onStart: () => {
+            blockButtonsFlag = true;
+          },
         })
         .to(
           camera.position,
@@ -253,9 +287,7 @@ export function robots(scene, camera, controls) {
             ease: "power1.inOut",
           },
           "-=2"
-        );
-
-      tla
+        )
         .to(
           helperRobot.phaseOne.rotation,
           {
@@ -311,6 +343,9 @@ export function robots(scene, camera, controls) {
             duration: 1.5,
             z: THREE.MathUtils.degToRad(0),
             ease: "power1.inOut",
+            onComplete: () => {
+              blockButtonsFlag = false;
+            },
           },
           "-=1.5"
         );
@@ -324,6 +359,9 @@ export function robots(scene, camera, controls) {
           duration: 2,
           y: THREE.MathUtils.degToRad(180),
           ease: "power1.inOut",
+          onStart: () => {
+            blockButtonsFlag = true;
+          },
         })
         .to(
           weldingRobot2.phaseThree.rotation,
@@ -367,6 +405,7 @@ export function robots(scene, camera, controls) {
               particlesPosition = new THREE.Vector3(3, 35, -60);
               controls.autoRotate = true;
               controls.autoRotateSpeed = -0.3;
+              blockButtonsFlag = false;
             },
           },
           "-=2.5"
@@ -384,6 +423,7 @@ export function robots(scene, camera, controls) {
           ease: "power1.inOut",
           onStart: () => {
             particlesPosition = new THREE.Vector3(0, -40, 0);
+            blockButtonsFlag = true;
           },
         })
         .to(weldingRobot2.phaseOne.rotation, {
@@ -499,6 +539,9 @@ export function robots(scene, camera, controls) {
             duration: 3,
             y: THREE.MathUtils.degToRad(-90),
             ease: "power1.inOut",
+            onComplete: () => {
+              blockButtonsFlag = false;
+            },
           },
           "-=3"
         );
@@ -512,6 +555,9 @@ export function robots(scene, camera, controls) {
           duration: 1.5,
           z: THREE.MathUtils.degToRad(15),
           ease: "power1.inOut",
+          onStart: () => {
+            blockButtonsFlag = true;
+          },
         })
         .to(
           helperRobot.phaseThree.rotation,
@@ -604,6 +650,7 @@ export function robots(scene, camera, controls) {
               particlesPosition = new THREE.Vector3(-3, 35, 60);
               controls.autoRotate = true;
               controls.autoRotateSpeed = 0.3;
+              blockButtonsFlag = false;
             },
           },
           "-=2.5"
@@ -620,6 +667,7 @@ export function robots(scene, camera, controls) {
           ease: "power1.inOut",
           onStart: () => {
             particlesPosition = new THREE.Vector3(0, -40, 0);
+            blockButtonsFlag = true;
           },
         })
         .to(weldingRobot1.phaseOne.rotation, {
@@ -708,6 +756,9 @@ export function robots(scene, camera, controls) {
             duration: 1.5,
             z: THREE.MathUtils.degToRad(0),
             ease: "power1.inOut",
+            onComplete: () => {
+              blockButtonsFlag = false;
+            },
           },
           "-=1.5"
         );
@@ -723,6 +774,9 @@ export function robots(scene, camera, controls) {
           y: 40,
           z: 0,
           ease: "power1.inOut",
+          onStart: () => {
+            blockButtonsFlag = true;
+          },
         })
         .to(
           camera.position,
@@ -790,6 +844,9 @@ export function robots(scene, camera, controls) {
             duration: 1.5,
             z: THREE.MathUtils.degToRad(0),
             ease: "power1.inOut",
+            onComplete: () => {
+              blockButtonsFlag = false;
+            },
           },
           "-=1.5"
         );
@@ -803,6 +860,9 @@ export function robots(scene, camera, controls) {
           duration: 1.5,
           y: THREE.MathUtils.degToRad(180),
           ease: "power1.inOut",
+          onStart: () => {
+            blockButtonsFlag = true;
+          },
         })
         .to(camera.position, {
           duration: 2.5,
@@ -856,6 +916,9 @@ export function robots(scene, camera, controls) {
           {
             duration: 3,
             z: 200,
+            onComplete: () => {
+              blockButtonsFlag = false;
+            },
           },
           "-=3"
         );
@@ -870,6 +933,9 @@ export function robots(scene, camera, controls) {
           x: 250,
           y: 50,
           z: -150,
+          onStart: () => {
+            blockButtonsFlag = true;
+          },
         })
         .to(
           controls.target,
@@ -920,6 +986,9 @@ export function robots(scene, camera, controls) {
             duration: 4,
             z: -400,
             ease: "power1.inOut",
+            onComplete: () => {
+              blockButtonsFlag = false;
+            },
           },
           "-=4"
         );
@@ -934,6 +1003,9 @@ export function robots(scene, camera, controls) {
           x: 0,
           y: 50,
           ease: "power1.inOut",
+          onStart: () => {
+            blockButtonsFlag = true;
+          },
         })
         .to(
           camera.position,
@@ -971,6 +1043,9 @@ export function robots(scene, camera, controls) {
           {
             duration: 2,
             z: 0,
+            onComplete: () => {
+              blockButtonsFlag = false;
+            },
           },
           "-=3"
         );
@@ -978,7 +1053,7 @@ export function robots(scene, camera, controls) {
 
     //---------------------------------------------------------------------------------------
 
-    if (e.key === "ArrowLeft") {
+    if (e.key === "ArrowLeft" && !blockButtonsFlag) {
       if (counter > 0) counter -= 1;
       console.log(counter);
 
@@ -990,6 +1065,12 @@ export function robots(scene, camera, controls) {
           x: 0,
           y: 50,
           ease: "power1.inOut",
+          onStart: () => {
+            blockButtonsFlag = true;
+          },
+          onComplete: () => {
+            blockButtonsFlag = false;
+          },
         });
         gsap.to(camera.position, {
           duration: 2,
@@ -1025,11 +1106,15 @@ export function robots(scene, camera, controls) {
           y: 50,
           z: -150,
           onStart: () => {
+            blockButtonsFlag = true;
             return gsap.to(controls.target, {
               duration: 4,
               x: 320,
               y: 50,
               ease: "power1.inOut",
+              onComplete: () => {
+                blockButtonsFlag = false;
+              },
             });
           },
         });
@@ -1072,6 +1157,9 @@ export function robots(scene, camera, controls) {
           y: 50,
           z: -150,
           ease: "power1.inOut",
+          onStart: () => {
+            blockButtonsFlag = true;
+          },
         });
         gsap.to(controls.target, {
           duration: 2.5,
@@ -1086,6 +1174,7 @@ export function robots(scene, camera, controls) {
           ease: "power1.inOut",
           onComplete: () => {
             ridingRobot.phaseTwo.attach(element);
+            blockButtonsFlag = false;
           },
         });
         gsap.to(ridingRobot.phaseTwo.rotation, {
@@ -1114,6 +1203,9 @@ export function robots(scene, camera, controls) {
             duration: 1.5,
             z: THREE.MathUtils.degToRad(15),
             ease: "power1.inOut",
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
           })
           .to(
             helperRobot.phaseThree.rotation,
@@ -1167,6 +1259,9 @@ export function robots(scene, camera, controls) {
               duration: 2,
               y: THREE.MathUtils.degToRad(180),
               ease: "power1.inOut",
+              onComplete: () => {
+                blockButtonsFlag = false;
+              },
             });
           });
       }
@@ -1182,6 +1277,9 @@ export function robots(scene, camera, controls) {
             y: 50,
             z: 0,
             ease: "power1.inOut",
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
           })
           .to(
             camera.position,
@@ -1253,6 +1351,9 @@ export function robots(scene, camera, controls) {
               duration: 2,
               y: THREE.MathUtils.degToRad(0),
               ease: "power1.inOut",
+              onComplete: () => {
+                blockButtonsFlag = false;
+              },
             });
           });
       }
@@ -1268,6 +1369,7 @@ export function robots(scene, camera, controls) {
             onStart: () => {
               particlesPosition = new THREE.Vector3(0, -40, 0);
               controls.autoRotate = false;
+              blockButtonsFlag = true;
             },
           })
           .to(weldingRobot2.phaseOne.rotation, {
@@ -1306,6 +1408,9 @@ export function robots(scene, camera, controls) {
             duration: 2,
             y: THREE.MathUtils.degToRad(90),
             ease: "power1.inOut",
+            onComplete: () => {
+              blockButtonsFlag = false;
+            },
           });
       }
 
@@ -1319,6 +1424,9 @@ export function robots(scene, camera, controls) {
             y: 40,
             z: -60,
             ease: "power1.inOut",
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
           })
           .to(
             camera.position,
@@ -1337,9 +1445,6 @@ export function robots(scene, camera, controls) {
               duration: 3,
               y: THREE.MathUtils.degToRad(90),
               ease: "power1.inOut",
-              onComplete: () => {
-                controls.autoRotate = true;
-              },
             },
             "-=3"
           )
@@ -1439,6 +1544,7 @@ export function robots(scene, camera, controls) {
                 particlesPosition = new THREE.Vector3(3, 35, -60);
                 controls.autoRotate = true;
                 controls.autoRotateSpeed = -0.3;
+                blockButtonsFlag = false;
               },
             },
             "-=2.5"
@@ -1455,7 +1561,7 @@ export function robots(scene, camera, controls) {
             ease: "power1.inOut",
             onStart: () => {
               particlesPosition = new THREE.Vector3(0, -40, 0);
-              controls.autoRotate = false;
+              blockButtonsFlag = true;
             },
           })
           .to(weldingRobot1.phaseOne.rotation, {
@@ -1541,6 +1647,10 @@ export function robots(scene, camera, controls) {
               duration: 1.5,
               z: THREE.MathUtils.degToRad(0),
               ease: "power1.inOut",
+              onComplete: () => {
+                controls.autoRotate = false;
+                blockButtonsFlag = false;
+              },
             },
             "-=1.5"
           );
@@ -1554,6 +1664,9 @@ export function robots(scene, camera, controls) {
             duration: 1.5,
             z: THREE.MathUtils.degToRad(15),
             ease: "power1.inOut",
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
           })
           .to(
             helperRobot.phaseThree.rotation,
@@ -1646,6 +1759,7 @@ export function robots(scene, camera, controls) {
                 particlesPosition = new THREE.Vector3(-3, 35, 60);
                 controls.autoRotate = true;
                 controls.autoRotateSpeed = 0.3;
+                blockButtonsFlag = false;
               },
             },
             "-=2.5"
@@ -1660,6 +1774,9 @@ export function robots(scene, camera, controls) {
             duration: 1.5,
             z: THREE.MathUtils.degToRad(15),
             ease: "power1.inOut",
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
           })
           .to(
             helperRobot.phaseThree.rotation,
@@ -1729,6 +1846,9 @@ export function robots(scene, camera, controls) {
               duration: 1.5,
               y: THREE.MathUtils.degToRad(-90),
               ease: "power1.inOut",
+              onComplete: () => {
+                blockButtonsFlag = false;
+              },
             },
             "-=3"
           );
@@ -1744,6 +1864,7 @@ export function robots(scene, camera, controls) {
             ease: "power1.inOut",
             onStart: () => {
               table.attach(element);
+              blockButtonsFlag = true;
             },
           })
           .to(
@@ -1795,6 +1916,9 @@ export function robots(scene, camera, controls) {
               duration: 1.5,
               y: THREE.MathUtils.degToRad(0),
               ease: "power1.inOut",
+              onComplete: () => {
+                blockButtonsFlag = false;
+              },
             },
             "-=3"
           );
@@ -1810,6 +1934,9 @@ export function robots(scene, camera, controls) {
             y: 80,
             z: -150,
             ease: "power1.inOut",
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
           })
           .to(
             controls.target,
@@ -1861,72 +1988,66 @@ export function robots(scene, camera, controls) {
               duration: 4,
               z: 200,
               ease: "power1.inOut",
+              onComplete: () => {
+                blockButtonsFlag = false;
+              },
             },
             "-=4"
           );
       }
 
       if (counter === 12) {
-        tla.clear();
-
-        tla
-          .to(ridingRobot.robotObj.position, {
-            duration: 2,
-            x: 275,
-            ease: "power1.inOut",
-            delay: 1.3,
-            onComplete: () => {
-              ridingRobot.phaseTwo.attach(element);
-            },
-          })
-          .to(
-            ridingRobot.wheelsBack.rotation,
-            {
-              duration: 2,
-              z: -400,
-              ease: "power1.inOut",
-            },
-            "-=2"
-          )
-          .to(
-            ridingRobot.wheelsFront.rotation,
-            {
-              duration: 2,
-              z: -400,
-              ease: "power1.inOut",
-            },
-            "-=2"
-          )
-          .to(
-            camera.position,
-            {
-              duration: 3,
-              x: 100,
-              y: 50,
-              z: -150,
-            },
-            "-=2"
-          )
-          .to(
-            controls.target,
-            {
-              duration: 3,
-              x: 320,
-              y: 50,
-            },
-            "-=2"
-          )
+        gsap
           .to(camera.position, {
-            duration: 2,
-            x: 250,
+            duration: 3,
+            x: 100,
             y: 50,
             z: -150,
-            ease: "power1.inOut",
+            // ease: "power1.in",
+            onStart: () => {
+              blockButtonsFlag = true;
+              return gsap.to(controls.target, {
+                duration: 3,
+                x: 320,
+                y: 50,
+              });
+            },
+          })
+          .then(() => {
+            return gsap.to(camera.position, {
+              duration: 2,
+              x: 250,
+              y: 50,
+              z: -150,
+              ease: "power1.inOut",
+              onComplete: () => {
+                blockButtonsFlag = false;
+              },
+            });
           });
+
+        gsap.to(ridingRobot.robotObj.position, {
+          duration: 2,
+          x: 275,
+          ease: "power1.inOut",
+          delay: 1.3,
+          onComplete: () => {
+            ridingRobot.phaseTwo.attach(element);
+          },
+        });
+        gsap.to(ridingRobot.wheelsBack.rotation, {
+          duration: 2,
+          z: -400,
+          delay: 1.3,
+        });
+        gsap.to(ridingRobot.wheelsFront.rotation, {
+          duration: 2,
+          z: -400,
+          delay: 1.3,
+        });
       }
     }
-  });
-
+  }
   scene.onBeforeRender = function () {
     TWEEN.update();
     weldingParticles(particlesPosition);
