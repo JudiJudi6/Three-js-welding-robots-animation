@@ -2003,7 +2003,6 @@ export function robots(scene, camera, controls) {
             x: 100,
             y: 50,
             z: -150,
-            // ease: "power1.in",
             onStart: () => {
               blockButtonsFlag = true;
               return gsap.to(controls.target, {
