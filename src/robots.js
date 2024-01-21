@@ -36,1264 +36,181 @@ export function robots(scene, camera, controls) {
 
   const weldingParticles = addSmoke(scene, particlesPosition);
 
-  if (blockButtonsFlag) {
-    document.removeEventListener("keydown", animations);
-  } else {
-    document.addEventListener("keydown", animations);
-  }
+  // if (blockButtonsFlag) {
+  //   document.removeEventListener("keydown", animations);
+  // } else {
+  // }
+
+  document.addEventListener("keydown", animations);
 
   function animations(e) {
     console.log(blockButtonsFlag);
 
-    if (e.key === "ArrowRight" && !blockButtonsFlag) {
-      // if(counter )
-      counter += 1;
-      console.log(counter);
+    if (!blockButtonsFlag) {
+      if (e.key === "ArrowRight") {
+        // if(counter )
+        counter += 1;
+        console.log(counter);
 
-      // 1
+        // 1
 
-      if (counter === 1) {
-        gsap
-          .to(camera.position, {
-            duration: 3,
+        if (counter === 1) {
+          gsap
+            .to(camera.position, {
+              duration: 3,
+              x: 100,
+              y: 50,
+              z: -150,
+              // ease: "power1.in",
+              onStart: () => {
+                blockButtonsFlag = true;
+                return gsap.to(controls.target, {
+                  duration: 3,
+                  x: 320,
+                  y: 50,
+                });
+              },
+            })
+            .then(() => {
+              return gsap.to(camera.position, {
+                duration: 2,
+                x: 250,
+                y: 50,
+                z: -150,
+                ease: "power1.inOut",
+                onComplete: () => {
+                  blockButtonsFlag = false;
+                },
+              });
+            });
+
+          gsap.to(ridingRobot.robotObj.position, {
+            duration: 2,
+            x: 275,
+            ease: "power1.inOut",
+            delay: 1.3,
+            onComplete: () => {
+              ridingRobot.phaseTwo.attach(element);
+            },
+          });
+          gsap.to(ridingRobot.wheelsBack.rotation, {
+            duration: 2,
+            z: -400,
+            delay: 1.3,
+          });
+          gsap.to(ridingRobot.wheelsFront.rotation, {
+            duration: 2,
+            z: -400,
+            delay: 1.3,
+          });
+        }
+
+        // 2
+
+        if (counter === 2) {
+          gsap.to(controls.target, {
+            duration: 4,
+            x: 100,
+            y: 50,
+            z: 0,
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
+          });
+          gsap.to(camera.position, {
+            duration: 5,
             x: 100,
             y: 50,
             z: -150,
-            // ease: "power1.in",
-            onStart: () => {
-              blockButtonsFlag = true;
-              return gsap.to(controls.target, {
-                duration: 3,
-                x: 320,
-                y: 50,
-              });
+            ease: "power1.inOut",
+            onComplete: () => {
+              blockButtonsFlag = false;
             },
-          })
-          .then(() => {
-            return gsap.to(camera.position, {
-              duration: 2,
-              x: 250,
-              y: 50,
-              z: -150,
-              ease: "power1.inOut",
-              onComplete: () => {
-                blockButtonsFlag = false;
-              },
-            });
           });
 
-        gsap.to(ridingRobot.robotObj.position, {
-          duration: 2,
-          x: 275,
-          ease: "power1.inOut",
-          delay: 1.3,
-          onComplete: () => {
-            ridingRobot.phaseTwo.attach(element);
-          },
-        });
-        gsap.to(ridingRobot.wheelsBack.rotation, {
-          duration: 2,
-          z: -400,
-          delay: 1.3,
-        });
-        gsap.to(ridingRobot.wheelsFront.rotation, {
-          duration: 2,
-          z: -400,
-          delay: 1.3,
-        });
-      }
-
-      // 2
-
-      if (counter === 2) {
-        gsap.to(controls.target, {
-          duration: 4,
-          x: 100,
-          y: 50,
-          z: 0,
-          onStart: () => {
-            blockButtonsFlag = true;
-          },
-        });
-        gsap.to(camera.position, {
-          duration: 5,
-          x: 100,
-          y: 50,
-          z: -150,
-          ease: "power1.inOut",
-          onComplete: () => {
-            blockButtonsFlag = false;
-          },
-        });
-
-        gsap.to(ridingRobot.robotObj.position, {
-          duration: 4,
-          x: 105,
-          ease: "power1.inOut",
-          onStart: () => {
-            ridingRobot.phaseTwo.attach(element);
-          },
-          onComplete: () => {
-            table.attach(element);
-          },
-        });
-        gsap.to(ridingRobot.phaseTwo.rotation, {
-          duration: 4,
-          z: THREE.MathUtils.degToRad(180),
-          ease: "power1.inOut",
-          onComplete: () => {
-            table.attach(element);
-          },
-        });
-        gsap.to(ridingRobot.wheelsBack.rotation, {
-          duration: 4,
-          z: 200,
-        });
-        gsap.to(ridingRobot.wheelsFront.rotation, {
-          duration: 4,
-          z: 200,
-        });
-      }
-
-      if (counter === 3) {
-        gsap.to(camera.position, {
-          duration: 2.5,
-          x: 0,
-          z: 140,
-          y: 140,
-          ease: "power1.inOut",
-          onStart: () => {
-            blockButtonsFlag = true;
-          },
-          onComplete: () => {
-            blockButtonsFlag = false;
-          },
-        });
-        gsap.to(controls.target, {
-          duration: 2.5,
-          x: 50,
-          y: 50,
-          z: 0,
-          ease: "power1.inOut",
-        });
-        gsap.to(ridingRobot.robotObj.position, {
-          duration: 2,
-          x: 200,
-          ease: "power1.inOut",
-        });
-        gsap.to(ridingRobot.phaseTwo.rotation, {
-          duration: 2,
-          z: THREE.MathUtils.degToRad(0),
-          ease: "power1.inOut",
-        });
-        gsap.to(ridingRobot.wheelsBack.rotation, {
-          duration: 2,
-          z: 200,
-        });
-        gsap.to(ridingRobot.wheelsFront.rotation, {
-          duration: 2,
-          z: 200,
-        });
-      }
-    }
-
-    if (counter === 4) {
-      tla.clear();
-
-      tla
-        .to(helperRobot.phaseOne.rotation, {
-          duration: 2,
-          y: THREE.MathUtils.degToRad(0),
-          ease: "power1.inOut",
-          onStart: () => {
-            blockButtonsFlag = true;
-          },
-        })
-        .to(helperRobot.phaseTwo.rotation, {
-          duration: 1.5,
-          z: THREE.MathUtils.degToRad(15),
-          ease: "power1.inOut",
-        })
-        .to(
-          helperRobot.phaseThree.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(-25),
-            ease: "power1.inOut",
-          },
-          "-=1.5"
-        )
-        .to(
-          helperRobot.phaseFour.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(10),
-            ease: "power1.inOut",
-            onComplete: () => {
-              helperRobot.phaseFour.attach(element);
-            },
-          },
-          "-=1.5"
-        )
-        .to(helperRobot.phaseTwo.rotation, {
-          duration: 1.5,
-          z: THREE.MathUtils.degToRad(45),
-          ease: "power1.inOut",
-        })
-        .to(
-          helperRobot.phaseThree.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(-45),
-            ease: "power1.inOut",
-          },
-          "-=1.5"
-        )
-        .to(
-          helperRobot.phaseFour.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(0),
-            ease: "power1.inOut",
-            onComplete: () => {
-              blockButtonsFlag = false;
-            },
-          },
-          "-=1.5"
-        );
-    }
-
-    if (counter === 5) {
-      tla.clear();
-
-      tla
-        .to(controls.target, {
-          duration: 2,
-          z: -60,
-          x: 0,
-          y: 40,
-          ease: "power1.inOut",
-          onStart: () => {
-            blockButtonsFlag = true;
-          },
-        })
-        .to(
-          camera.position,
-          {
-            duration: 2,
-            x: 100,
-            z: -60,
-            y: 75,
-            ease: "power1.inOut",
-          },
-          "-=2"
-        )
-        .to(
-          helperRobot.phaseOne.rotation,
-          {
-            duration: 2,
-            y: THREE.MathUtils.degToRad(90),
-            ease: "power1.inOut",
-          },
-          "-=2"
-        )
-        .to(helperRobot.phaseTwo.rotation, {
-          duration: 1.5,
-          z: THREE.MathUtils.degToRad(15),
-          ease: "power1.inOut",
-        })
-        .to(
-          helperRobot.phaseThree.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(-25),
-            ease: "power1.inOut",
-          },
-          "-=1.5"
-        )
-        .to(
-          helperRobot.phaseFour.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(10),
-            ease: "power1.inOut",
-            onComplete: () => {
-              table.attach(element);
-            },
-          },
-          "-=1.5"
-        )
-        .to(helperRobot.phaseTwo.rotation, {
-          duration: 1.5,
-          z: THREE.MathUtils.degToRad(45),
-          ease: "power1.inOut",
-        })
-        .to(
-          helperRobot.phaseThree.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(-45),
-            ease: "power1.inOut",
-          },
-          "-=1.5"
-        )
-        .to(
-          helperRobot.phaseFour.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(0),
-            ease: "power1.inOut",
-            onComplete: () => {
-              blockButtonsFlag = false;
-            },
-          },
-          "-=1.5"
-        );
-    }
-
-    if (counter === 6) {
-      tla.clear();
-
-      tla
-        .to(helperRobot.phaseOne.rotation, {
-          duration: 2,
-          y: THREE.MathUtils.degToRad(180),
-          ease: "power1.inOut",
-          onStart: () => {
-            blockButtonsFlag = true;
-          },
-        })
-        .to(
-          weldingRobot2.phaseThree.rotation,
-          {
-            duration: 2,
-            z: THREE.MathUtils.degToRad(-50),
-            ease: "power1.inOut",
-          },
-          "-=1"
-        )
-        .to(weldingRobot2.phaseOne.rotation, {
-          duration: 2.5,
-          y: THREE.MathUtils.degToRad(0),
-          ease: "power1.inOut",
-        })
-        .to(
-          weldingRobot2.phaseTwo.rotation,
-          {
-            duration: 2.5,
-            z: THREE.MathUtils.degToRad(110),
-            ease: "power1.inOut",
-          },
-          "-=2.5"
-        )
-        .to(
-          weldingRobot2.phaseThree.rotation,
-          {
-            duration: 2.5,
-            z: THREE.MathUtils.degToRad(-75),
-            ease: "power1.inOut",
-          },
-          "-=2.5"
-        )
-        .to(
-          weldingRobot2.phaseFour.rotation,
-          {
-            duration: 2.5,
-            z: THREE.MathUtils.degToRad(-125),
-            ease: "power1.inOut",
-            onComplete: () => {
-              particlesPosition = new THREE.Vector3(3, 35, -60);
-              controls.autoRotate = true;
-              controls.autoRotateSpeed = -0.3;
-              blockButtonsFlag = false;
-            },
-          },
-          "-=2.5"
-        );
-    }
-
-    if (counter === 7) {
-      tla.clear();
-      secondTla.clear();
-
-      tla
-        .to(weldingRobot2.phaseThree.rotation, {
-          duration: 2,
-          z: THREE.MathUtils.degToRad(-50),
-          ease: "power1.inOut",
-          onStart: () => {
-            particlesPosition = new THREE.Vector3(0, -40, 0);
-            blockButtonsFlag = true;
-          },
-        })
-        .to(weldingRobot2.phaseOne.rotation, {
-          duration: 2.5,
-          y: THREE.MathUtils.degToRad(90),
-          ease: "power1.inOut",
-        })
-        .to(
-          weldingRobot2.phaseFour.rotation,
-          {
-            duration: 2.5,
-            z: THREE.MathUtils.degToRad(-90),
-            ease: "power1.inOut",
-          },
-          "-=2"
-        )
-        .to(
-          weldingRobot2.phaseThree.rotation,
-          {
-            duration: 2.5,
-            z: THREE.MathUtils.degToRad(-135),
-            ease: "power1.inOut",
-          },
-          "-=2"
-        )
-        .to(
-          weldingRobot2.phaseTwo.rotation,
-          {
-            duration: 2.5,
-            z: THREE.MathUtils.degToRad(135),
-            ease: "power1.inOut",
-          },
-          "-=2"
-        )
-        .to(helperRobot.phaseOne.rotation, {
-          duration: 2,
-          y: THREE.MathUtils.degToRad(90),
-          ease: "power1.inOut",
-        })
-        .to(helperRobot.phaseTwo.rotation, {
-          duration: 1.5,
-          z: THREE.MathUtils.degToRad(15),
-          ease: "power1.inOut",
-        })
-        .to(
-          helperRobot.phaseThree.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(-25),
-            ease: "power1.inOut",
-            onComplete: () => {
-              helperRobot.phaseFour.attach(element);
-            },
-          },
-          "-=1.5"
-        )
-        .to(
-          helperRobot.phaseFour.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(10),
-            ease: "power1.inOut",
-          },
-          "-=1.5"
-        )
-        .to(helperRobot.phaseTwo.rotation, {
-          duration: 1.5,
-          z: THREE.MathUtils.degToRad(45),
-          ease: "power1.inOut",
-        })
-        .to(
-          helperRobot.phaseThree.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(-45),
-            ease: "power1.inOut",
-          },
-          "-=1.5"
-        )
-        .to(
-          helperRobot.phaseFour.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(0),
-            ease: "power1.inOut",
-            onComplete: () => {
-              controls.autoRotate = false;
-            },
-          },
-          "-=1.5"
-        )
-        .to(controls.target, {
-          duration: 3,
-          x: 0,
-          y: 40,
-          z: 60,
-          ease: "power1.inOut",
-        })
-        .to(
-          camera.position,
-          {
-            duration: 3,
-            x: 80,
-            z: 80,
-            y: 80,
-            ease: "power1.inOut",
-          },
-          "-=3"
-        )
-        .to(
-          helperRobot.phaseOne.rotation,
-          {
-            duration: 3,
-            y: THREE.MathUtils.degToRad(-90),
-            ease: "power1.inOut",
-            onComplete: () => {
-              blockButtonsFlag = false;
-            },
-          },
-          "-=3"
-        );
-    }
-
-    if (counter === 8) {
-      tla.clear();
-
-      tla
-        .to(helperRobot.phaseTwo.rotation, {
-          duration: 1.5,
-          z: THREE.MathUtils.degToRad(15),
-          ease: "power1.inOut",
-          onStart: () => {
-            blockButtonsFlag = true;
-          },
-        })
-        .to(
-          helperRobot.phaseThree.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(-25),
-            ease: "power1.inOut",
-          },
-          "-=1.5"
-        )
-        .to(
-          helperRobot.phaseFour.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(10),
-            ease: "power1.inOut",
-            onComplete: () => {
-              table.attach(element);
-            },
-          },
-          "-=1.5"
-        )
-        .to(helperRobot.phaseTwo.rotation, {
-          duration: 1.5,
-          z: THREE.MathUtils.degToRad(45),
-          ease: "power1.inOut",
-        })
-        .to(
-          helperRobot.phaseThree.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(-45),
-            ease: "power1.inOut",
-          },
-          "-=1.5"
-        )
-        .to(
-          helperRobot.phaseFour.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(0),
-            ease: "power1.inOut",
-          },
-          "-=1.5"
-        )
-        .to(helperRobot.phaseOne.rotation, {
-          duration: 1.5,
-          y: THREE.MathUtils.degToRad(-180),
-          ease: "power1.inOut",
-        })
-        .to(
-          weldingRobot1.phaseThree.rotation,
-          {
-            duration: 2,
-            z: THREE.MathUtils.degToRad(-50),
-            ease: "power1.inOut",
-          },
-          "-=1"
-        )
-        .to(weldingRobot1.phaseOne.rotation, {
-          duration: 2.5,
-          y: THREE.MathUtils.degToRad(0),
-          ease: "power1.inOut",
-        })
-        .to(
-          weldingRobot1.phaseTwo.rotation,
-          {
-            duration: 2.5,
-            z: THREE.MathUtils.degToRad(110),
-            ease: "power1.inOut",
-          },
-          "-=2.5"
-        )
-        .to(
-          weldingRobot1.phaseThree.rotation,
-          {
-            duration: 2.5,
-            z: THREE.MathUtils.degToRad(-75),
-            ease: "power1.inOut",
-          },
-          "-=2.5"
-        )
-        .to(
-          weldingRobot1.phaseFour.rotation,
-          {
-            duration: 2.5,
-            z: THREE.MathUtils.degToRad(-125),
-            ease: "power1.inOut",
-            onComplete: () => {
-              particlesPosition = new THREE.Vector3(-3, 35, 60);
-              controls.autoRotate = true;
-              controls.autoRotateSpeed = 0.3;
-              blockButtonsFlag = false;
-            },
-          },
-          "-=2.5"
-        );
-    }
-
-    if (counter === 9) {
-      tla.clear();
-
-      tla
-        .to(weldingRobot1.phaseThree.rotation, {
-          duration: 2,
-          z: THREE.MathUtils.degToRad(-50),
-          ease: "power1.inOut",
-          onStart: () => {
-            particlesPosition = new THREE.Vector3(0, -40, 0);
-            blockButtonsFlag = true;
-          },
-        })
-        .to(weldingRobot1.phaseOne.rotation, {
-          duration: 2.5,
-          y: THREE.MathUtils.degToRad(90),
-          ease: "power1.inOut",
-        })
-        .to(
-          weldingRobot1.phaseFour.rotation,
-          {
-            duration: 2.5,
-            z: THREE.MathUtils.degToRad(-90),
-            ease: "power1.inOut",
-          },
-          "-=2"
-        )
-        .to(
-          weldingRobot1.phaseThree.rotation,
-          {
-            duration: 2.5,
-            z: THREE.MathUtils.degToRad(-135),
-            ease: "power1.inOut",
-          },
-          "-=2"
-        )
-        .to(
-          weldingRobot1.phaseTwo.rotation,
-          {
-            duration: 2.5,
-            z: THREE.MathUtils.degToRad(135),
-            ease: "power1.inOut",
-          },
-          "-=2"
-        )
-        .to(helperRobot.phaseOne.rotation, {
-          duration: 2,
-          y: THREE.MathUtils.degToRad(-90),
-          ease: "power1.inOut",
-        })
-        .to(helperRobot.phaseTwo.rotation, {
-          duration: 1.5,
-          z: THREE.MathUtils.degToRad(15),
-          ease: "power1.inOut",
-        })
-        .to(
-          helperRobot.phaseThree.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(-25),
-            ease: "power1.inOut",
-          },
-          "-=1.5"
-        )
-        .to(
-          helperRobot.phaseFour.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(10),
-            ease: "power1.inOut",
-            onComplete: () => {
-              helperRobot.phaseFour.attach(element);
-            },
-          },
-          "-=1.5"
-        )
-        .to(helperRobot.phaseTwo.rotation, {
-          duration: 1.5,
-          z: THREE.MathUtils.degToRad(45),
-          ease: "power1.inOut",
-        })
-        .to(
-          helperRobot.phaseThree.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(-45),
-            ease: "power1.inOut",
-            onComplete: () => {
-              controls.autoRotate = false;
-            },
-          },
-          "-=1.5"
-        )
-        .to(
-          helperRobot.phaseFour.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(0),
-            ease: "power1.inOut",
-            onComplete: () => {
-              blockButtonsFlag = false;
-            },
-          },
-          "-=1.5"
-        );
-    }
-
-    if (counter === 10) {
-      tla.clear();
-
-      tla
-        .to(controls.target, {
-          duration: 3,
-          x: 50,
-          y: 40,
-          z: 0,
-          ease: "power1.inOut",
-          onStart: () => {
-            blockButtonsFlag = true;
-          },
-        })
-        .to(
-          camera.position,
-          {
-            duration: 3,
-            x: 120,
-            z: 80,
-            y: 80,
-            ease: "power1.inOut",
-          },
-          "-=3"
-        )
-        .to(
-          helperRobot.phaseOne.rotation,
-          {
-            duration: 1.5,
-            y: THREE.MathUtils.degToRad(0),
-            ease: "power1.inOut",
-          },
-          "-=3"
-        )
-        .to(helperRobot.phaseTwo.rotation, {
-          duration: 1.5,
-          z: THREE.MathUtils.degToRad(15),
-          ease: "power1.inOut",
-        })
-        .to(
-          helperRobot.phaseThree.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(-25),
-            ease: "power1.inOut",
-          },
-          "-=1.5"
-        )
-        .to(
-          helperRobot.phaseFour.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(10),
-            ease: "power1.inOut",
-            onComplete: () => {
-              table.attach(element);
-            },
-          },
-          "-=1.5"
-        )
-        .to(helperRobot.phaseTwo.rotation, {
-          duration: 1.5,
-          z: THREE.MathUtils.degToRad(45),
-          ease: "power1.inOut",
-        })
-        .to(
-          helperRobot.phaseThree.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(-45),
-            ease: "power1.inOut",
-          },
-          "-=1.5"
-        )
-        .to(
-          helperRobot.phaseFour.rotation,
-          {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(0),
-            ease: "power1.inOut",
-            onComplete: () => {
-              blockButtonsFlag = false;
-            },
-          },
-          "-=1.5"
-        );
-    }
-
-    if (counter === 11) {
-      tla.clear();
-
-      tla
-        .to(helperRobot.phaseOne.rotation, {
-          duration: 1.5,
-          y: THREE.MathUtils.degToRad(180),
-          ease: "power1.inOut",
-          onStart: () => {
-            blockButtonsFlag = true;
-          },
-        })
-        .to(camera.position, {
-          duration: 2.5,
-          x: 140,
-          y: 80,
-          z: -150,
-          ease: "power1.inOut",
-        })
-        .to(
-          controls.target,
-          {
-            duration: 2.5,
-            x: 100,
-            z: 0,
-            y: 50,
-            ease: "power1.inOut",
-          },
-          "-=2.5"
-        )
-        .to(
-          ridingRobot.robotObj.position,
-          {
-            duration: 3,
+          gsap.to(ridingRobot.robotObj.position, {
+            duration: 4,
             x: 105,
             ease: "power1.inOut",
-          },
-          "-=2.5"
-        )
-        .to(
-          ridingRobot.phaseTwo.rotation,
-          {
-            duration: 3,
+            onStart: () => {
+              ridingRobot.phaseTwo.attach(element);
+            },
+            onComplete: () => {
+              table.attach(element);
+            },
+          });
+          gsap.to(ridingRobot.phaseTwo.rotation, {
+            duration: 4,
             z: THREE.MathUtils.degToRad(180),
             ease: "power1.inOut",
             onComplete: () => {
-              ridingRobot.phaseTwo.attach(element);
+              table.attach(element);
             },
-          },
-          "-=3"
-        )
-        .to(
-          ridingRobot.wheelsBack.rotation,
-          {
-            duration: 3,
+          });
+          gsap.to(ridingRobot.wheelsBack.rotation, {
+            duration: 4,
             z: 200,
-          },
-          "-=3"
-        )
-        .to(
-          ridingRobot.wheelsFront.rotation,
-          {
-            duration: 3,
+          });
+          gsap.to(ridingRobot.wheelsFront.rotation, {
+            duration: 4,
             z: 200,
-            onComplete: () => {
-              blockButtonsFlag = false;
-            },
-          },
-          "-=3"
-        );
-    }
+          });
+        }
 
-    if (counter === 12) {
-      tla.clear();
-
-      tla
-        .to(camera.position, {
-          duration: 4,
-          x: 250,
-          y: 50,
-          z: -150,
-          onStart: () => {
-            blockButtonsFlag = true;
-          },
-        })
-        .to(
-          controls.target,
-          {
-            duration: 4,
-            x: 320,
-            y: 50,
-            ease: "power1.inOut",
-          },
-          "-=4"
-        )
-        .to(
-          ridingRobot.robotObj.position,
-          {
-            duration: 4,
-            x: 275,
-            ease: "power1.inOut",
-          },
-          "-=4"
-        )
-        .to(
-          ridingRobot.phaseTwo.rotation,
-          {
-            duration: 4,
-            z: THREE.MathUtils.degToRad(0),
-            ease: "power1.inOut",
-            onComplete: () => {
-              table2.attach(element);
-            },
-            onStart: () => {
-              ridingRobot.phaseTwo.attach(element);
-            },
-          },
-          "-=4"
-        )
-        .to(
-          ridingRobot.wheelsBack.rotation,
-          {
-            duration: 4,
-            z: -400,
-            ease: "power1.inOut",
-          },
-          "-=4"
-        )
-        .to(
-          ridingRobot.wheelsFront.rotation,
-          {
-            duration: 4,
-            z: -400,
-            ease: "power1.inOut",
-            onComplete: () => {
-              blockButtonsFlag = false;
-            },
-          },
-          "-=4"
-        );
-    }
-
-    if (counter === 13) {
-      tla.clear();
-
-      tla
-        .to(controls.target, {
-          duration: 3,
-          x: 0,
-          y: 50,
-          ease: "power1.inOut",
-          onStart: () => {
-            blockButtonsFlag = true;
-          },
-        })
-        .to(
-          camera.position,
-          {
-            duration: 3,
+        if (counter === 3) {
+          gsap.to(camera.position, {
+            duration: 2.5,
             x: 0,
-            y: 100,
-            z: 200,
-            ease: "power1.inOut",
-          },
-          "-=3"
-        )
-        .to(
-          ridingRobot.robotObj.position,
-          {
-            duration: 2,
-            x: 200,
-            ease: "power1.inOut",
-            onStart: () => {
-              table2.attach(element);
-            },
-          },
-          "-=3"
-        )
-        .to(
-          ridingRobot.wheelsBack.rotation,
-          {
-            duration: 2,
-            z: 0,
-          },
-          "-=3"
-        )
-        .to(
-          ridingRobot.wheelsFront.rotation,
-          {
-            duration: 2,
-            z: 0,
-            onComplete: () => {
-              blockButtonsFlag = false;
-            },
-          },
-          "-=3"
-        );
-    }
-
-    //---------------------------------------------------------------------------------------
-
-    if (e.key === "ArrowLeft" && !blockButtonsFlag) {
-      if (counter > 0) counter -= 1;
-      console.log(counter);
-
-      // 1
-
-      if (counter === 0) {
-        gsap.to(controls.target, {
-          duration: 3,
-          x: 0,
-          y: 50,
-          ease: "power1.inOut",
-          onStart: () => {
-            blockButtonsFlag = true;
-          },
-          onComplete: () => {
-            blockButtonsFlag = false;
-          },
-        });
-        gsap.to(camera.position, {
-          duration: 2,
-          x: 0,
-          y: 100,
-          z: 200,
-          ease: "power1.inOut",
-        });
-        gsap.to(ridingRobot.robotObj.position, {
-          duration: 2,
-          x: 200,
-          ease: "power1.inOut",
-          onStart: () => {
-            table2.attach(element);
-          },
-        });
-        gsap.to(ridingRobot.wheelsBack.rotation, {
-          duration: 2,
-          z: 0,
-        });
-        gsap.to(ridingRobot.wheelsFront.rotation, {
-          duration: 2,
-          z: 0,
-        });
-      }
-
-      // 2 r
-
-      if (counter === 1) {
-        gsap.to(camera.position, {
-          duration: 4,
-          x: 250,
-          y: 50,
-          z: -150,
-          onStart: () => {
-            blockButtonsFlag = true;
-            return gsap.to(controls.target, {
-              duration: 4,
-              x: 320,
-              y: 50,
-              ease: "power1.inOut",
-              onComplete: () => {
-                blockButtonsFlag = false;
-              },
-            });
-          },
-        });
-
-        gsap.to(ridingRobot.robotObj.position, {
-          duration: 4,
-          x: 275,
-          ease: "power1.inOut",
-          onStart: () => {
-            ridingRobot.phaseTwo.attach(element);
-          },
-        });
-        gsap.to(ridingRobot.phaseTwo.rotation, {
-          duration: 4,
-          z: THREE.MathUtils.degToRad(0),
-          ease: "power1.inOut",
-          onComplete: () => {
-            table.attach(element);
-          },
-        });
-        gsap.to(ridingRobot.wheelsBack.rotation, {
-          duration: 4,
-          z: -400,
-          delay: 1.3,
-        });
-        gsap.to(ridingRobot.wheelsFront.rotation, {
-          duration: 4,
-          z: -400,
-          delay: 1.3,
-        });
-      }
-
-      //3 r
-
-      if (counter === 2) {
-        console.log(counter);
-        gsap.to(camera.position, {
-          duration: 2.5,
-          x: 100,
-          y: 50,
-          z: -150,
-          ease: "power1.inOut",
-          onStart: () => {
-            blockButtonsFlag = true;
-          },
-        });
-        gsap.to(controls.target, {
-          duration: 2.5,
-          x: 100,
-          z: 0,
-          y: 50,
-          ease: "power1.inOut",
-        });
-        gsap.to(ridingRobot.robotObj.position, {
-          duration: 4,
-          x: 105,
-          ease: "power1.inOut",
-          onComplete: () => {
-            ridingRobot.phaseTwo.attach(element);
-            blockButtonsFlag = false;
-          },
-        });
-        gsap.to(ridingRobot.phaseTwo.rotation, {
-          duration: 4,
-          z: THREE.MathUtils.degToRad(180),
-          ease: "power1.inOut",
-        });
-        gsap.to(ridingRobot.wheelsBack.rotation, {
-          duration: 4,
-          z: 200,
-        });
-        gsap.to(ridingRobot.wheelsFront.rotation, {
-          duration: 4,
-          z: 200,
-        });
-      }
-
-      // 4 r
-
-      if (counter === 3) {
-        // const tl = gsap.timeline();
-        tla.clear();
-
-        tla
-          .to(helperRobot.phaseTwo.rotation, {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(15),
+            z: 140,
+            y: 140,
             ease: "power1.inOut",
             onStart: () => {
               blockButtonsFlag = true;
             },
-          })
-          .to(
-            helperRobot.phaseThree.rotation,
-            {
-              duration: 1.5,
-              z: THREE.MathUtils.degToRad(-25),
-              ease: "power1.inOut",
-              onComplete: () => {
-                table.attach(element);
-              },
+            onComplete: () => {
+              blockButtonsFlag = false;
             },
-            "-=1.5"
-          )
-          .to(
-            helperRobot.phaseFour.rotation,
-            {
-              duration: 1.5,
-              z: THREE.MathUtils.degToRad(10),
-              ease: "power1.inOut",
-            },
-            "-=1.5"
-          )
-          .then(() => {
-            tla
-              .to(helperRobot.phaseTwo.rotation, {
-                duration: 1.5,
-                z: THREE.MathUtils.degToRad(45),
-                ease: "power1.inOut",
-              })
-              .to(
-                helperRobot.phaseThree.rotation,
-                {
-                  duration: 1.5,
-                  z: THREE.MathUtils.degToRad(-45),
-                  ease: "power1.inOut",
-                },
-                "-=1.5"
-              )
-              .to(
-                helperRobot.phaseFour.rotation,
-                {
-                  duration: 1.5,
-                  z: THREE.MathUtils.degToRad(0),
-                  ease: "power1.inOut",
-                },
-                "-=1.5"
-              );
-          })
-          .then(() => {
-            tla.to(helperRobot.phaseOne.rotation, {
-              duration: 2,
-              y: THREE.MathUtils.degToRad(180),
-              ease: "power1.inOut",
-              onComplete: () => {
-                blockButtonsFlag = false;
-              },
-            });
           });
-      }
-
-      if (counter === 4) {
-        tla.clear();
-        secondTla.clear();
-
-        secondTla
-          .to(controls.target, {
-            duration: 2,
+          gsap.to(controls.target, {
+            duration: 2.5,
             x: 50,
             y: 50,
             z: 0,
             ease: "power1.inOut",
+          });
+          gsap.to(ridingRobot.robotObj.position, {
+            duration: 2,
+            x: 200,
+            ease: "power1.inOut",
+          });
+          gsap.to(ridingRobot.phaseTwo.rotation, {
+            duration: 2,
+            z: THREE.MathUtils.degToRad(0),
+            ease: "power1.inOut",
+          });
+          gsap.to(ridingRobot.wheelsBack.rotation, {
+            duration: 2,
+            z: 200,
+          });
+          gsap.to(ridingRobot.wheelsFront.rotation, {
+            duration: 2,
+            z: 200,
+          });
+        }
+      }
+
+      if (counter === 4) {
+        tla.clear();
+
+        tla
+          .to(helperRobot.phaseOne.rotation, {
+            duration: 2,
+            y: THREE.MathUtils.degToRad(0),
+            ease: "power1.inOut",
             onStart: () => {
               blockButtonsFlag = true;
             },
           })
-          .to(
-            camera.position,
-            {
-              duration: 2,
-              x: 0,
-              z: 140,
-              y: 140,
-              ease: "power1.inOut",
-            },
-            "-=2"
-          );
-
-        tla
           .to(helperRobot.phaseTwo.rotation, {
             duration: 1.5,
             z: THREE.MathUtils.degToRad(15),
@@ -1304,173 +221,19 @@ export function robots(scene, camera, controls) {
             {
               duration: 1.5,
               z: THREE.MathUtils.degToRad(-25),
+              ease: "power1.inOut",
+            },
+            "-=1.5"
+          )
+          .to(
+            helperRobot.phaseFour.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(10),
               ease: "power1.inOut",
               onComplete: () => {
                 helperRobot.phaseFour.attach(element);
               },
-            },
-            "-=1.5"
-          )
-          .to(
-            helperRobot.phaseFour.rotation,
-            {
-              duration: 1.5,
-              z: THREE.MathUtils.degToRad(10),
-              ease: "power1.inOut",
-            },
-            "-=1.5"
-          )
-          .then(() => {
-            tla
-              .to(helperRobot.phaseTwo.rotation, {
-                duration: 1.5,
-                z: THREE.MathUtils.degToRad(45),
-                ease: "power1.inOut",
-              })
-              .to(
-                helperRobot.phaseThree.rotation,
-                {
-                  duration: 1.5,
-                  z: THREE.MathUtils.degToRad(-45),
-                  ease: "power1.inOut",
-                },
-                "-=1.5"
-              )
-              .to(
-                helperRobot.phaseFour.rotation,
-                {
-                  duration: 1.5,
-                  z: THREE.MathUtils.degToRad(0),
-                  ease: "power1.inOut",
-                },
-                "-=1.5"
-              );
-          })
-          .then(() => {
-            tla.to(helperRobot.phaseOne.rotation, {
-              duration: 2,
-              y: THREE.MathUtils.degToRad(0),
-              ease: "power1.inOut",
-              onComplete: () => {
-                blockButtonsFlag = false;
-              },
-            });
-          });
-      }
-
-      if (counter === 5) {
-        tla.clear();
-
-        tla
-          .to(weldingRobot2.phaseThree.rotation, {
-            duration: 2,
-            z: THREE.MathUtils.degToRad(-50),
-            ease: "power1.inOut",
-            onStart: () => {
-              particlesPosition = new THREE.Vector3(0, -40, 0);
-              controls.autoRotate = false;
-              blockButtonsFlag = true;
-            },
-          })
-          .to(weldingRobot2.phaseOne.rotation, {
-            duration: 2.5,
-            y: THREE.MathUtils.degToRad(90),
-            ease: "power1.inOut",
-          })
-          .to(
-            weldingRobot2.phaseFour.rotation,
-            {
-              duration: 2.5,
-              z: THREE.MathUtils.degToRad(-90),
-              ease: "power1.inOut",
-            },
-            "-=2"
-          )
-          .to(
-            weldingRobot2.phaseThree.rotation,
-            {
-              duration: 2.5,
-              z: THREE.MathUtils.degToRad(-135),
-              ease: "power1.inOut",
-            },
-            "-=2"
-          )
-          .to(
-            weldingRobot2.phaseTwo.rotation,
-            {
-              duration: 2.5,
-              z: THREE.MathUtils.degToRad(135),
-              ease: "power1.inOut",
-            },
-            "-=2"
-          )
-          .to(helperRobot.phaseOne.rotation, {
-            duration: 2,
-            y: THREE.MathUtils.degToRad(90),
-            ease: "power1.inOut",
-            onComplete: () => {
-              blockButtonsFlag = false;
-            },
-          });
-      }
-
-      if (counter === 6) {
-        tla.clear();
-
-        tla
-          .to(controls.target, {
-            duration: 3,
-            x: 0,
-            y: 40,
-            z: -60,
-            ease: "power1.inOut",
-            onStart: () => {
-              blockButtonsFlag = true;
-            },
-          })
-          .to(
-            camera.position,
-            {
-              duration: 3,
-              x: 100,
-              z: -60,
-              y: 75,
-              ease: "power1.inOut",
-            },
-            "-=3"
-          )
-          .to(
-            helperRobot.phaseOne.rotation,
-            {
-              duration: 3,
-              y: THREE.MathUtils.degToRad(90),
-              ease: "power1.inOut",
-            },
-            "-=3"
-          )
-          .to(helperRobot.phaseTwo.rotation, {
-            duration: 1.5,
-            z: THREE.MathUtils.degToRad(15),
-            ease: "power1.inOut",
-          })
-          .to(
-            helperRobot.phaseThree.rotation,
-            {
-              duration: 1.5,
-              z: THREE.MathUtils.degToRad(-25),
-              ease: "power1.inOut",
-              onComplete: () => {
-                table.attach(element);
-              },
-            },
-            "-=1.5"
-          )
-          .to(
-            helperRobot.phaseFour.rotation,
-            {
-              duration: 1.5,
-              z: THREE.MathUtils.degToRad(10),
-              ease: "power1.inOut",
             },
             "-=1.5"
           )
@@ -1494,13 +257,113 @@ export function robots(scene, camera, controls) {
               duration: 1.5,
               z: THREE.MathUtils.degToRad(0),
               ease: "power1.inOut",
+              onComplete: () => {
+                blockButtonsFlag = false;
+              },
+            },
+            "-=1.5"
+          );
+      }
+
+      if (counter === 5) {
+        tla.clear();
+
+        tla
+          .to(controls.target, {
+            duration: 2,
+            z: -60,
+            x: 0,
+            y: 40,
+            ease: "power1.inOut",
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
+          })
+          .to(
+            camera.position,
+            {
+              duration: 2,
+              x: 100,
+              z: -60,
+              y: 75,
+              ease: "power1.inOut",
+            },
+            "-=2"
+          )
+          .to(
+            helperRobot.phaseOne.rotation,
+            {
+              duration: 2,
+              y: THREE.MathUtils.degToRad(90),
+              ease: "power1.inOut",
+            },
+            "-=2"
+          )
+          .to(helperRobot.phaseTwo.rotation, {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(15),
+            ease: "power1.inOut",
+          })
+          .to(
+            helperRobot.phaseThree.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(-25),
+              ease: "power1.inOut",
             },
             "-=1.5"
           )
+          .to(
+            helperRobot.phaseFour.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(10),
+              ease: "power1.inOut",
+              onComplete: () => {
+                table.attach(element);
+              },
+            },
+            "-=1.5"
+          )
+          .to(helperRobot.phaseTwo.rotation, {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(45),
+            ease: "power1.inOut",
+          })
+          .to(
+            helperRobot.phaseThree.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(-45),
+              ease: "power1.inOut",
+            },
+            "-=1.5"
+          )
+          .to(
+            helperRobot.phaseFour.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(0),
+              ease: "power1.inOut",
+              onComplete: () => {
+                blockButtonsFlag = false;
+              },
+            },
+            "-=1.5"
+          );
+      }
+
+      if (counter === 6) {
+        tla.clear();
+
+        tla
           .to(helperRobot.phaseOne.rotation, {
             duration: 2,
             y: THREE.MathUtils.degToRad(180),
             ease: "power1.inOut",
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
           })
           .to(
             weldingRobot2.phaseThree.rotation,
@@ -1553,9 +416,10 @@ export function robots(scene, camera, controls) {
 
       if (counter === 7) {
         tla.clear();
+        secondTla.clear();
 
         tla
-          .to(weldingRobot1.phaseThree.rotation, {
+          .to(weldingRobot2.phaseThree.rotation, {
             duration: 2,
             z: THREE.MathUtils.degToRad(-50),
             ease: "power1.inOut",
@@ -1564,13 +428,13 @@ export function robots(scene, camera, controls) {
               blockButtonsFlag = true;
             },
           })
-          .to(weldingRobot1.phaseOne.rotation, {
+          .to(weldingRobot2.phaseOne.rotation, {
             duration: 2.5,
             y: THREE.MathUtils.degToRad(90),
             ease: "power1.inOut",
           })
           .to(
-            weldingRobot1.phaseFour.rotation,
+            weldingRobot2.phaseFour.rotation,
             {
               duration: 2.5,
               z: THREE.MathUtils.degToRad(-90),
@@ -1579,7 +443,7 @@ export function robots(scene, camera, controls) {
             "-=2"
           )
           .to(
-            weldingRobot1.phaseThree.rotation,
+            weldingRobot2.phaseThree.rotation,
             {
               duration: 2.5,
               z: THREE.MathUtils.degToRad(-135),
@@ -1588,7 +452,7 @@ export function robots(scene, camera, controls) {
             "-=2"
           )
           .to(
-            weldingRobot1.phaseTwo.rotation,
+            weldingRobot2.phaseTwo.rotation,
             {
               duration: 2.5,
               z: THREE.MathUtils.degToRad(135),
@@ -1598,7 +462,7 @@ export function robots(scene, camera, controls) {
           )
           .to(helperRobot.phaseOne.rotation, {
             duration: 2,
-            y: THREE.MathUtils.degToRad(-90),
+            y: THREE.MathUtils.degToRad(90),
             ease: "power1.inOut",
           })
           .to(helperRobot.phaseTwo.rotation, {
@@ -1612,6 +476,9 @@ export function robots(scene, camera, controls) {
               duration: 1.5,
               z: THREE.MathUtils.degToRad(-25),
               ease: "power1.inOut",
+              onComplete: () => {
+                helperRobot.phaseFour.attach(element);
+              },
             },
             "-=1.5"
           )
@@ -1621,9 +488,6 @@ export function robots(scene, camera, controls) {
               duration: 1.5,
               z: THREE.MathUtils.degToRad(10),
               ease: "power1.inOut",
-              onComplete: () => {
-                helperRobot.phaseFour.attach(element);
-              },
             },
             "-=1.5"
           )
@@ -1649,10 +513,39 @@ export function robots(scene, camera, controls) {
               ease: "power1.inOut",
               onComplete: () => {
                 controls.autoRotate = false;
-                blockButtonsFlag = false;
               },
             },
             "-=1.5"
+          )
+          .to(controls.target, {
+            duration: 3,
+            x: 0,
+            y: 40,
+            z: 60,
+            ease: "power1.inOut",
+          })
+          .to(
+            camera.position,
+            {
+              duration: 3,
+              x: 80,
+              z: 80,
+              y: 80,
+              ease: "power1.inOut",
+            },
+            "-=3"
+          )
+          .to(
+            helperRobot.phaseOne.rotation,
+            {
+              duration: 3,
+              y: THREE.MathUtils.degToRad(-90),
+              ease: "power1.inOut",
+              onComplete: () => {
+                blockButtonsFlag = false;
+              },
+            },
+            "-=3"
           );
       }
 
@@ -1770,13 +663,56 @@ export function robots(scene, camera, controls) {
         tla.clear();
 
         tla
+          .to(weldingRobot1.phaseThree.rotation, {
+            duration: 2,
+            z: THREE.MathUtils.degToRad(-50),
+            ease: "power1.inOut",
+            onStart: () => {
+              particlesPosition = new THREE.Vector3(0, -40, 0);
+              blockButtonsFlag = true;
+            },
+          })
+          .to(weldingRobot1.phaseOne.rotation, {
+            duration: 2.5,
+            y: THREE.MathUtils.degToRad(90),
+            ease: "power1.inOut",
+          })
+          .to(
+            weldingRobot1.phaseFour.rotation,
+            {
+              duration: 2.5,
+              z: THREE.MathUtils.degToRad(-90),
+              ease: "power1.inOut",
+            },
+            "-=2"
+          )
+          .to(
+            weldingRobot1.phaseThree.rotation,
+            {
+              duration: 2.5,
+              z: THREE.MathUtils.degToRad(-135),
+              ease: "power1.inOut",
+            },
+            "-=2"
+          )
+          .to(
+            weldingRobot1.phaseTwo.rotation,
+            {
+              duration: 2.5,
+              z: THREE.MathUtils.degToRad(135),
+              ease: "power1.inOut",
+            },
+            "-=2"
+          )
+          .to(helperRobot.phaseOne.rotation, {
+            duration: 2,
+            y: THREE.MathUtils.degToRad(-90),
+            ease: "power1.inOut",
+          })
           .to(helperRobot.phaseTwo.rotation, {
             duration: 1.5,
             z: THREE.MathUtils.degToRad(15),
             ease: "power1.inOut",
-            onStart: () => {
-              blockButtonsFlag = true;
-            },
           })
           .to(
             helperRobot.phaseThree.rotation,
@@ -1810,6 +746,9 @@ export function robots(scene, camera, controls) {
               duration: 1.5,
               z: THREE.MathUtils.degToRad(-45),
               ease: "power1.inOut",
+              onComplete: () => {
+                controls.autoRotate = false;
+              },
             },
             "-=1.5"
           )
@@ -1819,38 +758,11 @@ export function robots(scene, camera, controls) {
               duration: 1.5,
               z: THREE.MathUtils.degToRad(0),
               ease: "power1.inOut",
-            },
-            "-=1.5"
-          )
-          .to(controls.target, {
-            duration: 3,
-            x: 0,
-            y: 40,
-            z: 60,
-            ease: "power1.inOut",
-          })
-          .to(
-            camera.position,
-            {
-              duration: 3,
-              x: 80,
-              z: 80,
-              y: 80,
-              ease: "power1.inOut",
-            },
-            "-=3"
-          )
-          .to(
-            helperRobot.phaseOne.rotation,
-            {
-              duration: 1.5,
-              y: THREE.MathUtils.degToRad(-90),
-              ease: "power1.inOut",
               onComplete: () => {
                 blockButtonsFlag = false;
               },
             },
-            "-=3"
+            "-=1.5"
           );
       }
 
@@ -1858,46 +770,15 @@ export function robots(scene, camera, controls) {
         tla.clear();
 
         tla
-          .to(ridingRobot.robotObj.position, {
-            duration: 3,
-            x: 200,
-            ease: "power1.inOut",
-            onStart: () => {
-              table.attach(element);
-              blockButtonsFlag = true;
-            },
-          })
-          .to(
-            ridingRobot.phaseTwo.rotation,
-            {
-              duration: 3,
-              z: THREE.MathUtils.degToRad(0),
-              ease: "power1.inOut",
-            },
-            "-=3"
-          )
-          .to(
-            ridingRobot.wheelsBack.rotation,
-            {
-              duration: 3,
-              z: -400,
-            },
-            "-=3"
-          )
-          .to(
-            ridingRobot.wheelsFront.rotation,
-            {
-              duration: 3,
-              z: -400,
-            },
-            "-=3"
-          )
           .to(controls.target, {
             duration: 3,
             x: 50,
             y: 40,
             z: 0,
             ease: "power1.inOut",
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
           })
           .to(
             camera.position,
@@ -1916,11 +797,60 @@ export function robots(scene, camera, controls) {
               duration: 1.5,
               y: THREE.MathUtils.degToRad(0),
               ease: "power1.inOut",
+            },
+            "-=3"
+          )
+          .to(helperRobot.phaseTwo.rotation, {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(15),
+            ease: "power1.inOut",
+          })
+          .to(
+            helperRobot.phaseThree.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(-25),
+              ease: "power1.inOut",
+            },
+            "-=1.5"
+          )
+          .to(
+            helperRobot.phaseFour.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(10),
+              ease: "power1.inOut",
+              onComplete: () => {
+                table.attach(element);
+              },
+            },
+            "-=1.5"
+          )
+          .to(helperRobot.phaseTwo.rotation, {
+            duration: 1.5,
+            z: THREE.MathUtils.degToRad(45),
+            ease: "power1.inOut",
+          })
+          .to(
+            helperRobot.phaseThree.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(-45),
+              ease: "power1.inOut",
+            },
+            "-=1.5"
+          )
+          .to(
+            helperRobot.phaseFour.rotation,
+            {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(0),
+              ease: "power1.inOut",
               onComplete: () => {
                 blockButtonsFlag = false;
               },
             },
-            "-=3"
+            "-=1.5"
           );
       }
 
@@ -1928,15 +858,20 @@ export function robots(scene, camera, controls) {
         tla.clear();
 
         tla
+          .to(helperRobot.phaseOne.rotation, {
+            duration: 1.5,
+            y: THREE.MathUtils.degToRad(180),
+            ease: "power1.inOut",
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
+          })
           .to(camera.position, {
             duration: 2.5,
             x: 140,
             y: 80,
             z: -150,
             ease: "power1.inOut",
-            onStart: () => {
-              blockButtonsFlag = true;
-            },
           })
           .to(
             controls.target,
@@ -1952,7 +887,7 @@ export function robots(scene, camera, controls) {
           .to(
             ridingRobot.robotObj.position,
             {
-              duration: 4,
+              duration: 3,
               x: 105,
               ease: "power1.inOut",
             },
@@ -1961,14 +896,79 @@ export function robots(scene, camera, controls) {
           .to(
             ridingRobot.phaseTwo.rotation,
             {
-              duration: 4,
+              duration: 3,
               z: THREE.MathUtils.degToRad(180),
               ease: "power1.inOut",
-              onStart: () => {
+              onComplete: () => {
                 ridingRobot.phaseTwo.attach(element);
               },
+            },
+            "-=3"
+          )
+          .to(
+            ridingRobot.wheelsBack.rotation,
+            {
+              duration: 3,
+              z: 200,
+            },
+            "-=3"
+          )
+          .to(
+            ridingRobot.wheelsFront.rotation,
+            {
+              duration: 3,
+              z: 200,
               onComplete: () => {
-                table.attach(element);
+                blockButtonsFlag = false;
+              },
+            },
+            "-=3"
+          );
+      }
+
+      if (counter === 12) {
+        tla.clear();
+
+        tla
+          .to(camera.position, {
+            duration: 4,
+            x: 250,
+            y: 50,
+            z: -150,
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
+          })
+          .to(
+            controls.target,
+            {
+              duration: 4,
+              x: 320,
+              y: 50,
+              ease: "power1.inOut",
+            },
+            "-=4"
+          )
+          .to(
+            ridingRobot.robotObj.position,
+            {
+              duration: 4,
+              x: 275,
+              ease: "power1.inOut",
+            },
+            "-=4"
+          )
+          .to(
+            ridingRobot.phaseTwo.rotation,
+            {
+              duration: 4,
+              z: THREE.MathUtils.degToRad(0),
+              ease: "power1.inOut",
+              onComplete: () => {
+                table2.attach(element);
+              },
+              onStart: () => {
+                ridingRobot.phaseTwo.attach(element);
               },
             },
             "-=4"
@@ -1977,7 +977,7 @@ export function robots(scene, camera, controls) {
             ridingRobot.wheelsBack.rotation,
             {
               duration: 4,
-              z: 200,
+              z: -400,
               ease: "power1.inOut",
             },
             "-=4"
@@ -1986,7 +986,7 @@ export function robots(scene, camera, controls) {
             ridingRobot.wheelsFront.rotation,
             {
               duration: 4,
-              z: 200,
+              z: -400,
               ease: "power1.inOut",
               onComplete: () => {
                 blockButtonsFlag = false;
@@ -1996,54 +996,1058 @@ export function robots(scene, camera, controls) {
           );
       }
 
-      if (counter === 12) {
-        gsap
-          .to(camera.position, {
+      if (counter === 13) {
+        tla.clear();
+
+        tla
+          .to(controls.target, {
             duration: 3,
-            x: 100,
+            x: 0,
+            y: 50,
+            ease: "power1.inOut",
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
+          })
+          .to(
+            camera.position,
+            {
+              duration: 3,
+              x: 0,
+              y: 100,
+              z: 200,
+              ease: "power1.inOut",
+            },
+            "-=3"
+          )
+          .to(
+            ridingRobot.robotObj.position,
+            {
+              duration: 2,
+              x: 200,
+              ease: "power1.inOut",
+              onStart: () => {
+                table2.attach(element);
+              },
+            },
+            "-=3"
+          )
+          .to(
+            ridingRobot.wheelsBack.rotation,
+            {
+              duration: 2,
+              z: 0,
+            },
+            "-=3"
+          )
+          .to(
+            ridingRobot.wheelsFront.rotation,
+            {
+              duration: 2,
+              z: 0,
+              onComplete: () => {
+                blockButtonsFlag = false;
+              },
+            },
+            "-=3"
+          );
+      }
+
+      //---------------------------------------------------------------------------------------
+
+      if (e.key === "ArrowLeft") {
+        if (counter > 0) counter -= 1;
+        console.log(counter);
+
+        // 1
+
+        if (counter === 0) {
+          gsap.to(controls.target, {
+            duration: 3,
+            x: 0,
+            y: 50,
+            ease: "power1.inOut",
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
+          });
+          gsap.to(camera.position, {
+            duration: 2,
+            x: 0,
+            y: 100,
+            z: 200,
+            ease: "power1.inOut",
+          });
+          gsap.to(ridingRobot.robotObj.position, {
+            duration: 2,
+            x: 200,
+            ease: "power1.inOut",
+            onStart: () => {
+              table2.attach(element);
+            },
+          });
+          gsap.to(ridingRobot.wheelsBack.rotation, {
+            duration: 2,
+            z: 0,
+          });
+          gsap.to(ridingRobot.wheelsFront.rotation, {
+            duration: 2,
+            z: 0,
+            onComplete: () => {
+              blockButtonsFlag = false;
+            },
+          });
+        }
+
+        // 2 r
+
+        if (counter === 1) {
+          gsap.to(camera.position, {
+            duration: 4,
+            x: 250,
             y: 50,
             z: -150,
             onStart: () => {
               blockButtonsFlag = true;
               return gsap.to(controls.target, {
-                duration: 3,
+                duration: 4,
                 x: 320,
                 y: 50,
+                ease: "power1.inOut",
+                onComplete: () => {
+                  blockButtonsFlag = false;
+                },
               });
             },
-          })
-          .then(() => {
-            return gsap.to(camera.position, {
+          });
+
+          gsap.to(ridingRobot.robotObj.position, {
+            duration: 4,
+            x: 275,
+            ease: "power1.inOut",
+            onStart: () => {
+              ridingRobot.phaseTwo.attach(element);
+            },
+          });
+          gsap.to(ridingRobot.phaseTwo.rotation, {
+            duration: 4,
+            z: THREE.MathUtils.degToRad(0),
+            ease: "power1.inOut",
+            onComplete: () => {
+              table.attach(element);
+            },
+          });
+          gsap.to(ridingRobot.wheelsBack.rotation, {
+            duration: 4,
+            z: -400,
+            delay: 1.3,
+          });
+          gsap.to(ridingRobot.wheelsFront.rotation, {
+            duration: 4,
+            z: -400,
+            delay: 1.3,
+          });
+        }
+
+        //3 r
+
+        if (counter === 2) {
+          console.log(counter);
+          gsap.to(camera.position, {
+            duration: 2.5,
+            x: 100,
+            y: 50,
+            z: -150,
+            ease: "power1.inOut",
+            onStart: () => {
+              blockButtonsFlag = true;
+            },
+          });
+          gsap.to(controls.target, {
+            duration: 2.5,
+            x: 100,
+            z: 0,
+            y: 50,
+            ease: "power1.inOut",
+          });
+          gsap.to(ridingRobot.robotObj.position, {
+            duration: 4,
+            x: 105,
+            ease: "power1.inOut",
+            onComplete: () => {
+              ridingRobot.phaseTwo.attach(element);
+              blockButtonsFlag = false;
+            },
+          });
+          gsap.to(ridingRobot.phaseTwo.rotation, {
+            duration: 4,
+            z: THREE.MathUtils.degToRad(180),
+            ease: "power1.inOut",
+          });
+          gsap.to(ridingRobot.wheelsBack.rotation, {
+            duration: 4,
+            z: 200,
+          });
+          gsap.to(ridingRobot.wheelsFront.rotation, {
+            duration: 4,
+            z: 200,
+          });
+        }
+
+        // 4 r
+
+        if (counter === 3) {
+          // const tl = gsap.timeline();
+          tla.clear();
+
+          tla
+            .to(helperRobot.phaseTwo.rotation, {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(15),
+              ease: "power1.inOut",
+              onStart: () => {
+                blockButtonsFlag = true;
+              },
+            })
+            .to(
+              helperRobot.phaseThree.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(-25),
+                ease: "power1.inOut",
+                onComplete: () => {
+                  table.attach(element);
+                },
+              },
+              "-=1.5"
+            )
+            .to(
+              helperRobot.phaseFour.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(10),
+                ease: "power1.inOut",
+              },
+              "-=1.5"
+            )
+            .then(() => {
+              tla
+                .to(helperRobot.phaseTwo.rotation, {
+                  duration: 1.5,
+                  z: THREE.MathUtils.degToRad(45),
+                  ease: "power1.inOut",
+                })
+                .to(
+                  helperRobot.phaseThree.rotation,
+                  {
+                    duration: 1.5,
+                    z: THREE.MathUtils.degToRad(-45),
+                    ease: "power1.inOut",
+                  },
+                  "-=1.5"
+                )
+                .to(
+                  helperRobot.phaseFour.rotation,
+                  {
+                    duration: 1.5,
+                    z: THREE.MathUtils.degToRad(0),
+                    ease: "power1.inOut",
+                  },
+                  "-=1.5"
+                );
+            })
+            .then(() => {
+              tla.to(helperRobot.phaseOne.rotation, {
+                duration: 2,
+                y: THREE.MathUtils.degToRad(180),
+                ease: "power1.inOut",
+                onComplete: () => {
+                  blockButtonsFlag = false;
+                },
+              });
+            });
+        }
+
+        if (counter === 4) {
+          tla.clear();
+          secondTla.clear();
+
+          secondTla
+            .to(controls.target, {
               duration: 2,
-              x: 250,
+              x: 50,
               y: 50,
-              z: -150,
+              z: 0,
+              ease: "power1.inOut",
+              onStart: () => {
+                blockButtonsFlag = true;
+              },
+            })
+            .to(
+              camera.position,
+              {
+                duration: 2,
+                x: 0,
+                z: 140,
+                y: 140,
+                ease: "power1.inOut",
+              },
+              "-=2"
+            );
+
+          tla
+            .to(helperRobot.phaseTwo.rotation, {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(15),
+              ease: "power1.inOut",
+            })
+            .to(
+              helperRobot.phaseThree.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(-25),
+                ease: "power1.inOut",
+                onComplete: () => {
+                  helperRobot.phaseFour.attach(element);
+                },
+              },
+              "-=1.5"
+            )
+            .to(
+              helperRobot.phaseFour.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(10),
+                ease: "power1.inOut",
+              },
+              "-=1.5"
+            )
+            .then(() => {
+              tla
+                .to(helperRobot.phaseTwo.rotation, {
+                  duration: 1.5,
+                  z: THREE.MathUtils.degToRad(45),
+                  ease: "power1.inOut",
+                })
+                .to(
+                  helperRobot.phaseThree.rotation,
+                  {
+                    duration: 1.5,
+                    z: THREE.MathUtils.degToRad(-45),
+                    ease: "power1.inOut",
+                  },
+                  "-=1.5"
+                )
+                .to(
+                  helperRobot.phaseFour.rotation,
+                  {
+                    duration: 1.5,
+                    z: THREE.MathUtils.degToRad(0),
+                    ease: "power1.inOut",
+                  },
+                  "-=1.5"
+                );
+            })
+            .then(() => {
+              tla.to(helperRobot.phaseOne.rotation, {
+                duration: 2,
+                y: THREE.MathUtils.degToRad(0),
+                ease: "power1.inOut",
+                onComplete: () => {
+                  blockButtonsFlag = false;
+                },
+              });
+            });
+        }
+
+        if (counter === 5) {
+          tla.clear();
+
+          tla
+            .to(weldingRobot2.phaseThree.rotation, {
+              duration: 2,
+              z: THREE.MathUtils.degToRad(-50),
+              ease: "power1.inOut",
+              onStart: () => {
+                particlesPosition = new THREE.Vector3(0, -40, 0);
+                controls.autoRotate = false;
+                blockButtonsFlag = true;
+              },
+            })
+            .to(weldingRobot2.phaseOne.rotation, {
+              duration: 2.5,
+              y: THREE.MathUtils.degToRad(90),
+              ease: "power1.inOut",
+            })
+            .to(
+              weldingRobot2.phaseFour.rotation,
+              {
+                duration: 2.5,
+                z: THREE.MathUtils.degToRad(-90),
+                ease: "power1.inOut",
+              },
+              "-=2"
+            )
+            .to(
+              weldingRobot2.phaseThree.rotation,
+              {
+                duration: 2.5,
+                z: THREE.MathUtils.degToRad(-135),
+                ease: "power1.inOut",
+              },
+              "-=2"
+            )
+            .to(
+              weldingRobot2.phaseTwo.rotation,
+              {
+                duration: 2.5,
+                z: THREE.MathUtils.degToRad(135),
+                ease: "power1.inOut",
+              },
+              "-=2"
+            )
+            .to(helperRobot.phaseOne.rotation, {
+              duration: 2,
+              y: THREE.MathUtils.degToRad(90),
               ease: "power1.inOut",
               onComplete: () => {
                 blockButtonsFlag = false;
               },
             });
-          });
+        }
 
-        gsap.to(ridingRobot.robotObj.position, {
-          duration: 2,
-          x: 275,
-          ease: "power1.inOut",
-          delay: 1.3,
-          onComplete: () => {
-            ridingRobot.phaseTwo.attach(element);
-          },
-        });
-        gsap.to(ridingRobot.wheelsBack.rotation, {
-          duration: 2,
-          z: -400,
-          delay: 1.3,
-        });
-        gsap.to(ridingRobot.wheelsFront.rotation, {
-          duration: 2,
-          z: -400,
-          delay: 1.3,
-        });
+        if (counter === 6) {
+          tla.clear();
+
+          tla
+            .to(controls.target, {
+              duration: 3,
+              x: 0,
+              y: 40,
+              z: -60,
+              ease: "power1.inOut",
+              onStart: () => {
+                blockButtonsFlag = true;
+              },
+            })
+            .to(
+              camera.position,
+              {
+                duration: 3,
+                x: 100,
+                z: -60,
+                y: 75,
+                ease: "power1.inOut",
+              },
+              "-=3"
+            )
+            .to(
+              helperRobot.phaseOne.rotation,
+              {
+                duration: 3,
+                y: THREE.MathUtils.degToRad(90),
+                ease: "power1.inOut",
+              },
+              "-=3"
+            )
+            .to(helperRobot.phaseTwo.rotation, {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(15),
+              ease: "power1.inOut",
+            })
+            .to(
+              helperRobot.phaseThree.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(-25),
+                ease: "power1.inOut",
+                onComplete: () => {
+                  table.attach(element);
+                },
+              },
+              "-=1.5"
+            )
+            .to(
+              helperRobot.phaseFour.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(10),
+                ease: "power1.inOut",
+              },
+              "-=1.5"
+            )
+            .to(helperRobot.phaseTwo.rotation, {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(45),
+              ease: "power1.inOut",
+            })
+            .to(
+              helperRobot.phaseThree.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(-45),
+                ease: "power1.inOut",
+              },
+              "-=1.5"
+            )
+            .to(
+              helperRobot.phaseFour.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(0),
+                ease: "power1.inOut",
+              },
+              "-=1.5"
+            )
+            .to(helperRobot.phaseOne.rotation, {
+              duration: 2,
+              y: THREE.MathUtils.degToRad(180),
+              ease: "power1.inOut",
+            })
+            .to(
+              weldingRobot2.phaseThree.rotation,
+              {
+                duration: 2,
+                z: THREE.MathUtils.degToRad(-50),
+                ease: "power1.inOut",
+              },
+              "-=1"
+            )
+            .to(weldingRobot2.phaseOne.rotation, {
+              duration: 2.5,
+              y: THREE.MathUtils.degToRad(0),
+              ease: "power1.inOut",
+            })
+            .to(
+              weldingRobot2.phaseTwo.rotation,
+              {
+                duration: 2.5,
+                z: THREE.MathUtils.degToRad(110),
+                ease: "power1.inOut",
+              },
+              "-=2.5"
+            )
+            .to(
+              weldingRobot2.phaseThree.rotation,
+              {
+                duration: 2.5,
+                z: THREE.MathUtils.degToRad(-75),
+                ease: "power1.inOut",
+              },
+              "-=2.5"
+            )
+            .to(
+              weldingRobot2.phaseFour.rotation,
+              {
+                duration: 2.5,
+                z: THREE.MathUtils.degToRad(-125),
+                ease: "power1.inOut",
+                onComplete: () => {
+                  particlesPosition = new THREE.Vector3(3, 35, -60);
+                  controls.autoRotate = true;
+                  controls.autoRotateSpeed = -0.3;
+                  blockButtonsFlag = false;
+                },
+              },
+              "-=2.5"
+            );
+        }
+
+        if (counter === 7) {
+          tla.clear();
+
+          tla
+            .to(weldingRobot1.phaseThree.rotation, {
+              duration: 2,
+              z: THREE.MathUtils.degToRad(-50),
+              ease: "power1.inOut",
+              onStart: () => {
+                particlesPosition = new THREE.Vector3(0, -40, 0);
+                blockButtonsFlag = true;
+              },
+            })
+            .to(weldingRobot1.phaseOne.rotation, {
+              duration: 2.5,
+              y: THREE.MathUtils.degToRad(90),
+              ease: "power1.inOut",
+            })
+            .to(
+              weldingRobot1.phaseFour.rotation,
+              {
+                duration: 2.5,
+                z: THREE.MathUtils.degToRad(-90),
+                ease: "power1.inOut",
+              },
+              "-=2"
+            )
+            .to(
+              weldingRobot1.phaseThree.rotation,
+              {
+                duration: 2.5,
+                z: THREE.MathUtils.degToRad(-135),
+                ease: "power1.inOut",
+              },
+              "-=2"
+            )
+            .to(
+              weldingRobot1.phaseTwo.rotation,
+              {
+                duration: 2.5,
+                z: THREE.MathUtils.degToRad(135),
+                ease: "power1.inOut",
+              },
+              "-=2"
+            )
+            .to(helperRobot.phaseOne.rotation, {
+              duration: 2,
+              y: THREE.MathUtils.degToRad(-90),
+              ease: "power1.inOut",
+            })
+            .to(helperRobot.phaseTwo.rotation, {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(15),
+              ease: "power1.inOut",
+            })
+            .to(
+              helperRobot.phaseThree.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(-25),
+                ease: "power1.inOut",
+              },
+              "-=1.5"
+            )
+            .to(
+              helperRobot.phaseFour.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(10),
+                ease: "power1.inOut",
+                onComplete: () => {
+                  helperRobot.phaseFour.attach(element);
+                },
+              },
+              "-=1.5"
+            )
+            .to(helperRobot.phaseTwo.rotation, {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(45),
+              ease: "power1.inOut",
+            })
+            .to(
+              helperRobot.phaseThree.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(-45),
+                ease: "power1.inOut",
+              },
+              "-=1.5"
+            )
+            .to(
+              helperRobot.phaseFour.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(0),
+                ease: "power1.inOut",
+                onComplete: () => {
+                  controls.autoRotate = false;
+                  blockButtonsFlag = false;
+                },
+              },
+              "-=1.5"
+            );
+        }
+
+        if (counter === 8) {
+          tla.clear();
+
+          tla
+            .to(helperRobot.phaseTwo.rotation, {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(15),
+              ease: "power1.inOut",
+              onStart: () => {
+                blockButtonsFlag = true;
+              },
+            })
+            .to(
+              helperRobot.phaseThree.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(-25),
+                ease: "power1.inOut",
+              },
+              "-=1.5"
+            )
+            .to(
+              helperRobot.phaseFour.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(10),
+                ease: "power1.inOut",
+                onComplete: () => {
+                  table.attach(element);
+                },
+              },
+              "-=1.5"
+            )
+            .to(helperRobot.phaseTwo.rotation, {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(45),
+              ease: "power1.inOut",
+            })
+            .to(
+              helperRobot.phaseThree.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(-45),
+                ease: "power1.inOut",
+              },
+              "-=1.5"
+            )
+            .to(
+              helperRobot.phaseFour.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(0),
+                ease: "power1.inOut",
+              },
+              "-=1.5"
+            )
+            .to(helperRobot.phaseOne.rotation, {
+              duration: 1.5,
+              y: THREE.MathUtils.degToRad(-180),
+              ease: "power1.inOut",
+            })
+            .to(
+              weldingRobot1.phaseThree.rotation,
+              {
+                duration: 2,
+                z: THREE.MathUtils.degToRad(-50),
+                ease: "power1.inOut",
+              },
+              "-=1"
+            )
+            .to(weldingRobot1.phaseOne.rotation, {
+              duration: 2.5,
+              y: THREE.MathUtils.degToRad(0),
+              ease: "power1.inOut",
+            })
+            .to(
+              weldingRobot1.phaseTwo.rotation,
+              {
+                duration: 2.5,
+                z: THREE.MathUtils.degToRad(110),
+                ease: "power1.inOut",
+              },
+              "-=2.5"
+            )
+            .to(
+              weldingRobot1.phaseThree.rotation,
+              {
+                duration: 2.5,
+                z: THREE.MathUtils.degToRad(-75),
+                ease: "power1.inOut",
+              },
+              "-=2.5"
+            )
+            .to(
+              weldingRobot1.phaseFour.rotation,
+              {
+                duration: 2.5,
+                z: THREE.MathUtils.degToRad(-125),
+                ease: "power1.inOut",
+                onComplete: () => {
+                  particlesPosition = new THREE.Vector3(-3, 35, 60);
+                  controls.autoRotate = true;
+                  controls.autoRotateSpeed = 0.3;
+                  blockButtonsFlag = false;
+                },
+              },
+              "-=2.5"
+            );
+        }
+
+        if (counter === 9) {
+          tla.clear();
+
+          tla
+            .to(helperRobot.phaseTwo.rotation, {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(15),
+              ease: "power1.inOut",
+              onStart: () => {
+                blockButtonsFlag = true;
+              },
+            })
+            .to(
+              helperRobot.phaseThree.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(-25),
+                ease: "power1.inOut",
+              },
+              "-=1.5"
+            )
+            .to(
+              helperRobot.phaseFour.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(10),
+                ease: "power1.inOut",
+                onComplete: () => {
+                  helperRobot.phaseFour.attach(element);
+                },
+              },
+              "-=1.5"
+            )
+            .to(helperRobot.phaseTwo.rotation, {
+              duration: 1.5,
+              z: THREE.MathUtils.degToRad(45),
+              ease: "power1.inOut",
+            })
+            .to(
+              helperRobot.phaseThree.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(-45),
+                ease: "power1.inOut",
+              },
+              "-=1.5"
+            )
+            .to(
+              helperRobot.phaseFour.rotation,
+              {
+                duration: 1.5,
+                z: THREE.MathUtils.degToRad(0),
+                ease: "power1.inOut",
+              },
+              "-=1.5"
+            )
+            .to(controls.target, {
+              duration: 3,
+              x: 0,
+              y: 40,
+              z: 60,
+              ease: "power1.inOut",
+            })
+            .to(
+              camera.position,
+              {
+                duration: 3,
+                x: 80,
+                z: 80,
+                y: 80,
+                ease: "power1.inOut",
+              },
+              "-=3"
+            )
+            .to(
+              helperRobot.phaseOne.rotation,
+              {
+                duration: 1.5,
+                y: THREE.MathUtils.degToRad(-90),
+                ease: "power1.inOut",
+                onComplete: () => {
+                  blockButtonsFlag = false;
+                },
+              },
+              "-=3"
+            );
+        }
+
+        if (counter === 10) {
+          tla.clear();
+
+          tla
+            .to(ridingRobot.robotObj.position, {
+              duration: 3,
+              x: 200,
+              ease: "power1.inOut",
+              onStart: () => {
+                table.attach(element);
+                blockButtonsFlag = true;
+              },
+            })
+            .to(
+              ridingRobot.phaseTwo.rotation,
+              {
+                duration: 3,
+                z: THREE.MathUtils.degToRad(0),
+                ease: "power1.inOut",
+              },
+              "-=3"
+            )
+            .to(
+              ridingRobot.wheelsBack.rotation,
+              {
+                duration: 3,
+                z: -400,
+              },
+              "-=3"
+            )
+            .to(
+              ridingRobot.wheelsFront.rotation,
+              {
+                duration: 3,
+                z: -400,
+              },
+              "-=3"
+            )
+            .to(controls.target, {
+              duration: 3,
+              x: 50,
+              y: 40,
+              z: 0,
+              ease: "power1.inOut",
+            })
+            .to(
+              camera.position,
+              {
+                duration: 3,
+                x: 120,
+                z: 80,
+                y: 80,
+                ease: "power1.inOut",
+              },
+              "-=3"
+            )
+            .to(
+              helperRobot.phaseOne.rotation,
+              {
+                duration: 1.5,
+                y: THREE.MathUtils.degToRad(0),
+                ease: "power1.inOut",
+                onComplete: () => {
+                  blockButtonsFlag = false;
+                },
+              },
+              "-=3"
+            );
+        }
+
+        if (counter === 11) {
+          tla.clear();
+
+          tla
+            .to(camera.position, {
+              duration: 2.5,
+              x: 140,
+              y: 80,
+              z: -150,
+              ease: "power1.inOut",
+              onStart: () => {
+                blockButtonsFlag = true;
+              },
+            })
+            .to(
+              controls.target,
+              {
+                duration: 2.5,
+                x: 100,
+                z: 0,
+                y: 50,
+                ease: "power1.inOut",
+              },
+              "-=2.5"
+            )
+            .to(
+              ridingRobot.robotObj.position,
+              {
+                duration: 4,
+                x: 105,
+                ease: "power1.inOut",
+              },
+              "-=2.5"
+            )
+            .to(
+              ridingRobot.phaseTwo.rotation,
+              {
+                duration: 4,
+                z: THREE.MathUtils.degToRad(180),
+                ease: "power1.inOut",
+                onStart: () => {
+                  ridingRobot.phaseTwo.attach(element);
+                },
+                onComplete: () => {
+                  table.attach(element);
+                },
+              },
+              "-=4"
+            )
+            .to(
+              ridingRobot.wheelsBack.rotation,
+              {
+                duration: 4,
+                z: 200,
+                ease: "power1.inOut",
+              },
+              "-=4"
+            )
+            .to(
+              ridingRobot.wheelsFront.rotation,
+              {
+                duration: 4,
+                z: 200,
+                ease: "power1.inOut",
+                onComplete: () => {
+                  blockButtonsFlag = false;
+                },
+              },
+              "-=4"
+            );
+        }
+
+        if (counter === 12) {
+          gsap
+            .to(camera.position, {
+              duration: 3,
+              x: 100,
+              y: 50,
+              z: -150,
+              // ease: "power1.in",
+              onStart: () => {
+                blockButtonsFlag = true;
+                return gsap.to(controls.target, {
+                  duration: 3,
+                  x: 320,
+                  y: 50,
+                });
+              },
+            })
+            .then(() => {
+              return gsap.to(camera.position, {
+                duration: 2,
+                x: 250,
+                y: 50,
+                z: -150,
+                ease: "power1.inOut",
+                onComplete: () => {
+                  blockButtonsFlag = false;
+                },
+              });
+            });
+
+          gsap.to(ridingRobot.robotObj.position, {
+            duration: 2,
+            x: 275,
+            ease: "power1.inOut",
+            delay: 1.3,
+            onComplete: () => {
+              ridingRobot.phaseTwo.attach(element);
+            },
+          });
+          gsap.to(ridingRobot.wheelsBack.rotation, {
+            duration: 2,
+            z: -400,
+            delay: 1.3,
+          });
+          gsap.to(ridingRobot.wheelsFront.rotation, {
+            duration: 2,
+            z: -400,
+            delay: 1.3,
+          });
+        }
       }
     }
   }
