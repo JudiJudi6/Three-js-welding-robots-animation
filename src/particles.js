@@ -2,16 +2,16 @@ import * as THREE from "three";
 
 export function addSmoke(scene, startPosition = new THREE.Vector3()) {
   const pointLight = new THREE.PointLight(0xe4e4d5, 8000, 200);
-  const spotLightHelper = new THREE.PointLightHelper(pointLight);
+  // const spotLightHelper = new THREE.PointLightHelper(pointLight);
   pointLight.position.copy(startPosition);
-  scene.add(spotLightHelper);
+  // scene.add(spotLightHelper);
   pointLight.castShadow = true;
   scene.add(pointLight);
 
   const smokeGeometry = new THREE.BufferGeometry();
   const smokeMaterial = new THREE.PointsMaterial({
-    size: 1,
-    color: 0xff5a00,
+    size: 0.5,
+    color: 0xffc744,
     transparent: true,
     opacity: 1,
   });
@@ -19,13 +19,13 @@ export function addSmoke(scene, startPosition = new THREE.Vector3()) {
   const smokeParticles = new THREE.Points(smokeGeometry, smokeMaterial);
   const particlesData = [];
 
-  for (let i = 0; i < 300; i++) {
+  for (let i = 0; i < 1000; i++) {
     particlesData.push({
       position: startPosition.clone(),
       velocity: new THREE.Vector3(
-        Math.random() - 0.5,
-        Math.random() - 0.5,
-        Math.random() - 0.5
+        (Math.random() - 0.5) * 2, // Lekkie odchylenie na bok
+        Math.random() * 0.5 + 0.5, // Ruch do góry
+        (Math.random() - 0.5) * 2 // / Lekkie odchylenie na bok
       ),
       lifespan: Math.random() * 0.5,
       age: 1,
@@ -48,10 +48,8 @@ export function addSmoke(scene, startPosition = new THREE.Vector3()) {
   scene.add(smokeParticles);
 
   function updateSmoke(pos) {
-    // Aktualizacja intensywności point light na losową wartość z przedziału [5000, 10000]
     pointLight.intensity = Math.random() * 4000 + 500;
 
-    // Aktualizacja pozycji point light
     pointLight.position.copy(pos);
 
     for (let i = 0; i < particlesData.length; i++) {
