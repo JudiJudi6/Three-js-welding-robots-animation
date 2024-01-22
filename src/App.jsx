@@ -1,16 +1,28 @@
-import React, { useRef, useEffect } from "react";
+import  { useRef, useEffect } from "react";
 import * as THREE from "three";
+import toast, { Toaster, useToasterStore } from "react-hot-toast";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GUI } from "dat.gui";
 import { renderScene } from "./renderScene";
 import Stats from "three/examples/jsm/libs/stats.module";
-import { robots } from "./robots";
+import { blockButtonsFlag, robots } from "./robots";
 
 function App() {
   const canvasRef = useRef();
+  const { toasts } = useToasterStore();
+
+  const TOAST_LIMIT = 1;
+
+  useEffect(() => {
+    toasts
+      .filter((t) => t.visible) // Only consider visible toasts
+      .filter((item, i) => i >= TOAST_LIMIT) // Is toast index over limit
+      .forEach((t) => toast.dismiss(t.id)); // Dismiss – Use toast.remove(t.id) removal without animation
+  }, [toasts]);
 
   useEffect(() => {
     let renderer, stats, controls, ambientLight;
+    // toast.success("Stage 1");
 
     // Scene initialization
     let scene = new THREE.Scene();
@@ -38,9 +50,9 @@ function App() {
 
     controls = new OrbitControls(camera, renderer.domElement);
     controls.autoRotateSpeed = -0.5;
-    controls.enableDamping = true
-    controls.dampingFactor = 0.12
-    controls.enableZoom = true
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.12;
+    controls.enableZoom = true;
 
     // Ambient Light
     ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -48,7 +60,7 @@ function App() {
 
     // GUI
     const gui = new GUI();
-    gui.closed = true
+    gui.closed = true;
     const alFolder = gui.addFolder("Ambient Light");
     alFolder.add(ambientLight, "intensity", 0, 1, 0.1);
 
@@ -63,11 +75,28 @@ function App() {
     window.addEventListener("resize", onWindowResize, false);
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowUp") {
-        if (ambientLight.intensity < 0.7) ambientLight.intensity += 0.1;
-      }
-      if (e.key === "ArrowDown") {
-        if (ambientLight.intensity > 0.3) ambientLight.intensity -= 0.1;
+
+      if (!blockButtonsFlag) {
+        if (e.key === "ArrowUp") {
+          if (ambientLight.intensity < 0.7) ambientLight.intensity += 0.1;
+          if (+ambientLight.intensity.toFixed(1) === 0.7) {
+            toast.success(`Ambient light intensity - max`);
+          } else {
+            toast.success(
+              `Ambient light intensity - ${+ambientLight.intensity.toFixed(1)}`
+            );
+          }
+        }
+        if (e.key === "ArrowDown") {
+          if (ambientLight.intensity > 0.3) ambientLight.intensity -= 0.1;
+          if (+ambientLight.intensity.toFixed(1) === 0.2) {
+            toast.success(`Ambient light intensity - min`);
+          } else {
+            toast.success(
+              `Ambient light intensity - ${+ambientLight.intensity.toFixed(1)}`
+            );
+          }
+        }
       }
     });
 
@@ -98,8 +127,31 @@ function App() {
   }, [canvasRef]);
 
   return (
-    <div className="">
-      <canvas ref={canvasRef} />
+    <div className="relative">
+      <Toaster
+        position="bottom-left"
+        reverseOrder="true"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOptions={{
+          success: {
+            duration: 1000,
+          },
+          loading: {
+            duration: 1000,
+          },
+          style: {
+            fontSize: "16px",
+            maxWidth: "500px",
+            padding: "16px 24px",
+            backgroundColor: "#333",
+            color: "white",
+          },
+        }}
+      />{" "}
+      <div className="">
+        <canvas ref={canvasRef} />
+      </div>
     </div>
   );
 }
