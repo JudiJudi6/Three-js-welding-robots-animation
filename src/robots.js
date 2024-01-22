@@ -456,7 +456,7 @@ export function robots(scene, camera, controls) {
                 if (autoFlag) {
                   setTimeout(() => {
                     animations();
-                  }, 3000);
+                  }, 5000);
                 }
               },
             },
@@ -717,7 +717,7 @@ export function robots(scene, camera, controls) {
                 if (autoFlag) {
                   setTimeout(() => {
                     animations();
-                  }, 3000);
+                  }, 5000);
                 }
               },
             },
