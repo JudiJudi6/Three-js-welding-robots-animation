@@ -448,7 +448,7 @@ export function robots(scene, camera, controls) {
               z: THREE.MathUtils.degToRad(-125),
               ease: "power1.inOut",
               onComplete: () => {
-                particlesPosition = new THREE.Vector3(3, 35, -60);
+                particlesPosition = new THREE.Vector3(3, 36, -59);
                 controls.autoRotate = true;
                 controls.autoRotateSpeed = -0.3;
                 blockButtonsFlag = false;
@@ -709,7 +709,7 @@ export function robots(scene, camera, controls) {
               z: THREE.MathUtils.degToRad(-125),
               ease: "power1.inOut",
               onComplete: () => {
-                particlesPosition = new THREE.Vector3(-3, 35, 60);
+                particlesPosition = new THREE.Vector3(-3, 36, 59);
                 controls.autoRotate = true;
                 controls.autoRotateSpeed = 0.3;
                 blockButtonsFlag = false;
@@ -1649,7 +1649,7 @@ export function robots(scene, camera, controls) {
                 z: THREE.MathUtils.degToRad(-125),
                 ease: "power1.inOut",
                 onComplete: () => {
-                  particlesPosition = new THREE.Vector3(3, 35, -60);
+                  particlesPosition = new THREE.Vector3(3, 36, -59);
                   controls.autoRotate = true;
                   controls.autoRotateSpeed = -0.3;
                   blockButtonsFlag = false;
@@ -1868,7 +1868,7 @@ export function robots(scene, camera, controls) {
                 z: THREE.MathUtils.degToRad(-125),
                 ease: "power1.inOut",
                 onComplete: () => {
-                  particlesPosition = new THREE.Vector3(-3, 35, 60);
+                  particlesPosition = new THREE.Vector3(-3, 36, 59);
                   controls.autoRotate = true;
                   controls.autoRotateSpeed = 0.3;
                   blockButtonsFlag = false;
