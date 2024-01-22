@@ -3,6 +3,8 @@ import { box } from "./meshes/Box";
 import { metalFrame } from "./metalFrame";
 import { light } from "./light";
 import { lamp } from "./meshes/Lamp";
+import { blockButtonsFlag } from "./robots";
+import toast from "react-hot-toast";
 
 export function renderScene(scene, gui) {
   let isPressed = false;
@@ -101,28 +103,71 @@ export function renderScene(scene, gui) {
 
       switch (currentNumberKey) {
         case "1":
-          toggleLamp(l1);
-          lamp(scene, 203, 205, 105, 30, l1);
+          if (!blockButtonsFlag) {
+            toggleLamp(l1);
+            lamp(scene, 203, 205, 105, 30, l1);
+            if (!l1.visible) {
+              toast.success("Lamp 1 - off");
+            } else {
+              toast.success("Lamp 1 - on");
+            }
+          }
           break;
         case "2":
-          toggleLamp(l2);
-          lamp(scene, 3, 205, 105, 30, l2);
+          if (!blockButtonsFlag) {
+            toggleLamp(l2);
+            lamp(scene, 3, 205, 105, 30, l2);
+            if (!l2.visible) {
+              toast.success("Lamp 2 - off");
+            } else {
+              toast.success("Lamp 2 - on");
+            }
+          }
           break;
         case "3":
-          toggleLamp(l3);
-          lamp(scene, -203, 205, 105, 30, l3);
+          if (!blockButtonsFlag) {
+            toggleLamp(l3);
+            lamp(scene, -203, 205, 105, 30, l3);
+            if (!l3.visible) {
+              toast.success("Lamp 3 - off");
+            } else {
+              toast.success("Lamp 3 - on");
+            }
+          }
           break;
         case "4":
-          toggleLamp(l4);
-          lamp(scene, -203, 205, -105, -30, l4);
+          if (!blockButtonsFlag) {
+            toggleLamp(l4);
+            lamp(scene, -203, 205, -105, -30, l4);
+            if (!l4.visible) {
+              toast.success("Lamp 4 - off");
+            } else {
+              toast.success("Lamp 4 - on");
+            }
+          }
           break;
         case "5":
-          toggleLamp(l5);
-          lamp(scene, 3, 205, -105, -30, l5);
+          if (!blockButtonsFlag) {
+            toggleLamp(l5);
+            lamp(scene, 3, 205, -105, -30, l5);
+            if (!l5.visible) {
+              toast.success("Lamp 5 - off");
+            } else {
+              toast.success("Lamp 5 - on");
+            }
+          }
           break;
         case "6":
-          toggleLamp(l6);
-          lamp(scene, 203, 205, -105, -30, l6);
+          if (!blockButtonsFlag) {
+            toast.success("Lamp 6 - off");
+            toggleLamp(l6);
+            lamp(scene, 203, 205, -105, -30, l6);
+            if (!l6.visible) {
+              toast.success("Lamp 6 - off");
+            } else {
+              toast.success("Lamp 6 - on");
+            }
+          }
           break;
       }
     }
@@ -131,21 +176,53 @@ export function renderScene(scene, gui) {
       switch (currentNumberKey) {
         case "1":
           if (l1.intensity < 70000) l1.intensity += 5000;
+          if (l1.intensity === 70000) {
+            toast.success(`Lamp 1 intensity - max`);
+          } else {
+            toast.success(`Lamp 1 intensity - ${l1.intensity}`);
+          }
+
           break;
         case "2":
           if (l2.intensity < 70000) l2.intensity += 5000;
+          if (l2.intensity === 70000) {
+            toast.success(`Lamp 2 intensity - max`);
+          } else {
+            toast.success(`Lamp 2 intensity - ${l2.intensity}`);
+          }
+
           break;
         case "3":
           if (l3.intensity < 70000) l3.intensity += 5000;
+          if (l3.intensity === 70000) {
+            toast.success(`Lamp 3 intensity - max`);
+          } else {
+            toast.success(`Lamp 3 intensity - ${l3.intensity}`);
+          }
           break;
         case "4":
           if (l4.intensity < 70000) l4.intensity += 5000;
+          if (l4.intensity === 70000) {
+            toast.success(`Lamp 4 intensity - max`);
+          } else {
+            toast.success(`Lamp 4 intensity - ${l4.intensity}`);
+          }
           break;
         case "5":
           if (l5.intensity < 70000) l5.intensity += 5000;
+          if (l5.intensity === 70000) {
+            toast.success(`Lamp 5 intensity - max`);
+          } else {
+            toast.success(`Lamp 5 intensity - ${l5.intensity}`);
+          }
           break;
         case "6":
           if (l6.intensity < 70000) l6.intensity += 5000;
+          if (l6.intensity === 70000) {
+            toast.success(`Lamp 6 intensity - max`);
+          } else {
+            toast.success(`Lamp 6 intensity - ${l6.intensity}`);
+          }
           break;
       }
     }
@@ -154,21 +231,51 @@ export function renderScene(scene, gui) {
       switch (currentNumberKey) {
         case "1":
           if (l1.intensity > 5000) l1.intensity -= 5000;
+          if (l1.intensity === 5000) {
+            toast.success(`Lamp 1 intensity - min`);
+          } else {
+            toast.success(`Lamp 1 intensity - ${l1.intensity}`);
+          }
           break;
         case "2":
           if (l2.intensity > 5000) l2.intensity -= 5000;
+          if (l2.intensity === 5000) {
+            toast.success(`Lamp 2 intensity - min`);
+          } else {
+            toast.success(`Lamp 2 intensity - ${l2.intensity}`);
+          }
           break;
         case "3":
           if (l3.intensity > 5000) l3.intensity -= 5000;
+          if (l3.intensity === 5000) {
+            toast.success(`Lamp 3 intensity - min`);
+          } else {
+            toast.success(`Lamp 3 intensity - ${l3.intensity}`);
+          }
           break;
         case "4":
           if (l4.intensity > 5000) l4.intensity -= 5000;
+          if (l4.intensity === 5000) {
+            toast.success(`Lamp 4 intensity - min`);
+          } else {
+            toast.success(`Lamp 4 intensity - ${l4.intensity}`);
+          }
           break;
         case "5":
           if (l5.intensity > 5000) l5.intensity -= 5000;
+          if (l5.intensity === 5000) {
+            toast.success(`Lamp 5 intensity - min`);
+          } else {
+            toast.success(`Lamp 5 intensity - ${l5.intensity}`);
+          }
           break;
         case "6":
           if (l6.intensity > 5000) l6.intensity -= 5000;
+          if (l6.intensity === 5000) {
+            toast.success(`Lamp 6 intensity - min`);
+          } else {
+            toast.success(`Lamp 6 intensity - ${l6.intensity}`);
+          }
           break;
       }
     }

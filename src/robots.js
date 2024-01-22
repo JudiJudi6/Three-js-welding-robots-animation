@@ -6,12 +6,15 @@ import { robot3 } from "./robot3";
 import { addSmoke } from "./particles";
 import { box } from "./meshes/Box";
 import gsap from "gsap";
+import { toast } from "react-hot-toast";
+
+export let blockButtonsFlag = false;
 
 export function robots(scene, camera, controls) {
   let counter = 0;
-  let blockButtonsFlag = false;
   let tla = gsap.timeline();
   let secondTla = gsap.timeline();
+  let autoFlag = false;
 
   let particlesPosition = new THREE.Vector3(0, -40, 0);
   const element = box(scene, 25, 10, 25, "metal.jpg");
@@ -44,17 +47,33 @@ export function robots(scene, camera, controls) {
   document.addEventListener("keydown", animations);
 
   function animations(e) {
-    console.log(blockButtonsFlag);
+    // console.log(blockButtonsFlag);
+    if (e?.key === "a") {
+      toast.success("Auto animation on");
+      autoFlag = true;
+      // counter += 1;
+    }
+    if (autoFlag) {
+      if (e?.key === "ArrowRight" || e?.key === "ArrowLeft") {
+        toast.success("Auto animation off");
+        autoFlag = false;
+      }
+    }
 
     if (!blockButtonsFlag) {
-      if (e.key === "ArrowRight") {
+      tla.clear();
+      secondTla.clear();
+
+      if (e?.key === "ArrowRight" || autoFlag) {
         // if(counter )
         counter += 1;
-        console.log(counter);
+        // console.log(counter);
 
         // 1
 
         if (counter === 1) {
+          toast.loading(`Stage ${counter}`);
+
           gsap
             .to(camera.position, {
               duration: 3,
@@ -80,6 +99,10 @@ export function robots(scene, camera, controls) {
                 ease: "power1.inOut",
                 onComplete: () => {
                   blockButtonsFlag = false;
+                  toast.success(`Stage ${counter}`);
+                  if (autoFlag) {
+                    animations();
+                  }
                 },
               });
             });
@@ -108,6 +131,7 @@ export function robots(scene, camera, controls) {
         // 2
 
         if (counter === 2) {
+          toast.loading(`Stage ${counter}`);
           gsap.to(controls.target, {
             duration: 4,
             x: 100,
@@ -125,6 +149,10 @@ export function robots(scene, camera, controls) {
             ease: "power1.inOut",
             onComplete: () => {
               blockButtonsFlag = false;
+              toast.success(`Stage ${counter}`);
+              if (autoFlag) {
+                animations();
+              }
             },
           });
 
@@ -158,6 +186,7 @@ export function robots(scene, camera, controls) {
         }
 
         if (counter === 3) {
+          toast.loading(`Stage ${counter}`);
           gsap.to(camera.position, {
             duration: 2.5,
             x: 0,
@@ -169,6 +198,10 @@ export function robots(scene, camera, controls) {
             },
             onComplete: () => {
               blockButtonsFlag = false;
+              toast.success(`Stage ${counter}`);
+              if (autoFlag) {
+                animations();
+              }
             },
           });
           gsap.to(controls.target, {
@@ -200,6 +233,7 @@ export function robots(scene, camera, controls) {
       }
 
       if (counter === 4) {
+        toast.loading(`Stage ${counter}`);
         tla.clear();
 
         tla
@@ -259,6 +293,10 @@ export function robots(scene, camera, controls) {
               ease: "power1.inOut",
               onComplete: () => {
                 blockButtonsFlag = false;
+                toast.success(`Stage ${counter}`);
+                if (autoFlag) {
+                  animations();
+                }
               },
             },
             "-=1.5"
@@ -266,6 +304,7 @@ export function robots(scene, camera, controls) {
       }
 
       if (counter === 5) {
+        toast.loading(`Stage ${counter}`);
         tla.clear();
 
         tla
@@ -347,6 +386,10 @@ export function robots(scene, camera, controls) {
               ease: "power1.inOut",
               onComplete: () => {
                 blockButtonsFlag = false;
+                toast.success(`Stage ${counter}`);
+                if (autoFlag) {
+                  animations();
+                }
               },
             },
             "-=1.5"
@@ -354,6 +397,7 @@ export function robots(scene, camera, controls) {
       }
 
       if (counter === 6) {
+        toast.loading(`Stage ${counter}`);
         tla.clear();
 
         tla
@@ -408,6 +452,12 @@ export function robots(scene, camera, controls) {
                 controls.autoRotate = true;
                 controls.autoRotateSpeed = -0.3;
                 blockButtonsFlag = false;
+                toast.success(`Stage ${counter}`);
+                if (autoFlag) {
+                  setTimeout(() => {
+                    animations();
+                  }, 3000);
+                }
               },
             },
             "-=2.5"
@@ -415,6 +465,7 @@ export function robots(scene, camera, controls) {
       }
 
       if (counter === 7) {
+        toast.loading(`Stage ${counter}`);
         tla.clear();
         secondTla.clear();
 
@@ -513,6 +564,10 @@ export function robots(scene, camera, controls) {
               ease: "power1.inOut",
               onComplete: () => {
                 controls.autoRotate = false;
+                toast.success(`Stage ${counter}`);
+                if (autoFlag) {
+                  animations();
+                }
               },
             },
             "-=1.5"
@@ -543,6 +598,10 @@ export function robots(scene, camera, controls) {
               ease: "power1.inOut",
               onComplete: () => {
                 blockButtonsFlag = false;
+                toast.success(`Stage ${counter}`);
+                if (autoFlag) {
+                  animations();
+                }
               },
             },
             "-=3"
@@ -550,6 +609,7 @@ export function robots(scene, camera, controls) {
       }
 
       if (counter === 8) {
+        toast.loading(`Stage ${counter}`);
         tla.clear();
 
         tla
@@ -653,6 +713,12 @@ export function robots(scene, camera, controls) {
                 controls.autoRotate = true;
                 controls.autoRotateSpeed = 0.3;
                 blockButtonsFlag = false;
+                toast.success(`Stage ${counter}`);
+                if (autoFlag) {
+                  setTimeout(() => {
+                    animations();
+                  }, 3000);
+                }
               },
             },
             "-=2.5"
@@ -660,6 +726,7 @@ export function robots(scene, camera, controls) {
       }
 
       if (counter === 9) {
+        toast.loading(`Stage ${counter}`);
         tla.clear();
 
         tla
@@ -759,7 +826,11 @@ export function robots(scene, camera, controls) {
               z: THREE.MathUtils.degToRad(0),
               ease: "power1.inOut",
               onComplete: () => {
+                toast.success(`Stage ${counter}`);
                 blockButtonsFlag = false;
+                if (autoFlag) {
+                  animations();
+                }
               },
             },
             "-=1.5"
@@ -767,6 +838,7 @@ export function robots(scene, camera, controls) {
       }
 
       if (counter === 10) {
+        toast.loading(`Stage ${counter}`);
         tla.clear();
 
         tla
@@ -848,6 +920,10 @@ export function robots(scene, camera, controls) {
               ease: "power1.inOut",
               onComplete: () => {
                 blockButtonsFlag = false;
+                toast.success(`Stage ${counter}`);
+                if (autoFlag) {
+                  animations();
+                }
               },
             },
             "-=1.5"
@@ -855,6 +931,7 @@ export function robots(scene, camera, controls) {
       }
 
       if (counter === 11) {
+        toast.loading(`Stage ${counter}`);
         tla.clear();
 
         tla
@@ -920,6 +997,10 @@ export function robots(scene, camera, controls) {
               z: 200,
               onComplete: () => {
                 blockButtonsFlag = false;
+                toast.success(`Stage ${counter}`);
+                if (autoFlag) {
+                  animations();
+                }
               },
             },
             "-=3"
@@ -927,6 +1008,7 @@ export function robots(scene, camera, controls) {
       }
 
       if (counter === 12) {
+        toast.loading(`Stage ${counter}`);
         tla.clear();
 
         tla
@@ -990,6 +1072,10 @@ export function robots(scene, camera, controls) {
               ease: "power1.inOut",
               onComplete: () => {
                 blockButtonsFlag = false;
+                toast.success(`Stage ${counter}`);
+                if (autoFlag) {
+                  animations();
+                }
               },
             },
             "-=4"
@@ -998,6 +1084,7 @@ export function robots(scene, camera, controls) {
 
       if (counter === 13) {
         tla.clear();
+        toast.loading(`Stage ${counter}`);
 
         tla
           .to(controls.target, {
@@ -1047,6 +1134,12 @@ export function robots(scene, camera, controls) {
               z: 0,
               onComplete: () => {
                 blockButtonsFlag = false;
+                toast.success(`Stage ${counter}`);
+                setTimeout(() => {
+                  autoFlag = false
+                  counter = 0;
+                  toast.success("This is the end");
+                }, 1000);
               },
             },
             "-=3"
@@ -1055,13 +1148,14 @@ export function robots(scene, camera, controls) {
 
       //---------------------------------------------------------------------------------------
 
-      if (e.key === "ArrowLeft") {
+      if (e?.key === "ArrowLeft") {
         if (counter > 0) counter -= 1;
-        console.log(counter);
+        // console.log(counter);
 
         // 1
 
         if (counter === 0) {
+          toast.loading(`Stage ${counter}`);
           gsap.to(controls.target, {
             duration: 3,
             x: 0,
@@ -1095,6 +1189,7 @@ export function robots(scene, camera, controls) {
             z: 0,
             onComplete: () => {
               blockButtonsFlag = false;
+              toast.success(`Stage ${counter}`);
             },
           });
         }
@@ -1102,6 +1197,7 @@ export function robots(scene, camera, controls) {
         // 2 r
 
         if (counter === 1) {
+          toast.loading(`Stage ${counter}`);
           gsap.to(camera.position, {
             duration: 4,
             x: 250,
@@ -1116,6 +1212,7 @@ export function robots(scene, camera, controls) {
                 ease: "power1.inOut",
                 onComplete: () => {
                   blockButtonsFlag = false;
+                  toast.success(`Stage ${counter}`);
                 },
               });
             },
@@ -1152,7 +1249,8 @@ export function robots(scene, camera, controls) {
         //3 r
 
         if (counter === 2) {
-          console.log(counter);
+          toast.loading(`Stage ${counter}`);
+          // console.log(counter);
           gsap.to(camera.position, {
             duration: 2.5,
             x: 100,
@@ -1177,6 +1275,7 @@ export function robots(scene, camera, controls) {
             onComplete: () => {
               ridingRobot.phaseTwo.attach(element);
               blockButtonsFlag = false;
+              toast.success(`Stage ${counter}`);
             },
           });
           gsap.to(ridingRobot.phaseTwo.rotation, {
@@ -1197,6 +1296,7 @@ export function robots(scene, camera, controls) {
         // 4 r
 
         if (counter === 3) {
+          toast.loading(`Stage ${counter}`);
           // const tl = gsap.timeline();
           tla.clear();
 
@@ -1263,12 +1363,14 @@ export function robots(scene, camera, controls) {
                 ease: "power1.inOut",
                 onComplete: () => {
                   blockButtonsFlag = false;
+                  toast.success(`Stage ${counter}`);
                 },
               });
             });
         }
 
         if (counter === 4) {
+          toast.loading(`Stage ${counter}`);
           tla.clear();
           secondTla.clear();
 
@@ -1355,12 +1457,14 @@ export function robots(scene, camera, controls) {
                 ease: "power1.inOut",
                 onComplete: () => {
                   blockButtonsFlag = false;
+                  toast.success(`Stage ${counter}`);
                 },
               });
             });
         }
 
         if (counter === 5) {
+          toast.loading(`Stage ${counter}`);
           tla.clear();
 
           tla
@@ -1412,11 +1516,13 @@ export function robots(scene, camera, controls) {
               ease: "power1.inOut",
               onComplete: () => {
                 blockButtonsFlag = false;
+                toast.success(`Stage ${counter}`);
               },
             });
         }
 
         if (counter === 6) {
+          toast.loading(`Stage ${counter}`);
           tla.clear();
 
           tla
@@ -1547,6 +1653,7 @@ export function robots(scene, camera, controls) {
                   controls.autoRotate = true;
                   controls.autoRotateSpeed = -0.3;
                   blockButtonsFlag = false;
+                  toast.success(`Stage ${counter}`);
                 },
               },
               "-=2.5"
@@ -1554,6 +1661,7 @@ export function robots(scene, camera, controls) {
         }
 
         if (counter === 7) {
+          toast.loading(`Stage ${counter}`);
           tla.clear();
 
           tla
@@ -1652,6 +1760,7 @@ export function robots(scene, camera, controls) {
                 onComplete: () => {
                   controls.autoRotate = false;
                   blockButtonsFlag = false;
+                  toast.success(`Stage ${counter}`);
                 },
               },
               "-=1.5"
@@ -1659,6 +1768,7 @@ export function robots(scene, camera, controls) {
         }
 
         if (counter === 8) {
+          toast.loading(`Stage ${counter}`);
           tla.clear();
 
           tla
@@ -1762,6 +1872,7 @@ export function robots(scene, camera, controls) {
                   controls.autoRotate = true;
                   controls.autoRotateSpeed = 0.3;
                   blockButtonsFlag = false;
+                  toast.success(`Stage ${counter}`);
                 },
               },
               "-=2.5"
@@ -1769,6 +1880,7 @@ export function robots(scene, camera, controls) {
         }
 
         if (counter === 9) {
+          toast.loading(`Stage ${counter}`);
           tla.clear();
 
           tla
@@ -1850,6 +1962,7 @@ export function robots(scene, camera, controls) {
                 ease: "power1.inOut",
                 onComplete: () => {
                   blockButtonsFlag = false;
+                  toast.success(`Stage ${counter}`);
                 },
               },
               "-=3"
@@ -1857,6 +1970,7 @@ export function robots(scene, camera, controls) {
         }
 
         if (counter === 10) {
+          toast.loading(`Stage ${counter}`);
           tla.clear();
 
           tla
@@ -1920,6 +2034,7 @@ export function robots(scene, camera, controls) {
                 ease: "power1.inOut",
                 onComplete: () => {
                   blockButtonsFlag = false;
+                  toast.success(`Stage ${counter}`);
                 },
               },
               "-=3"
@@ -1927,6 +2042,7 @@ export function robots(scene, camera, controls) {
         }
 
         if (counter === 11) {
+          toast.loading(`Stage ${counter}`);
           tla.clear();
 
           tla
@@ -1992,6 +2108,7 @@ export function robots(scene, camera, controls) {
                 ease: "power1.inOut",
                 onComplete: () => {
                   blockButtonsFlag = false;
+                  toast.success(`Stage ${counter}`);
                 },
               },
               "-=4"
@@ -1999,6 +2116,7 @@ export function robots(scene, camera, controls) {
         }
 
         if (counter === 12) {
+          toast.loading(`Stage ${counter}`);
           gsap
             .to(camera.position, {
               duration: 3,
@@ -2024,6 +2142,7 @@ export function robots(scene, camera, controls) {
                 ease: "power1.inOut",
                 onComplete: () => {
                   blockButtonsFlag = false;
+                  toast.success(`Stage ${counter}`);
                 },
               });
             });
