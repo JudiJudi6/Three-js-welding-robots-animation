@@ -48,6 +48,10 @@ export function robots(scene, camera, controls) {
 
   function animations(e) {
     // console.log(blockButtonsFlag);
+    if(e?.key >= "1" && e?.key <= "6" || e?.key === "+" || e?.key === "-" || e?.key === "ArrowUp" || e?.key === "ArrowDown"){
+      return
+    }
+
     if (e?.key === "a") {
       toast.success("Auto animation on");
       autoFlag = true;
