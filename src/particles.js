@@ -16,7 +16,9 @@ export function addSmoke(scene, startPosition = new THREE.Vector3()) {
     opacity: 1,
   });
 
+
   const smokeParticles = new THREE.Points(smokeGeometry, smokeMaterial);
+  smokeParticles.frustumCulled = false
   const particlesData = [];
 
   for (let i = 0; i < 1000; i++) {
