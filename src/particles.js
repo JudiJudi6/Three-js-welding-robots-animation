@@ -2,16 +2,13 @@ import * as THREE from "three";
 
 export function addSmoke(scene, startPosition = new THREE.Vector3()) {
   const pointLight = new THREE.PointLight(0xe4e4d5, 8000, 200);
-  // const spotLightHelper = new THREE.PointLightHelper(pointLight);
   pointLight.position.copy(startPosition);
-  // scene.add(spotLightHelper);
   pointLight.castShadow = true;
   scene.add(pointLight);
 
   const textureLoader = new THREE.TextureLoader();
   const smokeTexture = textureLoader.load("smoke3.png");
 
-  // Ustawienia materiału punktów
   const smokeMaterial = new THREE.PointsMaterial({
     size: 4,
     transparent: true,
@@ -22,7 +19,6 @@ export function addSmoke(scene, startPosition = new THREE.Vector3()) {
     alphaTest: 0.2,
   });
 
-  // Tworzenie geometry i punktów
   const smokeGeometry = new THREE.BufferGeometry();
   const smokeParticles = new THREE.Points(smokeGeometry, smokeMaterial);
 
@@ -44,9 +40,9 @@ export function addSmoke(scene, startPosition = new THREE.Vector3()) {
     sparklesData.push({
       position: startPosition.clone(),
       velocity: new THREE.Vector3(
-        (Math.random() - 0.5) * 2, // Lekkie odchylenie na bok
-        Math.random() * 0.5 + 0.5, // Ruch do góry
-        (Math.random() - 0.5) * 2 // / Lekkie odchylenie na bok
+        (Math.random() - 0.5) * 2, 
+        Math.random() * 0.5 + 0.5, 
+        (Math.random() - 0.5) * 2 
       ),
       lifespan: Math.random() * 0.5,
       age: 1,
@@ -57,9 +53,9 @@ export function addSmoke(scene, startPosition = new THREE.Vector3()) {
     smokeData.push({
       position: startPosition.clone(),
       velocity: new THREE.Vector3(
-        (Math.random() - 0.5) * 0.1, // Lekkie odchylenie na bok
-        (Math.random() * 0.5 + 0.5) * 0.1, // Ruch do góry
-        (Math.random() - 0.5) * 0.1 // / Lekkie odchylenie na bok
+        (Math.random() - 0.5) * 0.1, 
+        (Math.random() * 0.5 + 0.5) * 0.1, 
+        (Math.random() - 0.5) * 0.1 
       ),
       lifespan: Math.random() * 10,
       age: 10,

@@ -11,7 +11,6 @@ export function light(scene, x, y, z, d) {
   scene.add(spotLight);
 
   //Dodaj light helpers
-
   // scene.add(spotLightHelper);
 
   spotLightHelper.update();
