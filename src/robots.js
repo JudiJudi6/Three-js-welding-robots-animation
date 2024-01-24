@@ -121,12 +121,12 @@ export function robots(scene, camera, controls) {
           });
           gsap.to(ridingRobot.wheelsBack.rotation, {
             duration: 2,
-            z: -400,
+            z: -200,
             delay: 1.3,
           });
           gsap.to(ridingRobot.wheelsFront.rotation, {
             duration: 2,
-            z: -400,
+            z: -200,
             delay: 1.3,
           });
         }
@@ -226,11 +226,11 @@ export function robots(scene, camera, controls) {
           });
           gsap.to(ridingRobot.wheelsBack.rotation, {
             duration: 2,
-            z: 200,
+            z: 0,
           });
           gsap.to(ridingRobot.wheelsFront.rotation, {
             duration: 2,
-            z: 200,
+            z: 0,
           });
         }
       }
