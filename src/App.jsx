@@ -15,16 +15,14 @@ function App() {
 
   useEffect(() => {
     toasts
-      .filter((t) => t.visible) // Only consider visible toasts
-      .filter((item, i) => i >= TOAST_LIMIT) // Is toast index over limit
-      .forEach((t) => toast.dismiss(t.id)); // Dismiss – Use toast.remove(t.id) removal without animation
+      .filter((t) => t.visible) 
+      .filter((item, i) => i >= TOAST_LIMIT)
+      .forEach((t) => toast.dismiss(t.id)); 
   }, [toasts]);
 
   useEffect(() => {
     let renderer, stats, controls, ambientLight;
-    // toast.success("Stage 1");
 
-    // Scene initialization
     let scene = new THREE.Scene();
     let camera = new THREE.PerspectiveCamera(
       70,

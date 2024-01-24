@@ -9,11 +9,11 @@ export function addSmoke(scene, startPosition = new THREE.Vector3()) {
   scene.add(pointLight);
 
   const textureLoader = new THREE.TextureLoader();
-  const smokeTexture = textureLoader.load("smoke.png");
+  const smokeTexture = textureLoader.load("smoke3.png");
 
   // Ustawienia materiału punktów
   const smokeMaterial = new THREE.PointsMaterial({
-    size: 5,
+    size: 4,
     transparent: true,
     opacity: 0.4,
     map: smokeTexture, 
@@ -53,7 +53,7 @@ export function addSmoke(scene, startPosition = new THREE.Vector3()) {
     });
   }
 
-  for (let j = 0; j < 100; j++) {
+  for (let j = 0; j < 10; j++) {
     smokeData.push({
       position: startPosition.clone(),
       velocity: new THREE.Vector3(

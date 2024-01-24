@@ -39,23 +39,22 @@ export function robots(scene, camera, controls) {
 
   const weldingParticles = addSmoke(scene, particlesPosition);
 
-  // if (blockButtonsFlag) {
-  //   document.removeEventListener("keydown", animations);
-  // } else {
-  // }
-
   document.addEventListener("keydown", animations);
 
   function animations(e) {
-    // console.log(blockButtonsFlag);
-    if(e?.key >= "1" && e?.key <= "6" || e?.key === "+" || e?.key === "-" || e?.key === "ArrowUp" || e?.key === "ArrowDown"){
-      return
+    if (
+      (e?.key >= "1" && e?.key <= "6") ||
+      e?.key === "+" ||
+      e?.key === "-" ||
+      e?.key === "ArrowUp" ||
+      e?.key === "ArrowDown"
+    ) {
+      return;
     }
 
     if (e?.key === "a") {
       toast.success("Auto animation on");
       autoFlag = true;
-      // counter += 1;
     }
     if (autoFlag) {
       if (e?.key === "ArrowRight" || e?.key === "ArrowLeft") {
@@ -1140,7 +1139,7 @@ export function robots(scene, camera, controls) {
                 blockButtonsFlag = false;
                 toast.success(`Stage ${counter}`);
                 setTimeout(() => {
-                  autoFlag = false
+                  autoFlag = false;
                   counter = 0;
                   toast.success("This is the end");
                 }, 1000);
