@@ -1,8 +1,29 @@
-# React + Vite
+# Three.js Welding robots animation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About the project
 
-Currently, two official plugins are available:
+The project is a interactive animation showing 4 robots passing an element and welding it. The user can control the different stages of the animation using the left and right arrows, right arrow moves animation forward, left arrow retracts it. With the help of buttons 1 - 6 you can switch specific lamps. Arrow up and down control the brightness of the ambient light. Holding down the lamp number and pressing "+" or "-" also brightens or dims the lamp. User can also release the camera and view the scene from their own perspective using the mouse.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Build with
+
+[![React](https://img.shields.io/badge/React-blue.svg)](https://reactjs.org/)
+[![Three.js](https://img.shields.io/badge/Three.js-blue.svg)](https://threejs.org/)
+[![GSAP](https://img.shields.io/badge/GSAP-green.svg)](https://greensock.com/gsap/)
+
+## Pictures
+
+![scene 1](/vite-project/public/ph1.jpg)
+![scene 2](/vite-project/public/ph2.jpg)
+![scene 3](/vite-project/public/ph3.jpg)
+![scene 4](/vite-project/public/ph4.jpg)
+
+## How to run
+
+1. Clone the repo
+   ```git clone https://github.com/JudiJudi6/Three-js-welding-robots-animation.git```
+
+2. Install NPM packages
+   ```npm i```
+
+3. To run app
+   ```npm run dev```
