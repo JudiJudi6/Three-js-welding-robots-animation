@@ -2,7 +2,7 @@
 
 ## About the project
 
-The project is a interactive animation showing 4 robots passing an element and welding it. The user can control the different stages of the animation using the left and right arrows, right arrow moves animation forward, left arrow retracts it. With the help of buttons 1 - 6 you can switch specific lamps. Arrow up and down control the brightness of the ambient light. Holding down the lamp number and pressing "+" or "-" also brightens or dims the lamp. User can also release the camera and view the scene from their own perspective using the mouse.
+The project is a interactive animation showing 4 robots passing an element and welding it. The user can control the different stages of the animation using the left and right arrows, right arrow moves animation forward, left arrow retracts it. With the help of buttons 1 - 6 you can switch specific lamps. Arrow up and down control the brightness of the ambient light. Holding down the lamp number and pressing "+" or "-" also brightens or dims the lamp. User can also release the camera and view the scene from their own perspective using the mouse. Animations are made in the Green Sock Animation Platform (gsap.js) library.
 
 ## Build with
 
@@ -12,10 +12,10 @@ The project is a interactive animation showing 4 robots passing an element and w
 
 ## Pictures
 
-![scene 1](/vite-project/public/ph1.jpg)
-![scene 2](/vite-project/public/ph2.jpg)
-![scene 3](/vite-project/public/ph3.jpg)
-![scene 4](/vite-project/public/ph4.jpg)
+![scene 1](./public/ph1.jpg)
+![scene 2](./public/ph2.jpg)
+![scene 3](./public/ph3.jpg)
+![scene 4](./public/ph4.jpg)
 
 ## How to run
 
