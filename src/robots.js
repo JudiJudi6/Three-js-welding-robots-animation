@@ -2173,8 +2173,10 @@ export function robots(scene, camera, controls) {
       }
     }
   }
+
   scene.onBeforeRender = function () {
     TWEEN.update();
     weldingParticles(particlesPosition);
   };
+  return animations;
 }
