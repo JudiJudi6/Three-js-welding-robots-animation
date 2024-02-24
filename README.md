@@ -8,9 +8,10 @@ Live - [Visit demo](https://three-js-welding-robots-animation.vercel.app/)
 
 ## Build with
 
-[![React](https://img.shields.io/badge/React-blue.svg)](https://reactjs.org/)
-[![Three.js](https://img.shields.io/badge/Three.js-blue.svg)](https://threejs.org/)
-[![GSAP](https://img.shields.io/badge/GSAP-green.svg)](https://greensock.com/gsap/)
+[![React](https://img.shields.io/badge/React-%2361DAFB.svg?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Three.js](https://img.shields.io/badge/Three.js-%23000000.svg?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org/)
+[![GSAP](https://img.shields.io/badge/GSAP-%2331CB5C.svg?style=for-the-badge&logo=greensock&logoColor=white)](https://greensock.com/gsap/)
 
 ## Pictures
 
@@ -22,10 +23,10 @@ Live - [Visit demo](https://three-js-welding-robots-animation.vercel.app/)
 ## How to run
 
 1. Clone the repo
-   ```git clone https://github.com/JudiJudi6/Three-js-welding-robots-animation.git```
+   `git clone https://github.com/JudiJudi6/Three-js-welding-robots-animation.git`
 
 2. Install NPM packages
-   ```npm i```
+   `npm i`
 
 3. To run app
-   ```npm run dev```
+   `npm run dev`
